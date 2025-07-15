@@ -34,11 +34,7 @@ public:
 
 /** Start RPC threads */
 void StartRPCThreads();
-/**
- * Alternative to StartRPCThreads for the GUI, when no server is
- * used. The RPC thread in this case is only used to handle timeouts.
- * If real RPC threads have already been started this is a no-op.
- */
+
 void StartDummyRPCThread();
 /** Stop RPC threads */
 void StopRPCThreads();
@@ -56,17 +52,9 @@ void SetRPCWarmupFinished();
 /* returns the current warmup state.  */
 bool RPCIsInWarmup(std::string *statusOut);
 
-/**
- * Type-check arguments; throws JSONRPCError if wrong type given. Does not check that
- * the right number of arguments are passed, just that any passed are the correct type.
- * Use like:  RPCTypeCheck(params, boost::assign::list_of(str_type)(int_type)(obj_type));
- */
 void RPCTypeCheck(const json_spirit::Array& params,
                   const std::list<json_spirit::Value_type>& typesExpected, bool fAllowNull=false);
-/**
- * Check for expected keys/value types in an Object.
- * Use like: RPCTypeCheck(object, boost::assign::map_list_of("name", str_type)("value", int_type));
- */
+
 void RPCTypeCheck(const json_spirit::Object& o,
                   const std::map<std::string, json_spirit::Value_type>& typesExpected, bool fAllowNull=false);
 
@@ -104,22 +92,11 @@ public:
     const CRPCCommand* operator[](std::string name) const;
     std::string help(std::string name) const;
 
-    /**
-     * Execute a method.
-     * @param method   Method to execute
-     * @param params   Array of arguments (JSON objects)
-     * @returns Result of the call.
-     * @throws an exception (json_spirit::Value) when an error happens.
-     */
     json_spirit::Value execute(const std::string &method, const json_spirit::Array &params) const;
 };
 
 extern const CRPCTable tableRPC;
 
-/**
- * Utilities: convert hex-encoded Values
- * (throws error if not hex).
- */
 extern uint256 ParseHashV(const json_spirit::Value& v, std::string strName);
 extern uint256 ParseHashO(const json_spirit::Object& o, std::string strKey);
 extern std::vector<unsigned char> ParseHexV(const json_spirit::Value& v, std::string strName);
@@ -225,7 +202,6 @@ extern json_spirit::Value getchaintips(const json_spirit::Array& params, bool fH
 extern json_spirit::Value invalidateblock(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value reconsiderblock(const json_spirit::Array& params, bool fHelp);
 
-// in rest.cpp
 extern bool HTTPReq_REST(AcceptedConnection *conn,
                   std::string& strURI,
                   std::map<std::string, std::string>& mapHeaders,

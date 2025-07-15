@@ -159,6 +159,9 @@ namespace {
 
 // These functions dispatch to one or all registered wallets
 
+#include <boost/bind.hpp>
+#include <boost/signals2/signal.hpp>
+
 namespace {
 
 struct CMainSignals {

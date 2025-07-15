@@ -47,59 +47,121 @@ bool CCrypter::SetKey(const CKeyingMaterial& chNewKey, const std::vector<unsigne
     return true;
 }
 
+// bool CCrypter::Encrypt(const CKeyingMaterial& vchPlaintext, std::vector<unsigned char> &vchCiphertext)
+// {
+//     if (!fKeySet)
+//         return false;
+
+//     // max ciphertext len for a n bytes of plaintext is
+//     // n + AES_BLOCK_SIZE - 1 bytes
+//     int nLen = vchPlaintext.size();
+//     int nCLen = nLen + AES_BLOCK_SIZE, nFLen = 0;
+//     vchCiphertext = std::vector<unsigned char> (nCLen);
+
+//     EVP_CIPHER_CTX ctx;
+
+//     bool fOk = true;
+
+//     EVP_CIPHER_CTX_init(&ctx);
+//     if (fOk) fOk = EVP_EncryptInit_ex(&ctx, EVP_aes_256_cbc(), NULL, chKey, chIV) != 0;
+//     if (fOk) fOk = EVP_EncryptUpdate(&ctx, &vchCiphertext[0], &nCLen, &vchPlaintext[0], nLen) != 0;
+//     if (fOk) fOk = EVP_EncryptFinal_ex(&ctx, (&vchCiphertext[0]) + nCLen, &nFLen) != 0;
+//     EVP_CIPHER_CTX_cleanup(&ctx);
+
+//     if (!fOk) return false;
+
+//     vchCiphertext.resize(nCLen + nFLen);
+//     return true;
+// }
+
 bool CCrypter::Encrypt(const CKeyingMaterial& vchPlaintext, std::vector<unsigned char> &vchCiphertext)
 {
     if (!fKeySet)
         return false;
 
-    // max ciphertext len for a n bytes of plaintext is
-    // n + AES_BLOCK_SIZE - 1 bytes
     int nLen = vchPlaintext.size();
     int nCLen = nLen + AES_BLOCK_SIZE, nFLen = 0;
-    vchCiphertext = std::vector<unsigned char> (nCLen);
+    vchCiphertext.resize(nCLen);
 
-    EVP_CIPHER_CTX ctx;
+    // Correct: allocate new context
+    EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
+    if (!ctx)
+        return false;
 
     bool fOk = true;
 
-    EVP_CIPHER_CTX_init(&ctx);
-    if (fOk) fOk = EVP_EncryptInit_ex(&ctx, EVP_aes_256_cbc(), NULL, chKey, chIV) != 0;
-    if (fOk) fOk = EVP_EncryptUpdate(&ctx, &vchCiphertext[0], &nCLen, &vchPlaintext[0], nLen) != 0;
-    if (fOk) fOk = EVP_EncryptFinal_ex(&ctx, (&vchCiphertext[0]) + nCLen, &nFLen) != 0;
-    EVP_CIPHER_CTX_cleanup(&ctx);
+    if (fOk) fOk = EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, chKey, chIV) != 0;
+    if (fOk) fOk = EVP_EncryptUpdate(ctx, vchCiphertext.data(), &nCLen, vchPlaintext.data(), nLen) != 0;
+    if (fOk) fOk = EVP_EncryptFinal_ex(ctx, vchCiphertext.data() + nCLen, &nFLen) != 0;
 
-    if (!fOk) return false;
+    // Free the context
+    EVP_CIPHER_CTX_free(ctx);
+
+    if (!fOk)
+        return false;
 
     vchCiphertext.resize(nCLen + nFLen);
     return true;
 }
+
+
+
+// bool CCrypter::Decrypt(const std::vector<unsigned char>& vchCiphertext, CKeyingMaterial& vchPlaintext)
+// {
+//     if (!fKeySet)
+//         return false;
+
+//     // plaintext will always be equal to or lesser than length of ciphertext
+//     int nLen = vchCiphertext.size();
+//     int nPLen = nLen, nFLen = 0;
+
+//     vchPlaintext = CKeyingMaterial(nPLen);
+
+//     EVP_CIPHER_CTX ctx;
+
+//     bool fOk = true;
+
+//     EVP_CIPHER_CTX_init(&ctx);
+//     if (fOk) fOk = EVP_DecryptInit_ex(&ctx, EVP_aes_256_cbc(), NULL, chKey, chIV) != 0;
+//     if (fOk) fOk = EVP_DecryptUpdate(&ctx, &vchPlaintext[0], &nPLen, &vchCiphertext[0], nLen) != 0;
+//     if (fOk) fOk = EVP_DecryptFinal_ex(&ctx, (&vchPlaintext[0]) + nPLen, &nFLen) != 0;
+//     EVP_CIPHER_CTX_cleanup(&ctx);
+
+//     if (!fOk) return false;
+
+//     vchPlaintext.resize(nPLen + nFLen);
+//     return true;
+// }
 
 bool CCrypter::Decrypt(const std::vector<unsigned char>& vchCiphertext, CKeyingMaterial& vchPlaintext)
 {
     if (!fKeySet)
         return false;
 
-    // plaintext will always be equal to or lesser than length of ciphertext
     int nLen = vchCiphertext.size();
     int nPLen = nLen, nFLen = 0;
 
     vchPlaintext = CKeyingMaterial(nPLen);
 
-    EVP_CIPHER_CTX ctx;
+    EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
+    if (!ctx)
+        return false;
 
     bool fOk = true;
 
-    EVP_CIPHER_CTX_init(&ctx);
-    if (fOk) fOk = EVP_DecryptInit_ex(&ctx, EVP_aes_256_cbc(), NULL, chKey, chIV) != 0;
-    if (fOk) fOk = EVP_DecryptUpdate(&ctx, &vchPlaintext[0], &nPLen, &vchCiphertext[0], nLen) != 0;
-    if (fOk) fOk = EVP_DecryptFinal_ex(&ctx, (&vchPlaintext[0]) + nPLen, &nFLen) != 0;
-    EVP_CIPHER_CTX_cleanup(&ctx);
+    if (fOk) fOk = EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, chKey, chIV) != 0;
+    if (fOk) fOk = EVP_DecryptUpdate(ctx, vchPlaintext.data(), &nPLen, vchCiphertext.data(), nLen) != 0;
+    if (fOk) fOk = EVP_DecryptFinal_ex(ctx, vchPlaintext.data() + nPLen, &nFLen) != 0;
 
-    if (!fOk) return false;
+    EVP_CIPHER_CTX_free(ctx);
+
+    if (!fOk)
+        return false;
 
     vchPlaintext.resize(nPLen + nFLen);
     return true;
 }
+
 
 
 bool EncryptSecret(const CKeyingMaterial& vMasterKey, const CKeyingMaterial &vchPlaintext, const uint256& nIV, std::vector<unsigned char> &vchCiphertext)

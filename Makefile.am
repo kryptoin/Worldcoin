@@ -1,4 +1,6 @@
 ACLOCAL_AMFLAGS = -I build-aux/m4
+ACLOCAL_AMFLAGS = -I build-aux/m4
+
 SUBDIRS = src
 .PHONY: deploy FORCE
 

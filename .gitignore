@@ -1,3 +1,5 @@
+.mem
+build_env.sh
 src/*.exe
 src/litecoin
 src/litecoind

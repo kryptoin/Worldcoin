@@ -16,63 +16,65 @@ export SHELL
 
 # Be more Bourne compatible
 DUALCASE=1; export DUALCASE # for MKS sh
-if test -n "${ZSH_VERSION+set}" && (emulate sh) >/dev/null 2>&1; then :
+if test ${ZSH_VERSION+y} && (emulate sh) >/dev/null 2>&1
+then :
   emulate sh
   NULLCMD=:
   # Pre-4.2 versions of Zsh do word splitting on ${1+"$@"}, which
   # is contrary to our usage.  Disable this feature.
   alias -g '${1+"$@"}'='"$@"'
   setopt NO_GLOB_SUBST
-else
-  case `(set -o) 2>/dev/null` in #(
+else case e in #(
+  e) case `(set -o) 2>/dev/null` in #(
   *posix*) :
     set -o posix ;; #(
   *) :
      ;;
+esac ;;
 esac
 fi
 
 
+
+# Reset variables that may have inherited troublesome values from
+# the environment.
+
+# IFS needs to be set, to space, tab, and newline, in precisely that order.
+# (If _AS_PATH_WALK were called with IFS unset, it would have the
+# side effect of setting IFS to empty, thus disabling word splitting.)
+# Quoting is to prevent editors from complaining about space-tab.
 as_nl='
 '
 export as_nl
-# Printing a long string crashes Solaris 7 /usr/bin/printf.
-as_echo='\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'
-as_echo=$as_echo$as_echo$as_echo$as_echo$as_echo
-as_echo=$as_echo$as_echo$as_echo$as_echo$as_echo$as_echo
-# Prefer a ksh shell builtin over an external printf program on Solaris,
-# but without wasting forks for bash or zsh.
-if test -z "$BASH_VERSION$ZSH_VERSION" \
-    && (test "X`print -r -- $as_echo`" = "X$as_echo") 2>/dev/null; then
-  as_echo='print -r --'
-  as_echo_n='print -rn --'
-elif (test "X`printf %s $as_echo`" = "X$as_echo") 2>/dev/null; then
-  as_echo='printf %s\n'
-  as_echo_n='printf %s'
-else
-  if test "X`(/usr/ucb/echo -n -n $as_echo) 2>/dev/null`" = "X-n $as_echo"; then
-    as_echo_body='eval /usr/ucb/echo -n "$1$as_nl"'
-    as_echo_n='/usr/ucb/echo -n'
-  else
-    as_echo_body='eval expr "X$1" : "X\\(.*\\)"'
-    as_echo_n_body='eval
-      arg=$1;
-      case $arg in #(
-      *"$as_nl"*)
-	expr "X$arg" : "X\\(.*\\)$as_nl";
-	arg=`expr "X$arg" : ".*$as_nl\\(.*\\)"`;;
-      esac;
-      expr "X$arg" : "X\\(.*\\)" | tr -d "$as_nl"
-    '
-    export as_echo_n_body
-    as_echo_n='sh -c $as_echo_n_body as_echo'
-  fi
-  export as_echo_body
-  as_echo='sh -c $as_echo_body as_echo'
-fi
+IFS=" ""	$as_nl"
+
+PS1='$ '
+PS2='> '
+PS4='+ '
+
+# Ensure predictable behavior from utilities with locale-dependent output.
+LC_ALL=C
+export LC_ALL
+LANGUAGE=C
+export LANGUAGE
+
+# We cannot yet rely on "unset" to work, but we need these variables
+# to be unset--not just set to an empty or harmless value--now, to
+# avoid bugs in old shells (e.g. pre-3.0 UWIN ksh).  This construct
+# also avoids known problems related to "unset" and subshell syntax
+# in other old shells (e.g. bash 2.01 and pdksh 5.2.14).
+for as_var in BASH_ENV ENV MAIL MAILPATH CDPATH
+do eval test \${$as_var+y} \
+  && ( (unset $as_var) || exit 1) >/dev/null 2>&1 && unset $as_var || :
+done
+
+# Ensure that fds 0, 1, and 2 are open.
+if (exec 3>&0) 2>/dev/null; then :; else exec 0</dev/null; fi
+if (exec 3>&1) 2>/dev/null; then :; else exec 1>/dev/null; fi
+if (exec 3>&2)            ; then :; else exec 2>/dev/null; fi
 
 # The user is always right.
-if test "${PATH_SEPARATOR+set}" != set; then
+if ${PATH_SEPARATOR+false} :; then
   PATH_SEPARATOR=:
   (PATH='/bin;/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 && {
     (PATH='/bin:/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 ||
@@ -80,13 +82,6 @@ if test "${PATH_SEPARATOR+set}" != set; then
   }
 fi
 
-
-# IFS
-# We need space, tab and new line, in precisely that order.  Quoting is
-# there to prevent editors from complaining about space-tab.
-# (If _AS_PATH_WALK were called with IFS unset, it would disable word
-# splitting by setting IFS to empty value.)
-IFS=" ""	$as_nl"
 
 # Find who we are.  Look in the path if we contain no directory separator.
 as_myself=
@@ -96,43 +91,27 @@ case $0 in #((
 for as_dir in $PATH
 do
   IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    test -r "$as_dir/$0" && as_myself=$as_dir/$0 && break
+  case $as_dir in #(((
+    '') as_dir=./ ;;
+    */) ;;
+    *) as_dir=$as_dir/ ;;
+  esac
+    test -r "$as_dir$0" && as_myself=$as_dir$0 && break
   done
 IFS=$as_save_IFS
 
      ;;
 esac
-# We did not find ourselves, most probably we were run as `sh COMMAND'
+# We did not find ourselves, most probably we were run as 'sh COMMAND'
 # in which case we are not to be found in the path.
 if test "x$as_myself" = x; then
   as_myself=$0
 fi
 if test ! -f "$as_myself"; then
-  $as_echo "$as_myself: error: cannot find myself; rerun with an absolute file name" >&2
+  printf "%s\n" "$as_myself: error: cannot find myself; rerun with an absolute file name" >&2
   exit 1
 fi
 
-# Unset variables that we do not need and which cause bugs (e.g. in
-# pre-3.0 UWIN ksh).  But do not cause bugs in bash 2.01; the "|| exit 1"
-# suppresses any "Segmentation fault" message there.  '((' could
-# trigger a bug in pdksh 5.2.14.
-for as_var in BASH_ENV ENV MAIL MAILPATH
-do eval test x\${$as_var+set} = xset \
-  && ( (unset $as_var) || exit 1) >/dev/null 2>&1 && unset $as_var || :
-done
-PS1='$ '
-PS2='> '
-PS4='+ '
-
-# NLS nuisances.
-LC_ALL=C
-export LC_ALL
-LANGUAGE=C
-export LANGUAGE
-
-# CDPATH.
-(unset CDPATH) >/dev/null 2>&1 && unset CDPATH
 
 
 # as_fn_error STATUS ERROR [LINENO LOG_FD]
@@ -145,9 +124,9 @@ as_fn_error ()
   as_status=$1; test $as_status -eq 0 && as_status=1
   if test "$4"; then
     as_lineno=${as_lineno-"$3"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-    $as_echo "$as_me:${as_lineno-$LINENO}: error: $2" >&$4
+    printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: $2" >&$4
   fi
-  $as_echo "$as_me: error: $2" >&2
+  printf "%s\n" "$as_me: error: $2" >&2
   as_fn_exit $as_status
 } # as_fn_error
 
@@ -178,22 +157,25 @@ as_fn_unset ()
   { eval $1=; unset $1;}
 }
 as_unset=as_fn_unset
+
 # as_fn_append VAR VALUE
 # ----------------------
 # Append the text in VALUE to the end of the definition contained in VAR. Take
 # advantage of any shell optimizations that allow amortized linear growth over
 # repeated appends, instead of the typical quadratic growth present in naive
 # implementations.
-if (eval "as_var=1; as_var+=2; test x\$as_var = x12") 2>/dev/null; then :
+if (eval "as_var=1; as_var+=2; test x\$as_var = x12") 2>/dev/null
+then :
   eval 'as_fn_append ()
   {
     eval $1+=\$2
   }'
-else
-  as_fn_append ()
+else case e in #(
+  e) as_fn_append ()
   {
     eval $1=\$$1\$2
-  }
+  } ;;
+esac
 fi # as_fn_append
 
 # as_fn_arith ARG...
@@ -201,16 +183,18 @@ fi # as_fn_append
 # Perform arithmetic evaluation on the ARGs, and store the result in the
 # global $as_val. Take advantage of shells that can avoid forks. The arguments
 # must be portable across $(()) and expr.
-if (eval "test \$(( 1 + 1 )) = 2") 2>/dev/null; then :
+if (eval "test \$(( 1 + 1 )) = 2") 2>/dev/null
+then :
   eval 'as_fn_arith ()
   {
     as_val=$(( $* ))
   }'
-else
-  as_fn_arith ()
+else case e in #(
+  e) as_fn_arith ()
   {
     as_val=`expr "$@" || test $? -eq 1`
-  }
+  } ;;
+esac
 fi # as_fn_arith
 
 
@@ -237,7 +221,7 @@ as_me=`$as_basename -- "$0" ||
 $as_expr X/"$0" : '.*/\([^/][^/]*\)/*$' \| \
 	 X"$0" : 'X\(//\)$' \| \
 	 X"$0" : 'X\(/\)' \| . 2>/dev/null ||
-$as_echo X/"$0" |
+printf "%s\n" X/"$0" |
     sed '/^.*\/\([^/][^/]*\)\/*$/{
 	    s//\1/
 	    q
@@ -259,6 +243,10 @@ as_cr_Letters=$as_cr_letters$as_cr_LETTERS
 as_cr_digits='0123456789'
 as_cr_alnum=$as_cr_Letters$as_cr_digits
 
+
+# Determine whether it's possible to make 'echo' print without a newline.
+# These variables are no longer used directly by Autoconf, but are AC_SUBSTed
+# for compatibility with existing Makefiles.
 ECHO_C= ECHO_N= ECHO_T=
 case `echo -n x` in #(((((
 -n*)
@@ -272,6 +260,12 @@ case `echo -n x` in #(((((
   ECHO_N='-n';;
 esac
 
+# For backward compatibility with old third-party macros, we provide
+# the shell variables $as_echo and $as_echo_n.  New code should use
+# AS_ECHO(["message"]) and AS_ECHO_N(["message"]), respectively.
+as_echo='printf %s\n'
+as_echo_n='printf %s'
+
 rm -f conf$$ conf$$.exe conf$$.file
 if test -d conf$$.dir; then
   rm -f conf$$.dir/conf$$.file
@@ -283,9 +277,9 @@ if (echo >conf$$.file) 2>/dev/null; then
   if ln -s conf$$.file conf$$ 2>/dev/null; then
     as_ln_s='ln -s'
     # ... but there are two gotchas:
-    # 1) On MSYS, both `ln -s file dir' and `ln file dir' fail.
-    # 2) DJGPP < 2.04 has no symlinks; `ln -s' creates a wrapper executable.
-    # In both cases, we have to default to `cp -pR'.
+    # 1) On MSYS, both 'ln -s file dir' and 'ln file dir' fail.
+    # 2) DJGPP < 2.04 has no symlinks; 'ln -s' creates a wrapper executable.
+    # In both cases, we have to default to 'cp -pR'.
     ln -s conf$$.file conf$$.dir 2>/dev/null && test ! -f conf$$.exe ||
       as_ln_s='cp -pR'
   elif ln conf$$.file conf$$ 2>/dev/null; then
@@ -313,7 +307,7 @@ as_fn_mkdir_p ()
     as_dirs=
     while :; do
       case $as_dir in #(
-      *\'*) as_qdir=`$as_echo "$as_dir" | sed "s/'/'\\\\\\\\''/g"`;; #'(
+      *\'*) as_qdir=`printf "%s\n" "$as_dir" | sed "s/'/'\\\\\\\\''/g"`;; #'(
       *) as_qdir=$as_dir;;
       esac
       as_dirs="'$as_qdir' $as_dirs"
@@ -322,7 +316,7 @@ $as_expr X"$as_dir" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
 	 X"$as_dir" : 'X\(//\)[^/]' \| \
 	 X"$as_dir" : 'X\(//\)$' \| \
 	 X"$as_dir" : 'X\(/\)' \| . 2>/dev/null ||
-$as_echo X"$as_dir" |
+printf "%s\n" X"$as_dir" |
     sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
 	    s//\1/
 	    q
@@ -366,10 +360,12 @@ as_test_x='test -x'
 as_executable_p=as_fn_executable_p
 
 # Sed expression to map a string onto a valid CPP name.
-as_tr_cpp="eval sed 'y%*$as_cr_letters%P$as_cr_LETTERS%;s%[^_$as_cr_alnum]%_%g'"
+as_sed_cpp="y%*$as_cr_letters%P$as_cr_LETTERS%;s%[^_$as_cr_alnum]%_%g"
+as_tr_cpp="eval sed '$as_sed_cpp'" # deprecated
 
 # Sed expression to map a string onto a valid variable name.
-as_tr_sh="eval sed 'y%*+%pp%;s%[^_$as_cr_alnum]%_%g'"
+as_sed_sh="y%*+%pp%;s%[^_$as_cr_alnum]%_%g"
+as_tr_sh="eval sed '$as_sed_sh'" # deprecated
 
 
 exec 6>&1
@@ -381,7 +377,7 @@ exec 6>&1
 # values after options handling.
 ac_log="
 This file was extended by Worldcoin Core $as_me 0.10.4.0, which was
-generated by GNU Autoconf 2.69.  Invocation command line was
+generated by GNU Autoconf 2.72.  Invocation command line was
 
   CONFIG_FILES    = $CONFIG_FILES
   CONFIG_HEADERS  = $CONFIG_HEADERS
@@ -398,7 +394,7 @@ config_headers=" src/config/bitcoin-config.h"
 config_commands=" depfiles libtool"
 
 ac_cs_usage="\
-\`$as_me' instantiates files and other configuration actions
+'$as_me' instantiates files and other configuration actions
 from templates according to the current configuration.  Unless the files
 and actions are specified as TAGs, all are instantiated by default.
 
@@ -427,20 +423,20 @@ $config_commands
 
 Report bugs to <info@worldcoin.org>."
 
-ac_cs_config="'--disable-upnp-default' '--disable-tests' '--with-qt-incdir=/d/deps521/qtbase-opensource-src-5.2.1/include' '--with-qt-libdir=/d/deps521/qtbase-opensource-src-5.2.1/lib' '--with-qt-bindir=/d/deps521/qtbase-opensource-src-5.2.1/bin' '--with-qt-plugindir=/d/deps521/qtbase-opensource-src-5.2.1/plugins' '--with-boost-system=mgw73-mt-s-1_55' '--with-boost-filesystem=mgw73-mt-s-1_55' '--with-boost-program-options=mgw73-mt-s-1_55' '--with-boost-thread=mgw73-mt-s-1_55' '--with-boost-chrono=mgw73-mt-s-1_55' '--with-protoc-bindir=/d/deps521/protobuf-2.6.1/src' 'LDFLAGS=-L/d/deps521/boost_1_55_0/stage/lib -L/d/deps521/db-4.8.30.NC/build_unix -L/d/deps521/openssl-1.0.1g -L/d/deps521/miniupnpc -L/d/deps521/protobuf-2.6.1/src/.libs -L/d/deps521/libpng-1.6.10/.libs -L/d/deps521/libevent-2.1.8/.libs -L/d/deps521/qrencode-3.4.3/.libs' 'CPPFLAGS=-I/d/deps521/boost_1_55_0 -I/d/deps521/db-4.8.30.NC/build_unix -I/d/deps521/openssl-1.0.1g/include -I/d/deps521 -I/d/deps521/protobuf-2.6.1/src -I/d/deps521/libpng-1.6.10 -I/d/deps521/libevent-2.1.8/include -I/d/deps521/qrencode-3.4.3' 'PKG_CONFIG_PATH=/mingw32/lib/pkgconfig:/mingw32/share/pkgconfig' --disable-shared --with-pic"
+ac_cs_config='--without-gui --with-wallet --enable-hardening --without-zmq --enable-cxx --with-unsupported-ssl --disable-tests --without-miniupnpc --with-boost=/opt/homebrew/Cellar/boost/1.88.0 --with-boost-libdir=/opt/homebrew/Cellar/boost/1.88.0/lib --disable-shared --with-pic'
 ac_cs_version="\
 Worldcoin Core config.status 0.10.4.0
-configured by ./configure, generated by GNU Autoconf 2.69,
+configured by ./configure, generated by GNU Autoconf 2.72,
   with options \"$ac_cs_config\"
 
-Copyright (C) 2012 Free Software Foundation, Inc.
+Copyright (C) 2023 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1'
+ac_pwd='/opt/crypto/sources/worldcoin'
 srcdir='.'
-INSTALL='/usr/bin/install -c'
-MKDIR_P='/usr/bin/mkdir -p'
+INSTALL='/opt/homebrew/bin/ginstall -c'
+MKDIR_P='/opt/homebrew/bin/gmkdir -p'
 AWK='gawk'
 test -n "$AWK" || AWK=awk
 # The default lists apply if the user does not specify any file.
@@ -470,15 +466,15 @@ do
   -recheck | --recheck | --rechec | --reche | --rech | --rec | --re | --r)
     ac_cs_recheck=: ;;
   --version | --versio | --versi | --vers | --ver | --ve | --v | -V )
-    $as_echo "$ac_cs_version"; exit ;;
+    printf "%s\n" "$ac_cs_version"; exit ;;
   --config | --confi | --conf | --con | --co | --c )
-    $as_echo "$ac_cs_config"; exit ;;
+    printf "%s\n" "$ac_cs_config"; exit ;;
   --debug | --debu | --deb | --de | --d | -d )
     debug=: ;;
   --file | --fil | --fi | --f )
     $ac_shift
     case $ac_optarg in
-    *\'*) ac_optarg=`$as_echo "$ac_optarg" | sed "s/'/'\\\\\\\\''/g"` ;;
+    *\'*) ac_optarg=`printf "%s\n" "$ac_optarg" | sed "s/'/'\\\\\\\\''/g"` ;;
     '') as_fn_error $? "missing file argument" ;;
     esac
     as_fn_append CONFIG_FILES " '$ac_optarg'"
@@ -486,23 +482,23 @@ do
   --header | --heade | --head | --hea )
     $ac_shift
     case $ac_optarg in
-    *\'*) ac_optarg=`$as_echo "$ac_optarg" | sed "s/'/'\\\\\\\\''/g"` ;;
+    *\'*) ac_optarg=`printf "%s\n" "$ac_optarg" | sed "s/'/'\\\\\\\\''/g"` ;;
     esac
     as_fn_append CONFIG_HEADERS " '$ac_optarg'"
     ac_need_defaults=false;;
   --he | --h)
     # Conflict between --help and --header
-    as_fn_error $? "ambiguous option: \`$1'
-Try \`$0 --help' for more information.";;
+    as_fn_error $? "ambiguous option: '$1'
+Try '$0 --help' for more information.";;
   --help | --hel | -h )
-    $as_echo "$ac_cs_usage"; exit ;;
+    printf "%s\n" "$ac_cs_usage"; exit ;;
   -q | -quiet | --quiet | --quie | --qui | --qu | --q \
   | -silent | --silent | --silen | --sile | --sil | --si | --s)
     ac_cs_silent=: ;;
 
   # This is an error.
-  -*) as_fn_error $? "unrecognized option: \`$1'
-Try \`$0 --help' for more information." ;;
+  -*) as_fn_error $? "unrecognized option: '$1'
+Try '$0 --help' for more information." ;;
 
   *) as_fn_append ac_config_targets " $1"
      ac_need_defaults=false ;;
@@ -519,9 +515,9 @@ if $ac_cs_silent; then
 fi
 
 if $ac_cs_recheck; then
-  set X /bin/sh './configure'  '--disable-upnp-default' '--disable-tests' '--with-qt-incdir=/d/deps521/qtbase-opensource-src-5.2.1/include' '--with-qt-libdir=/d/deps521/qtbase-opensource-src-5.2.1/lib' '--with-qt-bindir=/d/deps521/qtbase-opensource-src-5.2.1/bin' '--with-qt-plugindir=/d/deps521/qtbase-opensource-src-5.2.1/plugins' '--with-boost-system=mgw73-mt-s-1_55' '--with-boost-filesystem=mgw73-mt-s-1_55' '--with-boost-program-options=mgw73-mt-s-1_55' '--with-boost-thread=mgw73-mt-s-1_55' '--with-boost-chrono=mgw73-mt-s-1_55' '--with-protoc-bindir=/d/deps521/protobuf-2.6.1/src' 'LDFLAGS=-L/d/deps521/boost_1_55_0/stage/lib -L/d/deps521/db-4.8.30.NC/build_unix -L/d/deps521/openssl-1.0.1g -L/d/deps521/miniupnpc -L/d/deps521/protobuf-2.6.1/src/.libs -L/d/deps521/libpng-1.6.10/.libs -L/d/deps521/libevent-2.1.8/.libs -L/d/deps521/qrencode-3.4.3/.libs' 'CPPFLAGS=-I/d/deps521/boost_1_55_0 -I/d/deps521/db-4.8.30.NC/build_unix -I/d/deps521/openssl-1.0.1g/include -I/d/deps521 -I/d/deps521/protobuf-2.6.1/src -I/d/deps521/libpng-1.6.10 -I/d/deps521/libevent-2.1.8/include -I/d/deps521/qrencode-3.4.3' 'PKG_CONFIG_PATH=/mingw32/lib/pkgconfig:/mingw32/share/pkgconfig' --disable-shared --with-pic $ac_configure_extra_args --no-create --no-recursion
+  set X /bin/sh './configure'  '--without-gui' '--with-wallet' '--enable-hardening' '--without-zmq' '--enable-cxx' '--with-unsupported-ssl' '--disable-tests' '--without-miniupnpc' '--with-boost=/opt/homebrew/Cellar/boost/1.88.0' '--with-boost-libdir=/opt/homebrew/Cellar/boost/1.88.0/lib' --disable-shared --with-pic $ac_configure_extra_args --no-create --no-recursion
   shift
-  $as_echo "running CONFIG_SHELL=/bin/sh $*" >&6
+  \printf "%s\n" "running CONFIG_SHELL=/bin/sh $*" >&6
   CONFIG_SHELL='/bin/sh'
   export CONFIG_SHELL
   exec "$@"
@@ -533,13 +529,13 @@ exec 5>>config.log
   sed 'h;s/./-/g;s/^.../## /;s/...$/ ##/;p;x;p;x' <<_ASBOX
 ## Running $as_me. ##
 _ASBOX
-  $as_echo "$ac_log"
+  printf "%s\n" "$ac_log"
 } >&5
 
 #
 # INIT-COMMANDS
 #
-AMDEP_TRUE="" ac_aux_dir="build-aux"
+AMDEP_TRUE="" MAKE="make"
 
 
 # The HP-UX ksh and POSIX shell print the target directory to stdout
@@ -549,8 +545,8 @@ AMDEP_TRUE="" ac_aux_dir="build-aux"
 sed_quote_subst='s/\(["`$\\]\)/\\\1/g'
 double_quote_subst='s/\(["`\\]\)/\\\1/g'
 delay_variable_subst='s/\\\\\\\\\\\$/\\\\\\$/g'
-macro_version='2.4.6'
-macro_revision='2.4.6'
+macro_version='2.5.4'
+macro_revision='2.5.4'
 pic_mode='yes'
 enable_shared='yes'
 enable_static='yes'
@@ -560,209 +556,189 @@ SHELL='/bin/sh'
 ECHO='printf %s\n'
 PATH_SEPARATOR=':'
 host_alias=''
-host='i686-w64-mingw32'
-host_os='mingw32'
-build_alias='i686-w64-mingw32'
-build='i686-w64-mingw32'
-build_os='mingw32'
-SED='/usr/bin/sed'
-Xsed='/usr/bin/sed -e 1s/^X//'
+host='aarch64-apple-darwin24.5.0'
+host_os='darwin24.5.0'
+build_alias=''
+build='aarch64-apple-darwin24.5.0'
+build_os='darwin24.5.0'
+SED='/opt/homebrew/bin/gsed'
+Xsed='/opt/homebrew/bin/gsed -e 1s/^X//'
 GREP='/usr/bin/grep'
 EGREP='/usr/bin/grep -E'
 FGREP='/usr/bin/grep -F'
-LD='C:/msys64/mingw32/i686-w64-mingw32/bin/ld.exe'
-NM='/mingw32/bin/nm -B'
-LN_S='cp -pR'
-max_cmd_len='8192'
+LD='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld'
+NM='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/nm -B'
+LN_S='ln -s'
+max_cmd_len='786432'
 ac_objext='o'
 exeext=''
 lt_unset='unset'
 lt_SP2NL='tr \040 \012'
 lt_NL2SP='tr \015\012 \040\040'
-lt_cv_to_host_file_cmd='func_convert_file_msys_to_w32'
-lt_cv_to_tool_file_cmd='func_convert_file_msys_to_w32'
+lt_cv_to_host_file_cmd='func_convert_file_noop'
+lt_cv_to_tool_file_cmd='func_convert_file_noop'
 reload_flag=' -r'
-reload_cmds='$LD$reload_flag -o $output$reload_objs'
+reload_cmds='$LTCC $LTCFLAGS -nostdlib $wl-r -o $output$reload_objs'
+FILECMD='file'
 OBJDUMP='objdump'
 deplibs_check_method='pass_all'
-file_magic_cmd=''
+file_magic_cmd='$MAGIC_CMD'
 file_magic_glob=''
-want_nocaseglob='yes'
-DLLTOOL='dlltool'
-sharedlib_from_linklib_cmd='func_cygming_dll_for_implib'
-AR='/mingw32/bin/ar'
-AR_FLAGS='cru'
-archiver_list_spec='@'
-STRIP='/mingw32/bin/strip'
-RANLIB='/mingw32/bin/ranlib'
+want_nocaseglob='no'
+DLLTOOL='false'
+sharedlib_from_linklib_cmd='printf %s\n'
+AR='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar'
+lt_ar_flags='cr'
+AR_FLAGS='cr'
+archiver_list_spec=''
+STRIP='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip'
+RANLIB='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib'
 old_postinstall_cmds='chmod 644 $oldlib~$RANLIB $tool_oldlib'
 old_postuninstall_cmds=''
 old_archive_cmds='$AR $AR_FLAGS $oldlib$oldobjs~$RANLIB $tool_oldlib'
-lock_old_archive_extraction='no'
-CC='gcc'
+lock_old_archive_extraction='yes'
+CC='/opt/homebrew/bin/ccache gcc'
 CFLAGS='-g -O2'
 compiler='g++'
 GCC='yes'
-lt_cv_sys_global_symbol_pipe='sed -n -e '\''s/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*_\([_A-Za-z][_A-Za-z0-9]*\)\{0,1\}$/\1 _\2 \2/p'\'' | sed '\''/ __gnu_lto/d'\'''
-lt_cv_sys_global_symbol_to_cdecl='sed -n -e '\''s/^T .* \(.*\)$/extern int \1();/p'\'' -e '\''s/^[ABCDGIRSTW][ABCDGIRSTW]* .* \(.*\)$/extern char \1;/p'\'''
+lt_cv_sys_global_symbol_pipe='/opt/homebrew/bin/gsed -n -e '\''s/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*_\([_A-Za-z][_A-Za-z0-9]*\)$/\1 _\2 \2/p'\'' | /opt/homebrew/bin/gsed '\''/ __gnu_lto/d'\'''
+lt_cv_sys_global_symbol_to_cdecl='/opt/homebrew/bin/gsed -n -e '\''s/^T .* \(.*\)$/extern int \1();/p'\'' -e '\''s/^[ABCDGIRSTW][ABCDGIRSTW]* .* \(.*\)$/extern char \1;/p'\'''
 lt_cv_sys_global_symbol_to_import=''
-lt_cv_sys_global_symbol_to_c_name_address='sed -n -e '\''s/^: \(.*\) .*$/  {"\1", (void *) 0},/p'\'' -e '\''s/^[ABCDGIRSTW][ABCDGIRSTW]* .* \(.*\)$/  {"\1", (void *) \&\1},/p'\'''
-lt_cv_sys_global_symbol_to_c_name_address_lib_prefix='sed -n -e '\''s/^: \(.*\) .*$/  {"\1", (void *) 0},/p'\'' -e '\''s/^[ABCDGIRSTW][ABCDGIRSTW]* .* \(lib.*\)$/  {"\1", (void *) \&\1},/p'\'' -e '\''s/^[ABCDGIRSTW][ABCDGIRSTW]* .* \(.*\)$/  {"lib\1", (void *) \&\1},/p'\'''
+lt_cv_sys_global_symbol_to_c_name_address='/opt/homebrew/bin/gsed -n -e '\''s/^: \(.*\) .*$/  {"\1", (void *) 0},/p'\'' -e '\''s/^[ABCDGIRSTW][ABCDGIRSTW]* .* \(.*\)$/  {"\1", (void *) \&\1},/p'\'''
+lt_cv_sys_global_symbol_to_c_name_address_lib_prefix='/opt/homebrew/bin/gsed -n -e '\''s/^: \(.*\) .*$/  {"\1", (void *) 0},/p'\'' -e '\''s/^[ABCDGIRSTW][ABCDGIRSTW]* .* \(lib.*\)$/  {"\1", (void *) \&\1},/p'\'' -e '\''s/^[ABCDGIRSTW][ABCDGIRSTW]* .* \(.*\)$/  {"lib\1", (void *) \&\1},/p'\'''
 lt_cv_nm_interface='BSD nm'
 nm_file_list_spec='@'
 lt_sysroot=''
-lt_cv_truncate_bin='/usr/bin/dd bs=4096 count=1'
+lt_cv_truncate_bin='/bin/dd bs=4096 count=1'
 objdir='.libs'
 MAGIC_CMD='file'
-lt_prog_compiler_no_builtin_flag=' -fno-builtin'
-lt_prog_compiler_pic=' -DDLL_EXPORT -DPIC'
+lt_prog_compiler_no_builtin_flag=' -fno-builtin -fno-rtti -fno-exceptions'
+lt_prog_compiler_pic=' -fno-common -DPIC'
 lt_prog_compiler_wl='-Wl,'
-lt_prog_compiler_static='-static'
+lt_prog_compiler_static=''
 lt_cv_prog_compiler_c_o='yes'
 need_locks='no'
 MANIFEST_TOOL=':'
-DSYMUTIL=''
-NMEDIT=''
-LIPO=''
-OTOOL=''
-OTOOL64=''
+DSYMUTIL='dsymutil'
+NMEDIT='nmedit'
+LIPO='lipo'
+OTOOL='otool'
+OTOOL64=':'
 libext='a'
-shrext_cmds='.dll'
+shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
 extract_expsyms_cmds=''
-archive_cmds_need_lc='yes'
-enable_shared_with_static_runtimes='yes'
-export_dynamic_flag_spec='$wl--export-all-symbols'
-whole_archive_flag_spec='$wl--whole-archive$convenience $wl--no-whole-archive'
+archive_cmds_need_lc='no'
+enable_shared_with_static_runtimes='no'
+export_dynamic_flag_spec=''
+whole_archive_flag_spec='`for conv in $convenience\"\"; do test  -n \"$conv\" && new_convenience=\"$new_convenience $wl-force_load,$conv\"; done; func_echo_all \"$new_convenience\"`'
 compiler_needs_object='no'
 old_archive_from_new_cmds=''
 old_archive_from_expsyms_cmds=''
-archive_cmds='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-archive_expsym_cmds='if   test DEF = "`$SED -n     -e '\''s/^[	 ]*//'\''     -e '\''/^\(;.*\)*$/d'\''     -e '\''s/^\(EXPORTS\|LIBRARY\)\([	 ].*\)*$/DEF/p'\''     -e q     $export_symbols`" ; then
-          cp $export_symbols $output_objdir/$soname.def;
-        else
-          echo EXPORTS > $output_objdir/$soname.def;
-          cat $export_symbols >> $output_objdir/$soname.def;
-        fi~
-        $CC -shared $output_objdir/$soname.def $libobjs $deplibs $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-module_cmds=''
-module_expsym_cmds=''
-with_gnu_ld='yes'
-allow_undefined_flag='unsupported'
+archive_cmds='$CC -dynamiclib $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring '
+archive_expsym_cmds='/opt/homebrew/bin/gsed '\''s|^|_|'\'' < $export_symbols > $output_objdir/$libname-symbols.expsym~$CC -dynamiclib $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring  $wl-exported_symbols_list,$output_objdir/$libname-symbols.expsym'
+module_cmds='$CC $allow_undefined_flag -o $lib -bundle $libobjs $deplibs $compiler_flags'
+module_expsym_cmds='/opt/homebrew/bin/gsed -e '\''s|^|_|'\'' < $export_symbols > $output_objdir/$libname-symbols.expsym~$CC $allow_undefined_flag -o $lib -bundle $libobjs $deplibs $compiler_flags $wl-exported_symbols_list,$output_objdir/$libname-symbols.expsym'
+with_gnu_ld='no'
+allow_undefined_flag='$wl-undefined ${wl}dynamic_lookup $wl-no_fixup_chains'
 no_undefined_flag=''
-hardcode_libdir_flag_spec='-L$libdir'
+hardcode_libdir_flag_spec=''
 hardcode_libdir_separator=''
 hardcode_direct='no'
 hardcode_direct_absolute='no'
 hardcode_minus_L='no'
 hardcode_shlibpath_var='unsupported'
-hardcode_automatic='no'
+hardcode_automatic='yes'
 inherit_rpath='no'
-link_all_deplibs='unknown'
+link_all_deplibs='yes'
 always_export_symbols='no'
-export_symbols_cmds='$NM $libobjs $convenience | $global_symbol_pipe | $SED -e '\''/^[BCDGRS][ ]/s/.*[ ]\([^ ]*\)/\1 DATA/;s/^.*[ ]__nm__\([^ ]*\)[ ][^ ]*/\1 DATA/;/^I[ ]/d;/^[AITW][ ]/s/.* //'\'' | sort | uniq > $export_symbols'
-exclude_expsyms='[_]+GLOBAL_OFFSET_TABLE_|[_]+GLOBAL__[FID]_.*|[_]+head_[A-Za-z0-9_]+_dll|[A-Za-z0-9_]+_dll_iname'
+export_symbols_cmds='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
+exclude_expsyms='_GLOBAL_OFFSET_TABLE_|_GLOBAL__F[ID]_.*'
 include_expsyms=''
 prelink_cmds=''
 postlink_cmds=''
 file_list_spec=''
-variables_saved_for_relink='PATH PATH LD_RUN_PATH GCC_EXEC_PREFIX COMPILER_PATH LIBRARY_PATH'
+variables_saved_for_relink='PATH DYLD_LIBRARY_PATH  GCC_EXEC_PREFIX COMPILER_PATH LIBRARY_PATH'
 need_lib_prefix='no'
 need_version='no'
-version_type='windows'
-runpath_var='LD_RUN_PATH'
-shlibpath_var='PATH'
+version_type='darwin'
+runpath_var=''
+shlibpath_var='DYLD_LIBRARY_PATH'
 shlibpath_overrides_runpath='yes'
 libname_spec='lib$name'
-library_names_spec='$libname.dll.a'
-soname_spec='$libname`echo $release | $SED -e s/[.]/-/g`$versuffix$shared_ext'
+library_names_spec='$libname$release$major$shared_ext $libname$shared_ext'
+soname_spec='$libname$release$major$shared_ext'
 install_override_mode=''
-postinstall_cmds='base_file=`basename \$file`~
-      dlpath=`$SHELL 2>&1 -c '\''. $dir/'\''\$base_file'\''i; echo \$dlname'\''`~
-      dldir=$destdir/`dirname \$dlpath`~
-      test -d \$dldir || mkdir -p \$dldir~
-      $install_prog $dir/$dlname \$dldir/$dlname~
-      chmod a+x \$dldir/$dlname~
-      if test -n '\''$stripme'\'' && test -n '\''$striplib'\''; then
-        eval '\''$striplib \$dldir/$dlname'\'' || exit \$?;
-      fi'
-postuninstall_cmds='dldll=`$SHELL 2>&1 -c '\''. $file; echo \$dlname'\''`~
-      dlpath=$dir/\$dldll~
-       $RM \$dlpath'
+postinstall_cmds=''
+postuninstall_cmds=''
 finish_cmds=''
 finish_eval=''
 hardcode_into_libs='no'
-sys_lib_search_path_spec='C:/msys64/mingw32/lib/gcc/i686-w64-mingw32/7.3.0 C:/msys64/mingw32/lib/gcc C:/msys64/mingw32/i686-w64-mingw32/lib C:/msys64/mingw32/lib '
-configure_time_dlsearch_path='/lib /usr/lib'
+sys_lib_search_path_spec='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17  /usr/local/lib'
+configure_time_dlsearch_path='/usr/local/lib /lib /usr/lib'
 configure_time_lt_sys_library_path=''
 hardcode_action='immediate'
 enable_dlopen='unknown'
 enable_dlopen_self='unknown'
 enable_dlopen_self_static='unknown'
-old_striplib='strip --strip-debug'
-striplib='strip --strip-unneeded'
+old_striplib='strip -S'
+striplib='strip -x'
 compiler_lib_search_dirs=''
 predep_objects=''
 postdep_objects=''
 predeps=''
 postdeps=''
 compiler_lib_search_path=''
-LD_CXX='C:/msys64/mingw32/i686-w64-mingw32/bin/ld.exe'
+LD_CXX='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld'
 reload_flag_CXX=' -r'
-reload_cmds_CXX='$LD$reload_flag -o $output$reload_objs'
+reload_cmds_CXX='$LTCC $LTCFLAGS -nostdlib $wl-r -o $output$reload_objs'
 old_archive_cmds_CXX='$AR $AR_FLAGS $oldlib$oldobjs~$RANLIB $tool_oldlib'
 compiler_CXX='g++'
 GCC_CXX='yes'
 lt_prog_compiler_no_builtin_flag_CXX=' -fno-builtin'
-lt_prog_compiler_pic_CXX=' -DDLL_EXPORT -DPIC'
+lt_prog_compiler_pic_CXX=' -fno-common -DPIC'
 lt_prog_compiler_wl_CXX='-Wl,'
-lt_prog_compiler_static_CXX='-static'
+lt_prog_compiler_static_CXX=''
 lt_cv_prog_compiler_c_o_CXX='yes'
 archive_cmds_need_lc_CXX='no'
-enable_shared_with_static_runtimes_CXX='yes'
-export_dynamic_flag_spec_CXX='$wl--export-all-symbols'
-whole_archive_flag_spec_CXX='$wl--whole-archive$convenience $wl--no-whole-archive'
+enable_shared_with_static_runtimes_CXX='no'
+export_dynamic_flag_spec_CXX=''
+whole_archive_flag_spec_CXX='`for conv in $convenience\"\"; do test  -n \"$conv\" && new_convenience=\"$new_convenience $wl-force_load,$conv\"; done; func_echo_all \"$new_convenience\"`'
 compiler_needs_object_CXX='no'
 old_archive_from_new_cmds_CXX=''
 old_archive_from_expsyms_cmds_CXX=''
-archive_cmds_CXX='$CC -shared $libobjs $deplibs $compiler_flags -static -o $output_objdir/$soname ${wl}--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-archive_expsym_cmds_CXX='if   test DEF = "`$SED -n     -e '\''s/^[	 ]*//'\''     -e '\''/^\(;.*\)*$/d'\''     -e '\''s/^\(EXPORTS\|LIBRARY\)\([	 ].*\)*$/DEF/p'\''     -e q     $export_symbols`" ; then
-              cp $export_symbols $output_objdir/$soname.def;
-            else
-              echo EXPORTS > $output_objdir/$soname.def;
-              cat $export_symbols >> $output_objdir/$soname.def;
-            fi~
-            $CC -shared -nostdlib $output_objdir/$soname.def $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags -o $output_objdir/$soname $wl--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-module_cmds_CXX=''
-module_expsym_cmds_CXX=''
-with_gnu_ld_CXX='yes'
-allow_undefined_flag_CXX='unsupported'
+archive_cmds_CXX='$CC -dynamiclib $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring '
+archive_expsym_cmds_CXX='/opt/homebrew/bin/gsed '\''s|^|_|'\'' < $export_symbols > $output_objdir/$libname-symbols.expsym~$CC -dynamiclib $allow_undefined_flag -o $lib $libobjs $deplibs $compiler_flags -install_name $rpath/$soname $verstring  $wl-exported_symbols_list,$output_objdir/$libname-symbols.expsym'
+module_cmds_CXX='$CC $allow_undefined_flag -o $lib -bundle $libobjs $deplibs $compiler_flags'
+module_expsym_cmds_CXX='/opt/homebrew/bin/gsed -e '\''s|^|_|'\'' < $export_symbols > $output_objdir/$libname-symbols.expsym~$CC $allow_undefined_flag -o $lib -bundle $libobjs $deplibs $compiler_flags $wl-exported_symbols_list,$output_objdir/$libname-symbols.expsym'
+with_gnu_ld_CXX='no'
+allow_undefined_flag_CXX='$wl-undefined ${wl}dynamic_lookup $wl-no_fixup_chains'
 no_undefined_flag_CXX=''
-hardcode_libdir_flag_spec_CXX='-L$libdir'
+hardcode_libdir_flag_spec_CXX=''
 hardcode_libdir_separator_CXX=''
 hardcode_direct_CXX='no'
 hardcode_direct_absolute_CXX='no'
 hardcode_minus_L_CXX='no'
 hardcode_shlibpath_var_CXX='unsupported'
-hardcode_automatic_CXX='no'
+hardcode_automatic_CXX='yes'
 inherit_rpath_CXX='no'
-link_all_deplibs_CXX='unknown'
+link_all_deplibs_CXX='yes'
 always_export_symbols_CXX='no'
-export_symbols_cmds_CXX='$NM $libobjs $convenience | $global_symbol_pipe | $SED -e '\''/^[BCDGRS][ ]/s/.*[ ]\([^ ]*\)/\1 DATA/;s/^.*[ ]__nm__\([^ ]*\)[ ][^ ]*/\1 DATA/;/^I[ ]/d;/^[AITW][ ]/s/.* //'\'' | sort | uniq > $export_symbols'
-exclude_expsyms_CXX='[_]+GLOBAL_OFFSET_TABLE_|[_]+GLOBAL__[FID]_.*|[_]+head_[A-Za-z0-9_]+_dll|[A-Za-z0-9_]+_dll_iname'
+export_symbols_cmds_CXX='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
+exclude_expsyms_CXX='_GLOBAL_OFFSET_TABLE_|_GLOBAL__F[ID]_.*'
 include_expsyms_CXX=''
 prelink_cmds_CXX=''
 postlink_cmds_CXX=''
 file_list_spec_CXX=''
 hardcode_action_CXX='immediate'
-compiler_lib_search_dirs_CXX='C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0 C:/msys64/mingw32/bin/../lib/gcc C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../../../i686-w64-mingw32/lib/../lib C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../../../lib C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../../../i686-w64-mingw32/lib C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../..'
-predep_objects_CXX='C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../../../i686-w64-mingw32/lib/../lib/dllcrt2.o C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/crtbegin.o'
-postdep_objects_CXX='C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/crtend.o'
+compiler_lib_search_dirs_CXX=''
+predep_objects_CXX=''
+postdep_objects_CXX=''
 predeps_CXX=''
 postdeps_CXX=''
-compiler_lib_search_path_CXX='-LC:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0 -LC:/msys64/mingw32/bin/../lib/gcc -LC:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../../../i686-w64-mingw32/lib/../lib -LC:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../../../lib -LC:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../../../i686-w64-mingw32/lib -LC:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../..'
+compiler_lib_search_path_CXX=''
 
-WDCC='gcc'
-WDCFLAGS='-g -O2'
+LTCC='gcc'
+LTCFLAGS='-g -O2'
 compiler='gcc'
 
 # A function that is used when there is no print builtin or printf.
@@ -774,7 +750,7 @@ _LTECHO_EOF'
 }
 
 # Quote evaled strings.
-for var in SHELL ECHO PATH_SEPARATOR SED GREP EGREP FGREP LD NM LN_S lt_SP2NL lt_NL2SP reload_flag OBJDUMP deplibs_check_method file_magic_cmd file_magic_glob want_nocaseglob DLLTOOL sharedlib_from_linklib_cmd AR AR_FLAGS archiver_list_spec STRIP RANLIB CC CFLAGS compiler lt_cv_sys_global_symbol_pipe lt_cv_sys_global_symbol_to_cdecl lt_cv_sys_global_symbol_to_import lt_cv_sys_global_symbol_to_c_name_address lt_cv_sys_global_symbol_to_c_name_address_lib_prefix lt_cv_nm_interface nm_file_list_spec lt_cv_truncate_bin lt_prog_compiler_no_builtin_flag lt_prog_compiler_pic lt_prog_compiler_wl lt_prog_compiler_static lt_cv_prog_compiler_c_o need_locks MANIFEST_TOOL DSYMUTIL NMEDIT LIPO OTOOL OTOOL64 shrext_cmds export_dynamic_flag_spec whole_archive_flag_spec compiler_needs_object with_gnu_ld allow_undefined_flag no_undefined_flag hardcode_libdir_flag_spec hardcode_libdir_separator exclude_expsyms include_expsyms file_list_spec variables_saved_for_relink libname_spec library_names_spec soname_spec install_override_mode finish_eval old_striplib striplib compiler_lib_search_dirs predep_objects postdep_objects predeps postdeps compiler_lib_search_path LD_CXX reload_flag_CXX compiler_CXX lt_prog_compiler_no_builtin_flag_CXX lt_prog_compiler_pic_CXX lt_prog_compiler_wl_CXX lt_prog_compiler_static_CXX lt_cv_prog_compiler_c_o_CXX export_dynamic_flag_spec_CXX whole_archive_flag_spec_CXX compiler_needs_object_CXX with_gnu_ld_CXX allow_undefined_flag_CXX no_undefined_flag_CXX hardcode_libdir_flag_spec_CXX hardcode_libdir_separator_CXX exclude_expsyms_CXX include_expsyms_CXX file_list_spec_CXX compiler_lib_search_dirs_CXX predep_objects_CXX postdep_objects_CXX predeps_CXX postdeps_CXX compiler_lib_search_path_CXX; do
+for var in SHELL ECHO PATH_SEPARATOR SED GREP EGREP FGREP LD NM LN_S lt_SP2NL lt_NL2SP reload_flag FILECMD OBJDUMP deplibs_check_method file_magic_cmd file_magic_glob want_nocaseglob DLLTOOL sharedlib_from_linklib_cmd AR archiver_list_spec STRIP RANLIB CC CFLAGS compiler lt_cv_sys_global_symbol_pipe lt_cv_sys_global_symbol_to_cdecl lt_cv_sys_global_symbol_to_import lt_cv_sys_global_symbol_to_c_name_address lt_cv_sys_global_symbol_to_c_name_address_lib_prefix lt_cv_nm_interface nm_file_list_spec lt_cv_truncate_bin lt_prog_compiler_no_builtin_flag lt_prog_compiler_pic lt_prog_compiler_wl lt_prog_compiler_static lt_cv_prog_compiler_c_o need_locks MANIFEST_TOOL DSYMUTIL NMEDIT LIPO OTOOL OTOOL64 shrext_cmds export_dynamic_flag_spec whole_archive_flag_spec compiler_needs_object with_gnu_ld allow_undefined_flag no_undefined_flag hardcode_libdir_flag_spec hardcode_libdir_separator exclude_expsyms include_expsyms file_list_spec variables_saved_for_relink libname_spec library_names_spec soname_spec install_override_mode finish_eval old_striplib striplib compiler_lib_search_dirs predep_objects postdep_objects predeps postdeps compiler_lib_search_path LD_CXX reload_flag_CXX compiler_CXX lt_prog_compiler_no_builtin_flag_CXX lt_prog_compiler_pic_CXX lt_prog_compiler_wl_CXX lt_prog_compiler_static_CXX lt_cv_prog_compiler_c_o_CXX export_dynamic_flag_spec_CXX whole_archive_flag_spec_CXX compiler_needs_object_CXX with_gnu_ld_CXX allow_undefined_flag_CXX no_undefined_flag_CXX hardcode_libdir_flag_spec_CXX hardcode_libdir_separator_CXX exclude_expsyms_CXX include_expsyms_CXX file_list_spec_CXX compiler_lib_search_dirs_CXX predep_objects_CXX postdep_objects_CXX predeps_CXX postdeps_CXX compiler_lib_search_path_CXX; do
     case `eval \\$ECHO \\""\\$$var"\\"` in
     *[\\\`\"\$]*)
       eval "lt_$var=\\\"\`\$ECHO \"\$$var\" | \$SED \"\$sed_quote_subst\"\`\\\"" ## exclude from sc_prohibit_nested_quotes
@@ -797,7 +773,7 @@ for var in reload_cmds old_postinstall_cmds old_postuninstall_cmds old_archive_c
     esac
 done
 
-ac_aux_dir='build-aux'
+ac_aux_dir='./build-aux/'
 
 # See if we are running on zsh, and set the options that allow our
 # commands through without removal of \ escapes INIT.
@@ -832,7 +808,7 @@ do
     "qa/pull-tester/run-bitcoind-for-test.sh") CONFIG_FILES="$CONFIG_FILES qa/pull-tester/run-bitcoind-for-test.sh" ;;
     "qa/pull-tester/tests-config.sh") CONFIG_FILES="$CONFIG_FILES qa/pull-tester/tests-config.sh" ;;
 
-  *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
+  *) as_fn_error $? "invalid argument: '$ac_config_target'" "$LINENO" 5;;
   esac
 done
 
@@ -842,9 +818,9 @@ done
 # We use the long form for the default assignment because of an extremely
 # bizarre bug on SunOS 4.1.3.
 if $ac_need_defaults; then
-  test "${CONFIG_FILES+set}" = set || CONFIG_FILES=$config_files
-  test "${CONFIG_HEADERS+set}" = set || CONFIG_HEADERS=$config_headers
-  test "${CONFIG_COMMANDS+set}" = set || CONFIG_COMMANDS=$config_commands
+  test ${CONFIG_FILES+y} || CONFIG_FILES=$config_files
+  test ${CONFIG_HEADERS+y} || CONFIG_HEADERS=$config_headers
+  test ${CONFIG_COMMANDS+y} || CONFIG_COMMANDS=$config_commands
 fi
 
 # Have a temporary directory for convenience.  Make it in the build tree
@@ -852,7 +828,7 @@ fi
 # creating and moving files from /tmp can sometimes cause problems.
 # Hook for its removal unless debugging.
 # Note that there is a small window in which the directory will not be cleaned:
-# after its creation but before its name has been assigned to `$tmp'.
+# after its creation but before its name has been assigned to '$tmp'.
 $debug ||
 {
   tmp= ac_tmp=
@@ -876,7 +852,7 @@ ac_tmp=$tmp
 
 # Set up the scripts for CONFIG_FILES section.
 # No need to generate them if there are no CONFIG_FILES.
-# This happens for instance with `./config.status config.h'.
+# This happens for instance with './config.status config.h'.
 if test -n "$CONFIG_FILES"; then
 
 
@@ -896,24 +872,23 @@ fi
 
 echo 'BEGIN {' >"$ac_tmp/subs1.awk" &&
 cat >>"$ac_tmp/subs1.awk" <<\_ACAWK &&
-S["am__EXEEXT_FALSE"]="#"
-S["am__EXEEXT_TRUE"]=""
+S["am__EXEEXT_FALSE"]=""
+S["am__EXEEXT_TRUE"]="#"
 S["LTLIBOBJS"]=""
 S["LIBOBJS"]=""
 S["subdirs"]=" src/secp256k1"
-S["MINIUPNPC_LIBS"]="-lminiupnpc"
-S["MINIUPNPC_CPPFLAGS"]="-DSTATICLIB -DMINIUPNP_STATICLIB"
+S["MINIUPNPC_LIBS"]=""
+S["MINIUPNPC_CPPFLAGS"]=""
 S["BUILD_TEST_QT"]=""
-S["BUILD_QT"]="qt"
+S["BUILD_QT"]=""
 S["BUILD_TEST"]=""
-S["LEVELDB_TARGET_FLAGS"]="TARGET_OS=OS_WINDOWS_CROSSCOMPILE"
+S["LEVELDB_TARGET_FLAGS"]="TARGET_OS=Darwin"
 S["TESTDEFS"]=""
-S["BOOST_LIBS"]=" -lboost_system-mgw73-mt-s-1_55 -lboost_filesystem-mgw73-mt-s-1_55 -lboost_program_options-mgw73-mt-s-1_55 -lboost_thread-mgw73-mt-s-1_55 -lboost_ch"\
-"rono-mgw73-mt-s-1_55"
+S["BOOST_LIBS"]="-L/opt/homebrew/Cellar/boost/1.88.0/lib -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread -lboost_chrono"
 S["USE_QRCODE"]=""
 S["USE_UPNP"]=""
-S["LIBTOOL_APP_LDFLAGS"]=" -all-static"
-S["RELDFLAGS"]="-Wl,--exclude-libs,ALL"
+S["LIBTOOL_APP_LDFLAGS"]=""
+S["RELDFLAGS"]=""
 S["COPYRIGHT_YEAR"]="2015"
 S["CLIENT_VERSION_IS_RELEASE"]="true"
 S["CLIENT_VERSION_BUILD"]="0"
@@ -930,138 +905,137 @@ S["USE_COMPARISON_TOOL_FALSE"]=""
 S["USE_COMPARISON_TOOL_TRUE"]="#"
 S["USE_LCOV_FALSE"]=""
 S["USE_LCOV_TRUE"]="#"
-S["USE_QRCODE_FALSE"]="#"
-S["USE_QRCODE_TRUE"]=""
+S["USE_QRCODE_FALSE"]=""
+S["USE_QRCODE_TRUE"]="#"
 S["ENABLE_QT_TESTS_FALSE"]=""
 S["ENABLE_QT_TESTS_TRUE"]="#"
-S["ENABLE_QT_FALSE"]="#"
-S["ENABLE_QT_TRUE"]=""
+S["ENABLE_QT_FALSE"]=""
+S["ENABLE_QT_TRUE"]="#"
 S["ENABLE_TESTS_FALSE"]=""
 S["ENABLE_TESTS_TRUE"]="#"
 S["ENABLE_WALLET_FALSE"]="#"
 S["ENABLE_WALLET_TRUE"]=""
-S["TARGET_WINDOWS_FALSE"]="#"
-S["TARGET_WINDOWS_TRUE"]=""
-S["BUILD_DARWIN_FALSE"]=""
-S["BUILD_DARWIN_TRUE"]="#"
-S["TARGET_DARWIN_FALSE"]=""
-S["TARGET_DARWIN_TRUE"]="#"
+S["TARGET_WINDOWS_FALSE"]=""
+S["TARGET_WINDOWS_TRUE"]="#"
+S["BUILD_DARWIN_FALSE"]="#"
+S["BUILD_DARWIN_TRUE"]=""
+S["TARGET_DARWIN_FALSE"]="#"
+S["TARGET_DARWIN_TRUE"]=""
 S["BUILD_BITCOIN_LIBS_FALSE"]="#"
 S["BUILD_BITCOIN_LIBS_TRUE"]=""
 S["BUILD_BITCOIN_UTILS_FALSE"]="#"
 S["BUILD_BITCOIN_UTILS_TRUE"]=""
 S["BUILD_BITCOIND_FALSE"]="#"
 S["BUILD_BITCOIND_TRUE"]=""
-S["PROTOC"]="/d/deps521/protobuf-2.6.1/src/protoc"
-S["QR_LIBS"]="-lqrencode"
+S["PROTOC"]=""
+S["QR_LIBS"]=""
 S["QR_CFLAGS"]=""
-S["PROTOBUF_LIBS"]="-lprotobuf"
+S["PROTOBUF_LIBS"]=""
 S["PROTOBUF_CFLAGS"]=""
-S["CRYPTO_LIBS"]="-lcrypto"
-S["CRYPTO_CFLAGS"]=""
-S["SSL_LIBS"]="-lssl"
-S["SSL_CFLAGS"]=""
+S["CRYPTO_LIBS"]="-L/opt/homebrew/Cellar/openssl@3/3.5.0/lib -lcrypto"
+S["CRYPTO_CFLAGS"]="-I/opt/homebrew/Cellar/openssl@3/3.5.0/include"
+S["SSL_LIBS"]="-L/opt/homebrew/Cellar/openssl@3/3.5.0/lib -lssl"
+S["SSL_CFLAGS"]="-I/opt/homebrew/Cellar/openssl@3/3.5.0/include"
 S["BOOST_UNIT_TEST_FRAMEWORK_LIB"]=""
-S["BOOST_CHRONO_LIB"]="-lboost_chrono-mgw73-mt-s-1_55"
-S["BOOST_THREAD_LIB"]="-lboost_thread-mgw73-mt-s-1_55"
-S["BOOST_PROGRAM_OPTIONS_LIB"]="-lboost_program_options-mgw73-mt-s-1_55"
-S["BOOST_FILESYSTEM_LIB"]="-lboost_filesystem-mgw73-mt-s-1_55"
-S["BOOST_SYSTEM_LIB"]="-lboost_system-mgw73-mt-s-1_55"
-S["BOOST_LDFLAGS"]=""
-S["BOOST_CPPFLAGS"]="-mthreads "
+S["BOOST_CHRONO_LIB"]="-lboost_chrono"
+S["BOOST_THREAD_LIB"]="-lboost_thread"
+S["BOOST_PROGRAM_OPTIONS_LIB"]="-lboost_program_options"
+S["BOOST_FILESYSTEM_LIB"]="-lboost_filesystem"
+S["BOOST_SYSTEM_LIB"]="-lboost_system"
+S["BOOST_LDFLAGS"]="-L/opt/homebrew/Cellar/boost/1.88.0/lib"
+S["BOOST_CPPFLAGS"]="-pthread -I/opt/homebrew/Cellar/boost/1.88.0/include"
 S["MOC_DEFS"]="-DHAVE_CONFIG_H -I$(srcdir)"
-S["QT_SELECT"]="qt5"
+S["QT_SELECT"]="qt"
 S["QT_TEST_INCLUDES"]=""
 S["QT_DBUS_INCLUDES"]=""
-S["QT_LDFLAGS"]=" -mwindows"
-S["QT_INCLUDES"]="-I/d/deps521/qtbase-opensource-src-5.2.1/include -I/d/deps521/qtbase-opensource-src-5.2.1/include/QtCore -I/d/deps521/qtbase-opensource-src-5.2.1/in"\
-"clude/QtGui -I/d/deps521/qtbase-opensource-src-5.2.1/include/QtWidgets -I/d/deps521/qtbase-opensource-src-5.2.1/include/QtNetwork -I/d/deps521/qtbas"\
-"e-opensource-src-5.2.1/include/QtTest -I/d/deps521/qtbase-opensource-src-5.2.1/include/QtDBus"
-S["LUPDATE"]="/d/deps521/qtbase-opensource-src-5.2.1/bin/lupdate"
-S["LRELEASE"]="/d/deps521/qtbase-opensource-src-5.2.1/bin/lrelease"
-S["RCC"]="/d/deps521/qtbase-opensource-src-5.2.1/bin/rcc"
-S["UIC"]="/d/deps521/qtbase-opensource-src-5.2.1/bin/uic"
-S["MOC"]="/d/deps521/qtbase-opensource-src-5.2.1/bin/moc"
+S["QT_LDFLAGS"]=""
+S["QT_INCLUDES"]=""
+S["LUPDATE"]=""
+S["LRELEASE"]=""
+S["RCC"]=""
+S["UIC"]=""
+S["MOC"]=""
 S["QTPRINT_LIBS"]=""
 S["QTPRINT_CFLAGS"]=""
 S["X11XCB_LIBS"]=""
 S["X11XCB_CFLAGS"]=""
 S["QTPLATFORM_LIBS"]=""
 S["QTPLATFORM_CFLAGS"]=""
-S["QT_DBUS_LIBS"]="-L/d/deps521/qtbase-opensource-src-5.2.1/lib"
+S["QT_DBUS_LIBS"]=""
 S["QT_DBUS_CFLAGS"]=""
-S["QT_TEST_LIBS"]="-lQt5Test -L/d/deps521/qtbase-opensource-src-5.2.1/lib"
+S["QT_TEST_LIBS"]=""
 S["QT_TEST_CFLAGS"]=""
-S["QT_LIBS"]="-lqwindows -lqtaccessiblewidgets -lQt5Widgets -lQt5Network -lQt5Gui     -lQt5Core    -lpng  -lz  -limm32  -L/d/deps521/qtbase-opensource-src-5.2.1/l"\
-"ib -L/d/deps521/qtbase-opensource-src-5.2.1/plugins/accessible -L/d/deps521/qtbase-opensource-src-5.2.1/plugins/platforms"
+S["QT_LIBS"]=""
 S["QT_CFLAGS"]=""
 S["QT_TRANSLATION_DIR"]=""
-S["BDB_LIBS"]="-ldb_cxx"
+S["BDB_LIBS"]="-ldb_cxx-4.8"
 S["BDB_CPPFLAGS"]=""
 S["LIBMEMENV"]=""
 S["LIBLEVELDB"]=""
 S["LEVELDB_CPPFLAGS"]=""
 S["EMBEDDED_LEVELDB_FALSE"]="#"
 S["EMBEDDED_LEVELDB_TRUE"]=""
-S["PTHREAD_CFLAGS"]=""
-S["PTHREAD_LIBS"]=""
+S["PTHREAD_CFLAGS"]="-pthread"
+S["PTHREAD_LIBS"]="-lpthread"
+S["PTHREAD_CXX"]="g++"
 S["PTHREAD_CC"]="gcc"
 S["ax_pthread_config"]=""
+S["CPP"]="gcc -E"
 S["COMPARISON_TOOL_REORG_TESTS"]="0"
 S["JAVA_COMPARISON_TOOL"]=""
 S["GENISOIMAGE"]=""
 S["INSTALLNAMETOOL"]=""
-S["BREW"]=""
+S["BREW"]="brew"
 S["PORT"]=""
-S["WINDOWS_BITS"]="32"
-S["WINDRES"]="/mingw32/bin/windres"
-S["MAKENSIS"]="none"
+S["WINDOWS_BITS"]=""
+S["WINDRES"]=""
+S["MAKENSIS"]=""
 S["PKG_CONFIG_LIBDIR"]=""
-S["PKG_CONFIG_PATH"]="/mingw32/lib/pkgconfig:/mingw32/share/pkgconfig"
-S["PKG_CONFIG"]="/usr/bin/pkg-config"
+S["PKG_CONFIG_PATH"]="/opt/homebrew/opt/qt@5/lib/pkgconfig:/opt/homebrew/opt/openssl@3/lib/pkgconfig:"
+S["PKG_CONFIG"]="/opt/homebrew/bin/pkg-config"
 S["HEXDUMP"]="/usr/bin/hexdump"
-S["XGETTEXT"]="/mingw32/bin/xgettext"
-S["CCACHE"]=""
-S["GIT"]="/usr/bin/git"
+S["XGETTEXT"]="/opt/homebrew/bin/xgettext"
+S["CCACHE"]="/opt/homebrew/bin/ccache"
+S["GIT"]="/Applications/Xcode.app/Contents/Developer/usr/bin/git"
 S["GENHTML"]=""
-S["JAVA"]=""
+S["JAVA"]="/usr/bin/java"
 S["LCOV"]=""
-S["GCOV"]="/mingw32/bin/gcov"
+S["GCOV"]="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/gcov"
 S["CXXCPP"]="g++ -E"
-S["CPP"]="gcc -E"
 S["LT_SYS_LIBRARY_PATH"]=""
-S["OTOOL64"]=""
-S["OTOOL"]=""
-S["LIPO"]=""
-S["NMEDIT"]=""
-S["DSYMUTIL"]=""
+S["OTOOL64"]=":"
+S["OTOOL"]="otool"
+S["LIPO"]="lipo"
+S["NMEDIT"]="nmedit"
+S["DSYMUTIL"]="dsymutil"
 S["MANIFEST_TOOL"]=":"
-S["RANLIB"]="/mingw32/bin/ranlib"
+S["RANLIB"]="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib"
 S["ac_ct_AR"]="ar"
-S["AR"]="/mingw32/bin/ar"
-S["DLLTOOL"]="dlltool"
+S["AR"]="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar"
+S["DLLTOOL"]="false"
 S["OBJDUMP"]="objdump"
-S["LN_S"]="cp -pR"
-S["NM"]="/mingw32/bin/nm -B"
+S["FILECMD"]="file"
+S["LN_S"]="ln -s"
+S["NM"]="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/nm -B"
 S["ac_ct_DUMPBIN"]=""
 S["DUMPBIN"]=""
-S["LD"]="C:/msys64/mingw32/i686-w64-mingw32/bin/ld.exe"
+S["LD"]="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld"
 S["FGREP"]="/usr/bin/grep -F"
 S["EGREP"]="/usr/bin/grep -E"
 S["GREP"]="/usr/bin/grep"
-S["SED"]="/usr/bin/sed"
+S["SED"]="/opt/homebrew/bin/gsed"
 S["am__fastdepCC_FALSE"]="#"
 S["am__fastdepCC_TRUE"]=""
 S["CCDEPMODE"]="depmode=gcc3"
 S["ac_ct_CC"]="gcc"
 S["CFLAGS"]="-g -O2"
-S["CC"]="gcc"
+S["CC"]="/opt/homebrew/bin/ccache gcc"
 S["LIBTOOL"]="$(SHELL) $(top_builddir)/libtool"
 S["am__fastdepOBJCXX_FALSE"]="#"
 S["am__fastdepOBJCXX_TRUE"]=""
 S["OBJCXXDEPMODE"]="depmode=gcc3"
 S["ac_ct_OBJCXX"]="g++"
-S["OBJCXXFLAGS"]="-g -O2 -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -Wno-self-assign -w  -Wstack-protector -fstack-protector-all"
+S["OBJCXXFLAGS"]="-g -O2 -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -Wno-self-assign  -Wstack-protector -fstack-protector-all -fPIE"
 S["OBJCXX"]="g++"
 S["am__fastdepCXX_FALSE"]="#"
 S["am__fastdepCXX_TRUE"]=""
@@ -1070,67 +1044,67 @@ S["am__nodep"]="_no"
 S["AMDEPBACKSLASH"]="\\"
 S["AMDEP_FALSE"]="#"
 S["AMDEP_TRUE"]=""
-S["am__quote"]=""
 S["am__include"]="include"
 S["DEPDIR"]=".deps"
 S["OBJEXT"]="o"
-S["EXEEXT"]=".exe"
+S["EXEEXT"]=""
 S["ac_ct_CXX"]="g++"
-S["CPPFLAGS"]="-I/d/deps521/boost_1_55_0 -I/d/deps521/db-4.8.30.NC/build_unix -I/d/deps521/openssl-1.0.1g/include -I/d/deps521 -I/d/deps521/protobuf-2.6.1/src -I/d"\
-"/deps521/libpng-1.6.10 -I/d/deps521/libevent-2.1.8/include -I/d/deps521/qrencode-3.4.3 -DBOOST_SPIRIT_THREADSAFE -DHAVE_BUILD_INFO -D__STDC_FORMAT_M"\
-"ACROS -D_MT -DWIN32 -D_WINDOWS -DBOOST_THREAD_USE_LIB -D_FILE_OFFSET_BITS=64  -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2"
-S["LDFLAGS"]="-L/d/deps521/boost_1_55_0/stage/lib -L/d/deps521/db-4.8.30.NC/build_unix -L/d/deps521/openssl-1.0.1g -L/d/deps521/miniupnpc -L/d/deps521/protobuf-2."\
-"6.1/src/.libs -L/d/deps521/libpng-1.6.10/.libs -L/d/deps521/libevent-2.1.8/.libs -L/d/deps521/qrencode-3.4.3/.libs -Wl,--large-address-aware  -Wl,--"\
-"dynamicbase -Wl,--nxcompat"
-S["CXXFLAGS"]="-g -O2 -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -Wno-self-assign -w  -Wstack-protector -fstack-protector-all -fvisibility=hidd"\
-"en"
-S["CXX"]="g++"
+S["CPPFLAGS"]="-Qunused-arguments  -DBOOST_SPIRIT_THREADSAFE -DHAVE_BUILD_INFO -D__STDC_FORMAT_MACROS -I/opt/homebrew/opt/berkeley-db@4/include -DMAC_OSX  -U_FORTI"\
+"FY_SOURCE -D_FORTIFY_SOURCE=2"
+S["LDFLAGS"]=" -Wl,-headerpad_max_install_names  -pie -Wl,-dead_strip"
+S["CXXFLAGS"]="-g -O2 -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -Wno-self-assign  -Wstack-protector -fstack-protector-all -fPIE -fvisibility=h"\
+"idden"
+S["CXX"]="/opt/homebrew/bin/ccache g++"
 S["MAINT"]=""
 S["MAINTAINER_MODE_FALSE"]="#"
 S["MAINTAINER_MODE_TRUE"]=""
+S["am__xargs_n"]="xargs -n"
+S["am__rm_f_notfound"]=""
 S["AM_BACKSLASH"]="\\"
 S["AM_DEFAULT_VERBOSITY"]="0"
 S["AM_DEFAULT_V"]="$(AM_DEFAULT_VERBOSITY)"
 S["AM_V"]="$(V)"
-S["am__untar"]="$${TAR-tar} xf -"
-S["am__tar"]="$${TAR-tar} chof - \"$$tardir\""
+S["CSCOPE"]="cscope"
+S["ETAGS"]="etags"
+S["CTAGS"]="ctags"
+S["am__untar"]="tar -xf -"
+S["am__tar"]="tar --format=ustar -chf - \"$$tardir\""
 S["AMTAR"]="$${TAR-tar}"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
 S["AWK"]="gawk"
 S["mkdir_p"]="$(MKDIR_P)"
-S["MKDIR_P"]="/usr/bin/mkdir -p"
+S["MKDIR_P"]="/opt/homebrew/bin/gmkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
-S["STRIP"]="/mingw32/bin/strip"
-S["install_sh"]="${SHELL} /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/build-aux/install-sh"
-S["MAKEINFO"]="${SHELL} /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/build-aux/missing makeinfo"
-S["AUTOHEADER"]="${SHELL} /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/build-aux/missing autoheader"
-S["AUTOMAKE"]="${SHELL} /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/build-aux/missing automake-1.15"
-S["AUTOCONF"]="${SHELL} /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/build-aux/missing autoconf"
-S["ACLOCAL"]="${SHELL} /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/build-aux/missing aclocal-1.15"
+S["STRIP"]="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip"
+S["install_sh"]="${SHELL} /opt/crypto/sources/worldcoin/build-aux/install-sh"
+S["MAKEINFO"]="${SHELL} '/opt/crypto/sources/worldcoin/build-aux/missing' makeinfo"
+S["AUTOHEADER"]="${SHELL} '/opt/crypto/sources/worldcoin/build-aux/missing' autoheader"
+S["AUTOMAKE"]="${SHELL} '/opt/crypto/sources/worldcoin/build-aux/missing' automake-1.18"
+S["AUTOCONF"]="${SHELL} '/opt/crypto/sources/worldcoin/build-aux/missing' autoconf"
+S["ACLOCAL"]="${SHELL} '/opt/crypto/sources/worldcoin/build-aux/missing' aclocal-1.18"
 S["VERSION"]="0.10.4.0"
 S["PACKAGE"]="worldcoin"
-S["CYGPATH_W"]="cygpath -w"
+S["CYGPATH_W"]="echo"
 S["am__isrc"]=""
 S["INSTALL_DATA"]="${INSTALL} -m 644"
 S["INSTALL_SCRIPT"]="${INSTALL}"
 S["INSTALL_PROGRAM"]="${INSTALL}"
-S["host_os"]="mingw32"
-S["host_vendor"]="w64"
-S["host_cpu"]="i686"
-S["host"]="i686-w64-mingw32"
-S["build_os"]="mingw32"
-S["build_vendor"]="w64"
-S["build_cpu"]="i686"
-S["build"]="i686-w64-mingw32"
+S["host_os"]="darwin24.5.0"
+S["host_vendor"]="apple"
+S["host_cpu"]="aarch64"
+S["host"]="aarch64-apple-darwin24.5.0"
+S["build_os"]="darwin24.5.0"
+S["build_vendor"]="apple"
+S["build_cpu"]="aarch64"
+S["build"]="aarch64-apple-darwin24.5.0"
 S["target_alias"]=""
 S["host_alias"]=""
-S["build_alias"]="i686-w64-mingw32"
-S["LIBS"]="-lcrypto -lssp -lcrypt32 -liphlpapi -lshlwapi -lmswsock -lws2_32 -ladvapi32 -lrpcrt4 -luuid -loleaut32 -lole32 -lcomctl32 -lshell32 -lwinmm -lwinspo"\
-"ol -lcomdlg32 -lgdi32 -luser32 -lkernel32 -lmingwthrd "
+S["build_alias"]=""
+S["LIBS"]=" -L/opt/homebrew/opt/berkeley-db@4/lib"
 S["ECHO_T"]=""
-S["ECHO_N"]="-n"
-S["ECHO_C"]=""
+S["ECHO_N"]=""
+S["ECHO_C"]="\\c"
 S["DEFS"]="-DHAVE_CONFIG_H"
 S["mandir"]="${datarootdir}/man"
 S["localedir"]="${datarootdir}/locale"
@@ -1143,6 +1117,7 @@ S["infodir"]="${datarootdir}/info"
 S["docdir"]="${datarootdir}/doc/${PACKAGE_TARNAME}"
 S["oldincludedir"]="/usr/include"
 S["includedir"]="${prefix}/include"
+S["runstatedir"]="${localstatedir}/run"
 S["localstatedir"]="${prefix}/var"
 S["sharedstatedir"]="${prefix}/com"
 S["sysconfdir"]="${prefix}/etc"
@@ -1152,7 +1127,7 @@ S["libexecdir"]="${exec_prefix}/libexec"
 S["sbindir"]="${exec_prefix}/sbin"
 S["bindir"]="${exec_prefix}/bin"
 S["program_transform_name"]="s,x,x,"
-S["prefix"]="/mingw32"
+S["prefix"]="/usr/local"
 S["exec_prefix"]="${prefix}"
 S["PACKAGE_URL"]=""
 S["PACKAGE_BUGREPORT"]="info@worldcoin.org"
@@ -1162,6 +1137,7 @@ S["PACKAGE_TARNAME"]="worldcoin"
 S["PACKAGE_NAME"]="Worldcoin Core"
 S["PATH_SEPARATOR"]=":"
 S["SHELL"]="/bin/sh"
+S["am__quote"]=""
 _ACAWK
 cat >>"$ac_tmp/subs1.awk" <<_ACAWK &&
   for (key in S) S_is_set[key] = 1
@@ -1199,7 +1175,7 @@ fi # test -n "$CONFIG_FILES"
 
 # Set up the scripts for CONFIG_HEADERS section.
 # No need to generate them if there are no CONFIG_HEADERS.
-# This happens for instance with `./config.status Makefile'.
+# This happens for instance with './config.status Makefile'.
 if test -n "$CONFIG_HEADERS"; then
 cat >"$ac_tmp/defines.awk" <<\_ACAWK ||
 BEGIN {
@@ -1209,50 +1185,33 @@ D["PACKAGE_VERSION"]=" \"0.10.4.0\""
 D["PACKAGE_STRING"]=" \"Worldcoin Core 0.10.4.0\""
 D["PACKAGE_BUGREPORT"]=" \"info@worldcoin.org\""
 D["PACKAGE_URL"]=" \"\""
-D["STDC_HEADERS"]=" 1"
-D["HAVE_SYS_TYPES_H"]=" 1"
-D["HAVE_SYS_STAT_H"]=" 1"
+D["HAVE_STDIO_H"]=" 1"
 D["HAVE_STDLIB_H"]=" 1"
 D["HAVE_STRING_H"]=" 1"
-D["HAVE_MEMORY_H"]=" 1"
-D["HAVE_STRINGS_H"]=" 1"
 D["HAVE_INTTYPES_H"]=" 1"
 D["HAVE_STDINT_H"]=" 1"
+D["HAVE_STRINGS_H"]=" 1"
+D["HAVE_SYS_STAT_H"]=" 1"
+D["HAVE_SYS_TYPES_H"]=" 1"
 D["HAVE_UNISTD_H"]=" 1"
+D["STDC_HEADERS"]=" 1"
+D["HAVE_DLFCN_H"]=" 1"
 D["LT_OBJDIR"]=" \".libs/\""
-D["HAVE_LIBMINGWTHRD"]=" 1"
-D["HAVE_LIBKERNEL32"]=" 1"
-D["HAVE_LIBUSER32"]=" 1"
-D["HAVE_LIBGDI32"]=" 1"
-D["HAVE_LIBCOMDLG32"]=" 1"
-D["HAVE_LIBWINSPOOL"]=" 1"
-D["HAVE_LIBWINMM"]=" 1"
-D["HAVE_LIBSHELL32"]=" 1"
-D["HAVE_LIBCOMCTL32"]=" 1"
-D["HAVE_LIBOLE32"]=" 1"
-D["HAVE_LIBOLEAUT32"]=" 1"
-D["HAVE_LIBUUID"]=" 1"
-D["HAVE_LIBRPCRT4"]=" 1"
-D["HAVE_LIBADVAPI32"]=" 1"
-D["HAVE_LIBWS2_32"]=" 1"
-D["HAVE_LIBMSWSOCK"]=" 1"
-D["HAVE_LIBSHLWAPI"]=" 1"
-D["HAVE_LIBIPHLPAPI"]=" 1"
-D["HAVE_LIBCRYPT32"]=" 1"
 D["HAVE_PTHREAD_PRIO_INHERIT"]=" 1"
 D["HAVE_PTHREAD"]=" 1"
-D["_FILE_OFFSET_BITS"]=" 64"
-D["HAVE_DECL_STRERROR_R"]=" 0"
+D["HAVE_DECL_STRERROR_R"]=" 1"
+D["HAVE_STRERROR_R"]=" 1"
 D["HAVE_FUNC_ATTRIBUTE_VISIBILITY"]=" 1"
 D["HAVE_FUNC_ATTRIBUTE_DLLEXPORT"]=" 1"
 D["HAVE_FUNC_ATTRIBUTE_DLLIMPORT"]=" 1"
-D["HAVE_LIBSSP"]=" 1"
 D["HAVE_STDIO_H"]=" 1"
 D["HAVE_STDLIB_H"]=" 1"
 D["HAVE_UNISTD_H"]=" 1"
 D["HAVE_STRINGS_H"]=" 1"
 D["HAVE_SYS_TYPES_H"]=" 1"
 D["HAVE_SYS_STAT_H"]=" 1"
+D["HAVE_SYS_SELECT_H"]=" 1"
+D["HAVE_INET_PTON"]=" 1"
 D["HAVE_DECL_STRNLEN"]=" 1"
 D["HAVE_DECL_LE32TOH"]=" 0"
 D["HAVE_DECL_LE64TOH"]=" 0"
@@ -1262,21 +1221,8 @@ D["HAVE_DECL_BE32TOH"]=" 0"
 D["HAVE_DECL_BE64TOH"]=" 0"
 D["HAVE_DECL_HTOBE32"]=" 0"
 D["HAVE_DECL_HTOBE64"]=" 0"
+D["HAVE_MSG_NOSIGNAL"]=" 1"
 D["HAVE_VISIBILITY_ATTRIBUTE"]=" 1"
-D["HAVE_MINIUPNPC_MINIWGET_H"]=" 1"
-D["HAVE_MINIUPNPC_MINIUPNPC_H"]=" 1"
-D["HAVE_MINIUPNPC_UPNPCOMMANDS_H"]=" 1"
-D["HAVE_MINIUPNPC_UPNPERRORS_H"]=" 1"
-D["HAVE_LIBIMM32"]=" 1"
-D["HAVE_LIBZ_"]=" 1"
-D["HAVE_LIBPNG_"]=" 1"
-D["HAVE_LIBQT5CORE___"]=" 1"
-D["HAVE_LIBQT5GUI____"]=" 1"
-D["HAVE_LIBQT5NETWORK"]=" 1"
-D["HAVE_LIBQT5WIDGETS"]=" 1"
-D["HAVE_LIBQT5TEST"]=" 1"
-D["QT_STATICPLUGIN"]=" 1"
-D["QT_QPA_PLATFORM_WINDOWS"]=" 1"
 D["HAVE_BOOST"]=" /**/"
 D["HAVE_BOOST_SYSTEM"]=" /**/"
 D["HAVE_BOOST_FILESYSTEM"]=" /**/"
@@ -1284,11 +1230,8 @@ D["HAVE_BOOST_PROGRAM_OPTIONS"]=" /**/"
 D["HAVE_BOOST_THREAD"]=" /**/"
 D["HAVE_BOOST_CHRONO"]=" /**/"
 D["HAVE_WORKING_BOOST_SLEEP_FOR"]=" 1"
-D["HAVE_LIBCRYPTO"]=" 1"
 D["HAVE_CONSENSUS_LIB"]=" 1"
 D["ENABLE_WALLET"]=" 1"
-D["USE_UPNP"]=" 0"
-D["USE_QRCODE"]=" 1"
 D["CLIENT_VERSION_MAJOR"]=" 0"
 D["CLIENT_VERSION_MINOR"]=" 10"
 D["CLIENT_VERSION_REVISION"]=" 4"
@@ -1340,7 +1283,7 @@ do
   esac
   case $ac_mode$ac_tag in
   :[FHL]*:*);;
-  :L* | :C*:*) as_fn_error $? "invalid tag \`$ac_tag'" "$LINENO" 5;;
+  :L* | :C*:*) as_fn_error $? "invalid tag '$ac_tag'" "$LINENO" 5;;
   :[FH]-) ac_tag=-:-;;
   :[FH]*) ac_tag=$ac_tag:$ac_tag.in;;
   esac
@@ -1362,33 +1305,33 @@ do
       -) ac_f="$ac_tmp/stdin";;
       *) # Look for the file first in the build tree, then in the source tree
 	 # (if the path is not absolute).  The absolute path cannot be DOS-style,
-	 # because $ac_f cannot contain `:'.
+	 # because $ac_f cannot contain ':'.
 	 test -f "$ac_f" ||
 	   case $ac_f in
 	   [\\/$]*) false;;
 	   *) test -f "$srcdir/$ac_f" && ac_f="$srcdir/$ac_f";;
 	   esac ||
-	   as_fn_error 1 "cannot find input file: \`$ac_f'" "$LINENO" 5;;
+	   as_fn_error 1 "cannot find input file: '$ac_f'" "$LINENO" 5;;
       esac
-      case $ac_f in *\'*) ac_f=`$as_echo "$ac_f" | sed "s/'/'\\\\\\\\''/g"`;; esac
+      case $ac_f in *\'*) ac_f=`printf "%s\n" "$ac_f" | sed "s/'/'\\\\\\\\''/g"`;; esac
       as_fn_append ac_file_inputs " '$ac_f'"
     done
 
-    # Let's still pretend it is `configure' which instantiates (i.e., don't
+    # Let's still pretend it is 'configure' which instantiates (i.e., don't
     # use $as_me), people would be surprised to read:
     #    /* config.h.  Generated by config.status.  */
     configure_input='Generated from '`
-	  $as_echo "$*" | sed 's|^[^:]*/||;s|:[^:]*/|, |g'
+	  printf "%s\n" "$*" | sed 's|^[^:]*/||;s|:[^:]*/|, |g'
 	`' by configure.'
     if test x"$ac_file" != x-; then
       configure_input="$ac_file.  $configure_input"
-      { $as_echo "$as_me:${as_lineno-$LINENO}: creating $ac_file" >&5
-$as_echo "$as_me: creating $ac_file" >&6;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: creating $ac_file" >&5
+printf "%s\n" "$as_me: creating $ac_file" >&6;}
     fi
     # Neutralize special characters interpreted by sed in replacement strings.
     case $configure_input in #(
     *\&* | *\|* | *\\* )
-       ac_sed_conf_input=`$as_echo "$configure_input" |
+       ac_sed_conf_input=`printf "%s\n" "$configure_input" |
        sed 's/[\\\\&|]/\\\\&/g'`;; #(
     *) ac_sed_conf_input=$configure_input;;
     esac
@@ -1405,7 +1348,7 @@ $as_expr X"$ac_file" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
 	 X"$ac_file" : 'X\(//\)[^/]' \| \
 	 X"$ac_file" : 'X\(//\)$' \| \
 	 X"$ac_file" : 'X\(/\)' \| . 2>/dev/null ||
-$as_echo X"$ac_file" |
+printf "%s\n" X"$ac_file" |
     sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
 	    s//\1/
 	    q
@@ -1429,9 +1372,9 @@ $as_echo X"$ac_file" |
 case "$ac_dir" in
 .) ac_dir_suffix= ac_top_builddir_sub=. ac_top_build_prefix= ;;
 *)
-  ac_dir_suffix=/`$as_echo "$ac_dir" | sed 's|^\.[\\/]||'`
+  ac_dir_suffix=/`printf "%s\n" "$ac_dir" | sed 's|^\.[\\/]||'`
   # A ".." for each directory in $ac_dir_suffix.
-  ac_top_builddir_sub=`$as_echo "$ac_dir_suffix" | sed 's|/[^\\/]*|/..|g;s|/||'`
+  ac_top_builddir_sub=`printf "%s\n" "$ac_dir_suffix" | sed 's|/[^\\/]*|/..|g;s|/||'`
   case $ac_top_builddir_sub in
   "") ac_top_builddir_sub=. ac_top_build_prefix= ;;
   *)  ac_top_build_prefix=$ac_top_builddir_sub/ ;;
@@ -1490,8 +1433,8 @@ ac_sed_dataroot='
 case `eval "sed -n \"\$ac_sed_dataroot\" $ac_file_inputs"` in
 *datarootdir*) ac_datarootdir_seen=yes;;
 *@datadir@*|*@docdir@*|*@infodir@*|*@localedir@*|*@mandir@*)
-  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $ac_file_inputs seems to ignore the --datarootdir setting" >&5
-$as_echo "$as_me: WARNING: $ac_file_inputs seems to ignore the --datarootdir setting" >&2;}
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: $ac_file_inputs seems to ignore the --datarootdir setting" >&5
+printf "%s\n" "$as_me: WARNING: $ac_file_inputs seems to ignore the --datarootdir setting" >&2;}
   ac_datarootdir_hack='
   s&@datadir@&${datarootdir}&g
   s&@docdir@&${datarootdir}/doc/${PACKAGE_TARNAME}&g
@@ -1540,9 +1483,9 @@ test -z "$ac_datarootdir_hack$ac_datarootdir_seen" &&
   { ac_out=`sed -n '/\${datarootdir}/p' "$ac_tmp/out"`; test -n "$ac_out"; } &&
   { ac_out=`sed -n '/^[	 ]*datarootdir[	 ]*:*=/p' \
       "$ac_tmp/out"`; test -z "$ac_out"; } &&
-  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $ac_file contains a reference to the variable \`datarootdir'
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: $ac_file contains a reference to the variable 'datarootdir'
 which seems to be undefined.  Please make sure it is defined" >&5
-$as_echo "$as_me: WARNING: $ac_file contains a reference to the variable \`datarootdir'
+printf "%s\n" "$as_me: WARNING: $ac_file contains a reference to the variable 'datarootdir'
 which seems to be undefined.  Please make sure it is defined" >&2;}
 
   rm -f "$ac_tmp/stdin"
@@ -1558,20 +1501,20 @@ which seems to be undefined.  Please make sure it is defined" >&2;}
   #
   if test x"$ac_file" != x-; then
     {
-      $as_echo "/* $configure_input  */" \
+      printf "%s\n" "/* $configure_input  */" >&1 \
       && eval '$AWK -f "$ac_tmp/defines.awk"' "$ac_file_inputs"
     } >"$ac_tmp/config.h" \
       || as_fn_error $? "could not create $ac_file" "$LINENO" 5
     if diff "$ac_file" "$ac_tmp/config.h" >/dev/null 2>&1; then
-      { $as_echo "$as_me:${as_lineno-$LINENO}: $ac_file is unchanged" >&5
-$as_echo "$as_me: $ac_file is unchanged" >&6;}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: $ac_file is unchanged" >&5
+printf "%s\n" "$as_me: $ac_file is unchanged" >&6;}
     else
       rm -f "$ac_file"
       mv "$ac_tmp/config.h" "$ac_file" \
 	|| as_fn_error $? "could not create $ac_file" "$LINENO" 5
     fi
   else
-    $as_echo "/* $configure_input  */" \
+    printf "%s\n" "/* $configure_input  */" >&1 \
       && eval '$AWK -f "$ac_tmp/defines.awk"' "$ac_file_inputs" \
       || as_fn_error $? "could not create -" "$LINENO" 5
   fi
@@ -1591,7 +1534,7 @@ $as_expr X"$_am_arg" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
 	 X"$_am_arg" : 'X\(//\)[^/]' \| \
 	 X"$_am_arg" : 'X\(//\)$' \| \
 	 X"$_am_arg" : 'X\(/\)' \| . 2>/dev/null ||
-$as_echo X"$_am_arg" |
+printf "%s\n" X"$_am_arg" |
     sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
 	    s//\1/
 	    q
@@ -1611,8 +1554,8 @@ $as_echo X"$_am_arg" |
 	  s/.*/./; q'`/stamp-h$_am_stamp_count
  ;;
 
-  :C)  { $as_echo "$as_me:${as_lineno-$LINENO}: executing $ac_file commands" >&5
-$as_echo "$as_me: executing $ac_file commands" >&6;}
+  :C)  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: executing $ac_file commands" >&5
+printf "%s\n" "$as_me: executing $ac_file commands" >&6;}
  ;;
   esac
 
@@ -1622,29 +1565,35 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
   # Older Autoconf quotes --file arguments for eval, but not when files
   # are listed without --file.  Let's play safe and only enable the eval
   # if we detect the quoting.
-  case $CONFIG_FILES in
-  *\'*) eval set x "$CONFIG_FILES" ;;
-  *)   set x $CONFIG_FILES ;;
-  esac
+  # TODO: see whether this extra hack can be removed once we start
+  # requiring Autoconf 2.70 or later.
+  case $CONFIG_FILES in #(
+  *\'*) :
+    eval set x "$CONFIG_FILES" ;; #(
+  *) :
+    set x $CONFIG_FILES ;; #(
+  *) :
+     ;;
+esac
   shift
-  for mf
+  # Used to flag and report bootstrapping failures.
+  am_rc=0
+  for am_mf
   do
     # Strip MF so we end up with the name of the file.
-    mf=`echo "$mf" | sed -e 's/:.*$//'`
-    # Check whether this is an Automake generated Makefile or not.
-    # We used to match only the files named 'Makefile.in', but
-    # some people rename them; so instead we look at the file content.
-    # Grep'ing the first line is not enough: some people post-process
-    # each Makefile.in and add a new line on top of each file to say so.
-    # Grep'ing the whole file is not good either: AIX grep has a line
+    am_mf=`printf "%s\n" "$am_mf" | sed -e 's/:.*$//'`
+    # Check whether this is an Automake generated Makefile which includes
+    # dependency-tracking related rules and includes.
+    # Grep'ing the whole file directly is not great: AIX grep has a line
     # limit of 2048, but all sed's we know have understand at least 4000.
-    if sed -n 's,^#.*generated by automake.*,X,p' "$mf" | grep X >/dev/null 2>&1; then
-      dirpart=`$as_dirname -- "$mf" ||
-$as_expr X"$mf" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
-	 X"$mf" : 'X\(//\)[^/]' \| \
-	 X"$mf" : 'X\(//\)$' \| \
-	 X"$mf" : 'X\(/\)' \| . 2>/dev/null ||
-$as_echo X"$mf" |
+    sed -n 's,^am--depfiles:.*,X,p' "$am_mf" | grep X >/dev/null 2>&1 \
+      || continue
+    am_dirpart=`$as_dirname -- "$am_mf" ||
+$as_expr X"$am_mf" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
+	 X"$am_mf" : 'X\(//\)[^/]' \| \
+	 X"$am_mf" : 'X\(//\)$' \| \
+	 X"$am_mf" : 'X\(/\)' \| . 2>/dev/null ||
+printf "%s\n" X"$am_mf" |
     sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
 	    s//\1/
 	    q
@@ -1662,53 +1611,50 @@ $as_echo X"$mf" |
 	    q
 	  }
 	  s/.*/./; q'`
-    else
-      continue
-    fi
-    # Extract the definition of DEPDIR, am__include, and am__quote
-    # from the Makefile without running 'make'.
-    DEPDIR=`sed -n 's/^DEPDIR = //p' < "$mf"`
-    test -z "$DEPDIR" && continue
-    am__include=`sed -n 's/^am__include = //p' < "$mf"`
-    test -z "$am__include" && continue
-    am__quote=`sed -n 's/^am__quote = //p' < "$mf"`
-    # Find all dependency output files, they are included files with
-    # $(DEPDIR) in their names.  We invoke sed twice because it is the
-    # simplest approach to changing $(DEPDIR) to its actual value in the
-    # expansion.
-    for file in `sed -n "
-      s/^$am__include $am__quote\(.*(DEPDIR).*\)$am__quote"'$/\1/p' <"$mf" | \
-	 sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g'`; do
-      # Make sure the directory exists.
-      test -f "$dirpart/$file" && continue
-      fdir=`$as_dirname -- "$file" ||
-$as_expr X"$file" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
-	 X"$file" : 'X\(//\)[^/]' \| \
-	 X"$file" : 'X\(//\)$' \| \
-	 X"$file" : 'X\(/\)' \| . 2>/dev/null ||
-$as_echo X"$file" |
-    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
+    am_filepart=`$as_basename -- "$am_mf" ||
+$as_expr X/"$am_mf" : '.*/\([^/][^/]*\)/*$' \| \
+	 X"$am_mf" : 'X\(//\)$' \| \
+	 X"$am_mf" : 'X\(/\)' \| . 2>/dev/null ||
+printf "%s\n" X/"$am_mf" |
+    sed '/^.*\/\([^/][^/]*\)\/*$/{
 	    s//\1/
 	    q
 	  }
-	  /^X\(\/\/\)[^/].*/{
+	  /^X\/\(\/\/\)$/{
 	    s//\1/
 	    q
 	  }
-	  /^X\(\/\/\)$/{
-	    s//\1/
-	    q
-	  }
-	  /^X\(\/\).*/{
+	  /^X\/\(\/\).*/{
 	    s//\1/
 	    q
 	  }
 	  s/.*/./; q'`
-      as_dir=$dirpart/$fdir; as_fn_mkdir_p
-      # echo "creating $dirpart/$file"
-      echo '# dummy' > "$dirpart/$file"
-    done
+    { echo "$as_me:$LINENO: cd "$am_dirpart" \
+      && sed -e '/# am--include-marker/d' "$am_filepart" \
+        | $MAKE -f - am--depfiles" >&5
+   (cd "$am_dirpart" \
+      && sed -e '/# am--include-marker/d' "$am_filepart" \
+        | $MAKE -f - am--depfiles) >&5 2>&5
+   ac_status=$?
+   echo "$as_me:$LINENO: \$? = $ac_status" >&5
+   (exit $ac_status); } || am_rc=$?
   done
+  if test $am_rc -ne 0; then
+    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in '$ac_pwd':" >&5
+printf "%s\n" "$as_me: error: in '$ac_pwd':" >&2;}
+as_fn_error $? "Something went wrong bootstrapping makefile fragments
+    for automatic dependency tracking.  If GNU make was not used, consider
+    re-running the configure script with MAKE=\"gmake\" (or whatever is
+    necessary).  You can also try re-running configure with the
+    '--disable-dependency-tracking' option to at least be able to build
+    the package (albeit without support for automatic dependency tracking).
+See 'config.log' for more details" "$LINENO" 5; }
+  fi
+  { am_dirpart=; unset am_dirpart;}
+  { am_filepart=; unset am_filepart;}
+  { am_mf=; unset am_mf;}
+  { am_rc=; unset am_rc;}
+  rm -f conftest-deps.mk
 }
  ;;
     "libtool":C)
@@ -1726,19 +1672,18 @@ $as_echo X"$file" |
     cat <<_LT_EOF >> "$cfgfile"
 #! $SHELL
 # Generated automatically by $as_me ($PACKAGE) $VERSION
-# Libtool was configured on host `(hostname || uname -n) 2>/dev/null | sed 1q`:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 
 # Provide generalized library-building support services.
 # Written by Gordon Matzigkeit, 1996
 
-# Copyright (C) 2014 Free Software Foundation, Inc.
+# Copyright (C) 2024 Free Software Foundation, Inc.
 # This is free software; see the source for copying conditions.  There is NO
 # warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 # GNU Libtool is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of of the License, or
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 #
 # As a special exception to the GNU General Public License, if you
@@ -1846,6 +1791,9 @@ to_host_file_cmd=$lt_cv_to_host_file_cmd
 # convert \$build files to toolchain format.
 to_tool_file_cmd=$lt_cv_to_tool_file_cmd
 
+# A file(cmd) program that detects file types.
+FILECMD=$lt_FILECMD
+
 # An object symbol dumper.
 OBJDUMP=$lt_OBJDUMP
 
@@ -1870,8 +1818,11 @@ sharedlib_from_linklib_cmd=$lt_sharedlib_from_linklib_cmd
 # The archiver.
 AR=$lt_AR
 
+# Flags to create an archive (by configure).
+lt_ar_flags=$lt_ar_flags
+
 # Flags to create an archive.
-AR_FLAGS=$lt_AR_FLAGS
+AR_FLAGS=\${ARFLAGS-"\$lt_ar_flags"}
 
 # How to feed a file listing to the archiver.
 archiver_list_spec=$lt_archiver_list_spec
@@ -1888,10 +1839,10 @@ old_postuninstall_cmds=$lt_old_postuninstall_cmds
 lock_old_archive_extraction=$lock_old_archive_extraction
 
 # A C compiler.
-WDCC=$lt_CC
+LTCC=$lt_CC
 
-# WDCC compiler flags.
-WDCFLAGS=$lt_CFLAGS
+# LTCC compiler flags.
+LTCFLAGS=$lt_CFLAGS
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe=$lt_lt_cv_sys_global_symbol_pipe
@@ -2113,7 +2064,7 @@ hardcode_direct=$hardcode_direct
 
 # Set to "yes" if using DIR/libNAME\$shared_ext during linking hardcodes
 # DIR into the resulting binary and the resulting library dependency is
-# "absolute",i.e impossible to change by setting \$shlibpath_var if the
+# "absolute",i.e. impossible to change by setting \$shlibpath_var if the
 # library is relocated.
 hardcode_direct_absolute=$hardcode_direct_absolute
 
@@ -2253,6 +2204,7 @@ _LT_EOF
   esac
 
 
+
 ltmain=$ac_aux_dir/ltmain.sh
 
 
@@ -2260,7 +2212,7 @@ ltmain=$ac_aux_dir/ltmain.sh
   # if finds mixed CR/LF and LF-only lines.  Since sed operates in
   # text mode, it properly converts lines to CR/LF.  This bash problem
   # is reportedly fixed, but why not run on old versions too?
-  sed '$q' "$ltmain" >> "$cfgfile" \
+  $SED '$q' "$ltmain" >> "$cfgfile" \
      || (rm -f "$cfgfile"; exit 1)
 
    mv -f "$cfgfile" "$ofile" ||
@@ -2355,7 +2307,7 @@ hardcode_direct=$hardcode_direct_CXX
 
 # Set to "yes" if using DIR/libNAME\$shared_ext during linking hardcodes
 # DIR into the resulting binary and the resulting library dependency is
-# "absolute",i.e impossible to change by setting \$shlibpath_var if the
+# "absolute",i.e. impossible to change by setting \$shlibpath_var if the
 # library is relocated.
 hardcode_direct_absolute=$hardcode_direct_absolute_CXX
 

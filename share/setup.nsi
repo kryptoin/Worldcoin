@@ -1,4 +1,4 @@
-Name "Worldcoin Core (32-bit)"
+Name "Worldcoin Core (-bit)"
 
 RequestExecutionLevel highest
 SetCompressor /SOLID lzma
@@ -10,11 +10,11 @@ SetCompressor /SOLID lzma
 !define URL http://www.worldcoin.org/
 
 # MUI Symbol Definitions
-!define MUI_ICON "/d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/share/pixmaps/bitcoin.ico"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "/d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/share/pixmaps/nsis-wizard.bmp"
+!define MUI_ICON "/opt/crypto/sources/worldcoin/share/pixmaps/bitcoin.ico"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "/opt/crypto/sources/worldcoin/share/pixmaps/nsis-wizard.bmp"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_RIGHT
-!define MUI_HEADERIMAGE_BITMAP "/d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/share/pixmaps/nsis-header.bmp"
+!define MUI_HEADERIMAGE_BITMAP "/opt/crypto/sources/worldcoin/share/pixmaps/nsis-header.bmp"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
@@ -22,13 +22,13 @@ SetCompressor /SOLID lzma
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER "Worldcoin Core"
 !define MUI_FINISHPAGE_RUN $INSTDIR\worldcoin-qt.exe
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
-!define MUI_UNWELCOMEFINISHPAGE_BITMAP "/d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/share/pixmaps/nsis-wizard.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "/opt/crypto/sources/worldcoin/share/pixmaps/nsis-wizard.bmp"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
 # Included files
 !include Sections.nsh
 !include MUI2.nsh
-!if "32" == "64"
+!if "" == "64"
 !include x64.nsh
 !endif
 
@@ -48,8 +48,8 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/worldcoin-${VERSION}-win32-setup.exe
-!if "32" == "64"
+OutFile /opt/crypto/sources/worldcoin/worldcoin-${VERSION}-win-setup.exe
+!if "" == "64"
 InstallDir $PROGRAMFILES64\Worldcoin
 !else
 InstallDir $PROGRAMFILES\Worldcoin
@@ -73,14 +73,14 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/release/worldcoin-qt.exe
-    File /oname=COPYING.txt /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/COPYING
-    File /oname=readme.txt /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/doc/README_windows.txt
+    File /opt/crypto/sources/worldcoin/release/worldcoin-qt.exe
+    File /oname=COPYING.txt /opt/crypto/sources/worldcoin/COPYING
+    File /oname=readme.txt /opt/crypto/sources/worldcoin/doc/README_windows.txt
     SetOutPath $INSTDIR\daemon
-    File /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/release/worldcoind.exe
-    File /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/release/worldcoin-cli.exe
+    File /opt/crypto/sources/worldcoin/release/worldcoind.exe
+    File /opt/crypto/sources/worldcoin/release/worldcoin-cli.exe
     SetOutPath $INSTDIR\doc
-    File /r /d/coin2019/ltcdoge/worldcoin-0.10.4.0rc1/doc\*.*
+    File /r /opt/crypto/sources/worldcoin/doc\*.*
     SetOutPath $INSTDIR
     WriteRegStr HKCU "${REGKEY}\Components" Main 1
 
@@ -160,7 +160,7 @@ SectionEnd
 # Installer functions
 Function .onInit
     InitPluginsDir
-!if "32" == "64"
+!if "" == "64"
     ${If} ${RunningX64}
       ; disable registry redirection (enable access to 64-bit portion of registry)
       SetRegView 64

@@ -455,20 +455,37 @@ void ThreadImport(std::vector<boost::filesystem::path> vImportFiles)
         InitBlockIndex();
     }
 
-    // hardcoded $DATADIR/bootstrap.dat
-    filesystem::path pathBootstrap = GetDataDir() / "bootstrap.dat";
-    if (filesystem::exists(pathBootstrap)) {
-        FILE *file = fopen(pathBootstrap.string().c_str(), "rb");
-        if (file) {
-            CImportingNow imp;
-            filesystem::path pathBootstrapOld = GetDataDir() / "bootstrap.dat.old";
-            LogPrintf("Importing bootstrap.dat...\n");
-            LoadExternalBlockFile(file);
-            RenameOver(pathBootstrap, pathBootstrapOld);
-        } else {
-            LogPrintf("Warning: Could not open bootstrap file %s\n", pathBootstrap.string());
-        }
+    // // hardcoded $DATADIR/bootstrap.dat
+    // filesystem::path pathBootstrap = GetDataDir() / "bootstrap.dat";
+    // if (filesystem::exists(pathBootstrap)) {
+    //     FILE *file = fopen(pathBootstrap.string().c_str(), "rb");
+    //     if (file) {
+    //         CImportingNow imp;
+    //         filesystem::path pathBootstrapOld = GetDataDir() / "bootstrap.dat.old";
+    //         LogPrintf("Importing bootstrap.dat...\n");
+    //         LoadExternalBlockFile(file);
+    //         RenameOver(pathBootstrap, pathBootstrapOld);
+    //     } else {
+    //         LogPrintf("Warning: Could not open bootstrap file %s\n", pathBootstrap.string());
+    //     }
+    // }
+
+    //filesystem::path pathBootstrap = GetDataDir() / "bootstrap.dat";
+    boost::filesystem::path pathBootstrap = GetDataDir() / "bootstrap.dat";
+
+if (boost::filesystem::exists(pathBootstrap)) {
+    FILE *file = fopen(pathBootstrap.string().c_str(), "rb");
+    if (file) {
+        CImportingNow imp;
+        boost::filesystem::path pathBootstrapOld = GetDataDir() / "bootstrap.dat.old";
+        LogPrintf("Importing bootstrap.dat...\n");
+        LoadExternalBlockFile(file);
+        RenameOver(pathBootstrap, pathBootstrapOld);  // ✅ inside the same block
+    } else {
+        LogPrintf("Warning: Could not open bootstrap file %s\n", pathBootstrap.string());
     }
+}
+
 
     // -loadblock=
     BOOST_FOREACH(boost::filesystem::path &path, vImportFiles) {
@@ -767,8 +784,8 @@ bool AppInit2(boost::thread_group& threadGroup)
     std::string strDataDir = GetDataDir().string();
 #ifdef ENABLE_WALLET
     // Wallet file must be a plain filename without a directory
-    if (strWalletFile != boost::filesystem::basename(strWalletFile) + boost::filesystem::extension(strWalletFile))
-        return InitError(strprintf(_("Wallet %s resides outside data directory %s"), strWalletFile, strDataDir));
+    //if (strWalletFile != boost::filesystem::basename(strWalletFile) + boost::filesystem::extension(strWalletFile))
+    //    return InitError(strprintf(_("Wallet %s resides outside data directory %s"), strWalletFile, strDataDir));
 #endif
     // Make sure only a single Bitcoin process is using the data directory.
     boost::filesystem::path pathLockFile = GetDataDir() / ".lock";
@@ -852,7 +869,7 @@ bool AppInit2(boost::thread_group& threadGroup)
                 return false;
         }
 
-        if (filesystem::exists(GetDataDir() / strWalletFile))
+        if (boost::filesystem::exists(GetDataDir() / strWalletFile))
         {
             CDBEnv::VerifyResult r = bitdb.Verify(strWalletFile, CWalletDB::Recover);
             if (r == CDBEnv::RECOVER_OK)
@@ -973,31 +990,56 @@ bool AppInit2(boost::thread_group& threadGroup)
     fReindex = GetBoolArg("-reindex", false);
 
     // Upgrading to 0.8; hard-link the old blknnnn.dat files into /blocks/
-    filesystem::path blocksDir = GetDataDir() / "blocks";
-    if (!filesystem::exists(blocksDir))
-    {
-        filesystem::create_directories(blocksDir);
-        bool linked = false;
-        for (unsigned int i = 1; i < 10000; i++) {
-            filesystem::path source = GetDataDir() / strprintf("blk%04u.dat", i);
-            if (!filesystem::exists(source)) break;
-            filesystem::path dest = blocksDir / strprintf("blk%05u.dat", i-1);
-            try {
-                filesystem::create_hard_link(source, dest);
-                LogPrintf("Hardlinked %s -> %s\n", source.string(), dest.string());
-                linked = true;
-            } catch (filesystem::filesystem_error & e) {
-                // Note: hardlink creation failing is not a disaster, it just means
-                // blocks will get re-downloaded from peers.
-                LogPrintf("Error hardlinking blk%04u.dat : %s\n", i, e.what());
-                break;
-            }
-        }
-        if (linked)
-        {
-            fReindex = true;
+
+    boost::filesystem::path blocksDir = GetDataDir() / "blocks";
+if (!boost::filesystem::exists(blocksDir))
+{
+    boost::filesystem::create_directories(blocksDir);
+    bool linked = false;
+    for (unsigned int i = 1; i < 10000; i++) {
+        boost::filesystem::path source = GetDataDir() / strprintf("blk%04u.dat", i);
+        if (!boost::filesystem::exists(source)) break;
+        boost::filesystem::path dest = blocksDir / strprintf("blk%05u.dat", i-1);
+        try {
+            boost::filesystem::create_hard_link(source, dest);
+            LogPrintf("Hardlinked %s -> %s\n", source.string(), dest.string());
+            linked = true;
+        } catch (boost::filesystem::filesystem_error & e) {
+            LogPrintf("Error hardlinking blk%04u.dat : %s\n", i, e.what());
+            break;
         }
     }
+    if (linked) {
+        fReindex = true;
+    }
+}
+
+
+    // filesystem::path blocksDir = GetDataDir() / "blocks";
+    // if (!filesystem::exists(blocksDir))
+    // {
+    //     filesystem::create_directories(blocksDir);
+    //     bool linked = false;
+    //     for (unsigned int i = 1; i < 10000; i++) {
+    //         filesystem::path source = GetDataDir() / strprintf("blk%04u.dat", i);
+    //         if (!filesystem::exists(source)) break;
+    //         filesystem::path dest = blocksDir / strprintf("blk%05u.dat", i-1);
+    //         try {
+    //             filesystem::create_hard_link(source, dest);
+    //             LogPrintf("Hardlinked %s -> %s\n", source.string(), dest.string());
+    //             linked = true;
+    //         } catch (filesystem::filesystem_error & e) {
+    //             // Note: hardlink creation failing is not a disaster, it just means
+    //             // blocks will get re-downloaded from peers.
+    //             LogPrintf("Error hardlinking blk%04u.dat : %s\n", i, e.what());
+    //             break;
+    //         }
+    //     }
+    //     if (linked)
+    //     {
+    //         fReindex = true;
+    //     }
+    // }
 
     // cache size calculations
     size_t nTotalCache = (GetArg("-dbcache", nDefaultDbCache) << 20);

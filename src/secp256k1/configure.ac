@@ -8,6 +8,7 @@ AH_TOP([#define LIBSECP256K1_CONFIG_H])
 AH_BOTTOM([#endif //LIBSECP256K1_CONFIG_H])
 AM_INIT_AUTOMAKE([foreign])
 LT_INIT
+m4_include([../../build-aux/m4/secp256k1.m4])
 
 dnl make the compilation flags quiet unless V=1 is used
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
@@ -105,83 +106,9 @@ AC_CHECK_TYPES([__int128])
 
 AC_CHECK_DECL(__builtin_expect,AC_DEFINE(HAVE_BUILTIN_EXPECT,1,[Define this symbol if __builtin_expect is available]),,)
 
-if test x"$req_field" = x"auto"; then
-  SECP_64BIT_ASM_CHECK
-  if test x"$has_64bit_asm" = x"yes"; then
-    set_field=64bit_asm
-  fi
-
-  if test x"$set_field" = x; then
-    SECP_INT128_CHECK
-    if test x"$has_int128" = x"yes"; then
-      set_field=64bit
-    fi
-  fi
-
-  if test x"$set_field" = x; then
-    set_field=32bit
-  fi
-else
-  set_field=$req_field
-  case $set_field in
-  64bit_asm)
-    SECP_64BIT_ASM_CHECK
-    ;;
-  64bit)
-    SECP_INT128_CHECK
-    ;;
-  gmp)
-    SECP_GMP_CHECK
-    ;;
-  32bit)
-    ;;
-  *)
-    AC_MSG_ERROR([invalid field implementation selection])
-    ;;
-  esac
-fi
-
-if test x"$req_scalar" = x"auto"; then
-  if test x"$set_scalar" = x; then
-    SECP_INT128_CHECK
-    if test x"$has_int128" = x"yes"; then
-      set_scalar=64bit
-    fi
-  fi
-  if test x"$set_scalar" = x; then
-    set_scalar=32bit
-  fi
-else
-  set_scalar=$req_scalar
-  case $set_scalar in
-  64bit)
-    SECP_INT128_CHECK
-    ;;
-  32bit)
-    ;;
-  *)
-    AC_MSG_ERROR([invalid scalar implementation selected])
-    ;;
-  esac
-fi
-
-if test x"$req_bignum" = x"auto"; then
-  if test x"$set_bignum" = x; then
-    set_bignum=none
-  fi
-else
-  set_bignum=$req_bignum
-  case $set_bignum in
-  gmp)
-    SECP_GMP_CHECK
-    ;;
-  none)
-    ;;
-  *)
-    AC_MSG_ERROR([invalid bignum implementation selection])
-    ;;
-  esac
-fi
+set_field=64bit
+set_scalar=64bit
+set_bignum=none
 
 # select field implementation
 case $set_field in
