@@ -253,6 +253,10 @@ static inline void xor_salsa8(uint32_t B[16], const uint32_t Bx[16])
 	B[15] += x15;
 }
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void scrypt_1024_1_1_256_sp_generic(const char *input, char *output, char *scratchpad)
 {
 	uint8_t B[128];
@@ -327,3 +331,7 @@ void scrypt_1024_1_1_256(const char *input, char *output)
 	char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
     scrypt_1024_1_1_256_sp(input, output, scratchpad);
 }
+
+#ifdef __cplusplus
+}
+#endif

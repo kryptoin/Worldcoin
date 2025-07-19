@@ -1,5 +1,4 @@
 ACLOCAL_AMFLAGS = -I build-aux/m4
-ACLOCAL_AMFLAGS = -I build-aux/m4
 
 SUBDIRS = src
 .PHONY: deploy FORCE
@@ -22,20 +21,20 @@ OSX_QT_TRANSLATIONS = da,de,es,hu,ru,uk,zh_CN,zh_TW
 DIST_DOCS = $(wildcard doc/*.md) $(wildcard doc/release-notes/*.md)
 
 WINDOWS_PACKAGING = $(top_srcdir)/share/pixmaps/bitcoin.ico \
-  $(top_srcdir)/share/pixmaps/nsis-header.bmp \
-  $(top_srcdir)/share/pixmaps/nsis-wizard.bmp \
-  $(top_srcdir)/doc/README_windows.txt
+	 $(top_srcdir)/share/pixmaps/nsis-header.bmp \
+	 $(top_srcdir)/share/pixmaps/nsis-wizard.bmp \
+	 $(top_srcdir)/doc/README_windows.txt
 
 OSX_PACKAGING = $(OSX_DEPLOY_SCRIPT) $(OSX_FANCY_PLIST) $(OSX_INSTALLER_ICONS) \
-  $(top_srcdir)/contrib/macdeploy/background.png \
-  $(top_srcdir)/contrib/macdeploy/DS_Store \
-  $(top_srcdir)/contrib/macdeploy/detached-sig-apply.sh \
-  $(top_srcdir)/contrib/macdeploy/detached-sig-create.sh
+	 $(top_srcdir)/contrib/macdeploy/background.png \
+	 $(top_srcdir)/contrib/macdeploy/DS_Store \
+	 $(top_srcdir)/contrib/macdeploy/detached-sig-apply.sh \
+	 $(top_srcdir)/contrib/macdeploy/detached-sig-create.sh
 
 COVERAGE_INFO = baseline_filtered_combined.info baseline.info block_test.info \
-  leveldb_baseline.info test_bitcoin_filtered.info total_coverage.info \
-  baseline_filtered.info block_test_filtered.info \
-  leveldb_baseline_filtered.info test_bitcoin_coverage.info test_bitcoin.info
+	 leveldb_baseline.info test_bitcoin_filtered.info total_coverage.info \
+	 baseline_filtered.info block_test_filtered.info \
+	 leveldb_baseline_filtered.info test_bitcoin_coverage.info test_bitcoin.info
 
 dist-hook:
 	-$(MAKE) -C $(top_distdir)/src/leveldb clean
@@ -82,8 +81,8 @@ $(OSX_APP)/Contents/MacOS/Worldcoin-Qt: $(BITCOIN_QT_BIN)
 	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM)  $< $@
 
 OSX_APP_BUILT=$(OSX_APP)/Contents/PkgInfo $(OSX_APP)/Contents/Resources/empty.lproj \
-  $(OSX_APP)/Contents/Resources/bitcoin.icns $(OSX_APP)/Contents/Info.plist \
-  $(OSX_APP)/Contents/MacOS/Worldcoin-Qt
+	 $(OSX_APP)/Contents/Resources/bitcoin.icns $(OSX_APP)/Contents/Info.plist \
+	 $(OSX_APP)/Contents/MacOS/Worldcoin-Qt
 
 if BUILD_DARWIN
 $(OSX_DMG): $(OSX_APP_BUILT) $(OSX_PACKAGING)

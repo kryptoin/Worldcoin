@@ -103,8 +103,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 {
-    if(hash.GetHex() == "ecab9c4d0cff0d84a09374834155c5b79a3b5a04e7200d38208877e724163d23")
-            return true;
+    
 
     bool fNegative;
     bool fOverflow;

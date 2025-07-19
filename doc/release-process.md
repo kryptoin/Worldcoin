@@ -126,7 +126,7 @@ rm SHA256SUMS
 ```
 (the digest algorithm is forced to sha256 to avoid confusion of the `Hash:` header that GPG adds with the SHA256 used for the files)
 
-- Update worldcoin.org version
+- Update worldcoin.tools version
 
 - Announce the release:
 

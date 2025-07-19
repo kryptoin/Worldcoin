@@ -92,29 +92,25 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@EMBEDDED_LEVELDB_TRUE@am__append_1 = -I$(srcdir)/leveldb/include \
-@EMBEDDED_LEVELDB_TRUE@	-I$(srcdir)/leveldb/helpers/memenv
-@EMBEDDED_LEVELDB_TRUE@am__append_2 = $(builddir)/leveldb/libleveldb.a
-@EMBEDDED_LEVELDB_TRUE@am__append_3 = $(builddir)/leveldb/libmemenv.a
-@ENABLE_WALLET_TRUE@am__append_4 = $(BDB_CPPFLAGS)
-@ENABLE_WALLET_TRUE@am__append_5 = libbitcoin_wallet.a
-bin_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
-	$(am__EXEEXT_4) $(am__EXEEXT_5)
+@ENABLE_WALLET_TRUE@am__append_1 = $(BDB_CPPFLAGS)
+@ENABLE_WALLET_TRUE@am__append_2 = libbitcoin_wallet.a
+bin_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) genesis_util$(EXEEXT) \
+	$(am__EXEEXT_3) $(am__EXEEXT_4) $(am__EXEEXT_5)
 TESTS = $(am__EXEEXT_6) $(am__EXEEXT_5)
-@BUILD_BITCOIND_TRUE@am__append_6 = worldcoind
-@BUILD_BITCOIN_UTILS_TRUE@am__append_7 = worldcoin-cli worldcoin-tx
-@GLIBC_BACK_COMPAT_TRUE@am__append_8 = compat/glibc_compat.cpp \
+@BUILD_BITCOIND_TRUE@am__append_3 = worldcoind
+@BUILD_BITCOIN_UTILS_TRUE@am__append_4 = worldcoin-cli worldcoin-tx
+@GLIBC_BACK_COMPAT_TRUE@am__append_5 = compat/glibc_compat.cpp \
 @GLIBC_BACK_COMPAT_TRUE@	compat/glibcxx_compat.cpp
-@ENABLE_WALLET_TRUE@am__append_9 = libbitcoin_wallet.a
+@ENABLE_WALLET_TRUE@am__append_6 = libbitcoin_wallet.a
 #
-@TARGET_WINDOWS_TRUE@am__append_10 = bitcoind-res.rc
-@TARGET_WINDOWS_TRUE@am__append_11 = bitcoin-cli-res.rc
-@BUILD_BITCOIN_LIBS_TRUE@@GLIBC_BACK_COMPAT_TRUE@am__append_12 = compat/glibc_compat.cpp \
+@TARGET_WINDOWS_TRUE@am__append_7 = bitcoind-res.rc
+@TARGET_WINDOWS_TRUE@am__append_8 = bitcoin-cli-res.rc
+@BUILD_BITCOIN_LIBS_TRUE@@GLIBC_BACK_COMPAT_TRUE@am__append_9 = compat/glibc_compat.cpp \
 @BUILD_BITCOIN_LIBS_TRUE@@GLIBC_BACK_COMPAT_TRUE@	compat/glibcxx_compat.cpp
-@BUILD_BITCOIN_LIBS_TRUE@@USE_LIBSECP256K1_TRUE@am__append_13 = secp256k1/libsecp256k1.la
-@ENABLE_TESTS_TRUE@am__append_14 = test/test_worldcoin test/bitcoin-util-test.py
-@ENABLE_TESTS_TRUE@am__append_15 = test/test_worldcoin
-@ENABLE_TESTS_TRUE@am__append_16 = \
+@BUILD_BITCOIN_LIBS_TRUE@@USE_LIBSECP256K1_TRUE@am__append_10 = secp256k1/libsecp256k1.la
+@ENABLE_TESTS_TRUE@am__append_11 = test/test_worldcoin test/bitcoin-util-test.py
+@ENABLE_TESTS_TRUE@am__append_12 = test/test_worldcoin
+@ENABLE_TESTS_TRUE@am__append_13 = \
 @ENABLE_TESTS_TRUE@	test/bctest.py \
 @ENABLE_TESTS_TRUE@	test/bitcoin-util-test.py \
 @ENABLE_TESTS_TRUE@	test/data/bitcoin-util-test.json \
@@ -127,16 +123,16 @@ TESTS = $(am__EXEEXT_6) $(am__EXEEXT_5)
 @ENABLE_TESTS_TRUE@	test/data/txcreate2.hex \
 @ENABLE_TESTS_TRUE@	test/data/txcreatesign.hex
 
-@ENABLE_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_17 = \
+@ENABLE_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_14 = \
 @ENABLE_TESTS_TRUE@@ENABLE_WALLET_TRUE@  test/accounting_tests.cpp \
 @ENABLE_TESTS_TRUE@@ENABLE_WALLET_TRUE@  test/wallet_tests.cpp \
 @ENABLE_TESTS_TRUE@@ENABLE_WALLET_TRUE@  test/rpc_wallet_tests.cpp
 
-@ENABLE_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_18 = $(LIBBITCOIN_WALLET)
-@ENABLE_TESTS_TRUE@am__append_19 = $(CLEAN_BITCOIN_TEST)
-@ENABLE_QT_TRUE@am__append_20 = qt/worldcoin-qt
-@ENABLE_QT_TRUE@am__append_21 = qt/libbitcoinqt.a
-@ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@am__append_22 = \
+@ENABLE_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_15 = $(LIBBITCOIN_WALLET)
+@ENABLE_TESTS_TRUE@am__append_16 = $(CLEAN_BITCOIN_TEST)
+@ENABLE_QT_TRUE@am__append_17 = qt/worldcoin-qt
+@ENABLE_QT_TRUE@am__append_18 = qt/libbitcoinqt.a
+@ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@am__append_19 = \
 @ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@  qt/addressbookpage.cpp \
 @ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@  qt/addresstablemodel.cpp \
 @ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@  qt/askpassphrasedialog.cpp \
@@ -164,43 +160,32 @@ TESTS = $(am__EXEEXT_6) $(am__EXEEXT_5)
 @ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@  qt/walletmodeltransaction.cpp \
 @ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@  qt/walletview.cpp
 
-@ENABLE_QT_TRUE@@TARGET_DARWIN_TRUE@am__append_23 = $(BITCOIN_MM)
-@ENABLE_QT_TRUE@@TARGET_WINDOWS_TRUE@am__append_24 = $(BITCOIN_RC)
-@ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@am__append_25 = $(LIBBITCOIN_WALLET)
-@ENABLE_QT_TRUE@am__append_26 = $(CLEAN_QT)
-@ENABLE_QT_TESTS_TRUE@am__append_27 = qt/test/test_worldcoin-qt
-@ENABLE_QT_TESTS_TRUE@am__append_28 = qt/test/test_worldcoin-qt
-@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_29 = qt/test/moc_paymentservertests.cpp
-@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_30 = \
+@ENABLE_QT_TRUE@@TARGET_DARWIN_TRUE@am__append_20 = $(BITCOIN_MM)
+@ENABLE_QT_TRUE@@TARGET_WINDOWS_TRUE@am__append_21 = $(BITCOIN_RC)
+@ENABLE_QT_TRUE@@ENABLE_WALLET_TRUE@am__append_22 = $(LIBBITCOIN_WALLET)
+@ENABLE_QT_TRUE@am__append_23 = $(CLEAN_QT)
+@ENABLE_QT_TESTS_TRUE@am__append_24 = qt/test/test_worldcoin-qt
+@ENABLE_QT_TESTS_TRUE@am__append_25 = qt/test/test_worldcoin-qt
+@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_26 = qt/test/moc_paymentservertests.cpp
+@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_27 = \
 @ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@  qt/test/paymentservertests.cpp
 
-@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_31 = $(LIBBITCOIN_WALLET)
-@ENABLE_QT_TESTS_TRUE@am__append_32 = $(CLEAN_BITCOIN_QT_TEST)
+@ENABLE_QT_TESTS_TRUE@@ENABLE_WALLET_TRUE@am__append_28 = $(LIBBITCOIN_WALLET)
+@ENABLE_QT_TESTS_TRUE@am__append_29 = $(CLEAN_BITCOIN_QT_TEST)
 subdir = src
-SUBDIRS =
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/build-aux/m4/ax_boost_base.m4 \
-	$(top_srcdir)/build-aux/m4/ax_boost_chrono.m4 \
-	$(top_srcdir)/build-aux/m4/ax_boost_filesystem.m4 \
-	$(top_srcdir)/build-aux/m4/ax_boost_program_options.m4 \
-	$(top_srcdir)/build-aux/m4/ax_boost_system.m4 \
-	$(top_srcdir)/build-aux/m4/ax_boost_thread.m4 \
-	$(top_srcdir)/build-aux/m4/ax_boost_unit_test_framework.m4 \
-	$(top_srcdir)/build-aux/m4/bitcoin_find_bdb48.m4 \
-	$(top_srcdir)/build-aux/m4/bitcoin_qt.m4 \
-	$(top_srcdir)/build-aux/m4/bitcoin_subdir_to_include.m4 \
-	$(top_srcdir)/build-aux/m4/libtool.m4 \
+am__aclocal_m4_deps = $(top_srcdir)/build-aux/m4/libtool.m4 \
 	$(top_srcdir)/build-aux/m4/ltoptions.m4 \
 	$(top_srcdir)/build-aux/m4/ltsugar.m4 \
 	$(top_srcdir)/build-aux/m4/ltversion.m4 \
-	$(top_srcdir)/build-aux/m4/lt~obsolete.m4 $(top_srcdir)/pkg.m4 \
+	$(top_srcdir)/build-aux/m4/lt~obsolete.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__include_HEADERS_DIST) \
 	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
-CONFIG_HEADER = $(top_builddir)/src/config/bitcoin-config.h
+CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 @BUILD_BITCOIND_TRUE@am__EXEEXT_1 = worldcoind$(EXEEXT)
@@ -306,7 +291,6 @@ am_libbitcoin_server_a_OBJECTS =  \
 	libbitcoin_server_a-chain.$(OBJEXT) \
 	libbitcoin_server_a-checkpoints.$(OBJEXT) \
 	libbitcoin_server_a-init.$(OBJEXT) \
-	libbitcoin_server_a-leveldbwrapper.$(OBJEXT) \
 	libbitcoin_server_a-main.$(OBJEXT) \
 	libbitcoin_server_a-merkleblock.$(OBJEXT) \
 	libbitcoin_server_a-miner.$(OBJEXT) \
@@ -323,7 +307,8 @@ am_libbitcoin_server_a_OBJECTS =  \
 	script/libbitcoin_server_a-sigcache.$(OBJEXT) \
 	libbitcoin_server_a-timedata.$(OBJEXT) \
 	libbitcoin_server_a-txdb.$(OBJEXT) \
-	libbitcoin_server_a-txmempool.$(OBJEXT) $(am__objects_1) \
+	libbitcoin_server_a-txmempool.$(OBJEXT) \
+	libbitcoin_server_a-leveldbwrapper.$(OBJEXT) $(am__objects_1) \
 	$(am__objects_1)
 libbitcoin_server_a_OBJECTS = $(am_libbitcoin_server_a_OBJECTS)
 libbitcoin_util_a_AR = $(AR) $(ARFLAGS)
@@ -340,16 +325,16 @@ am__libbitcoin_util_a_SOURCES_DIST = compat/strnlen.cpp \
 	coins.h compat.h compressor.h primitives/block.h \
 	primitives/transaction.h core_io.h crypter.h db.h \
 	eccryptoverify.h ecwrapper.h hash.h init.h key.h keystore.h \
-	leveldbwrapper.h limitedmap.h main.h merkleblock.h miner.h \
-	mruset.h netbase.h net.h noui.h pow.h protocol.h pubkey.h \
-	random.h rpcclient.h rpcprotocol.h rpcserver.h \
-	script/interpreter.h script/script.h script/sigcache.h \
-	script/sign.h script/standard.h script/script_error.h \
-	serialize.h streams.h sync.h threadsafety.h timedata.h \
-	tinyformat.h txdb.h txmempool.h ui_interface.h uint256.h \
-	undo.h util.h utilstrencodings.h utilmoneystr.h utiltime.h \
-	version.h wallet.h wallet_ismine.h walletdb.h compat/sanity.h \
-	compat/glibc_compat.cpp compat/glibcxx_compat.cpp
+	limitedmap.h main.h merkleblock.h miner.h mruset.h netbase.h \
+	net.h noui.h pow.h protocol.h pubkey.h random.h rpcclient.h \
+	rpcprotocol.h rpcserver.h script/interpreter.h script/script.h \
+	script/sigcache.h script/sign.h script/standard.h \
+	script/script_error.h serialize.h streams.h sync.h \
+	threadsafety.h timedata.h tinyformat.h txdb.h txmempool.h \
+	ui_interface.h uint256.h undo.h util.h utilstrencodings.h \
+	utilmoneystr.h utiltime.h version.h wallet.h wallet_ismine.h \
+	walletdb.h compat/sanity.h compat/glibc_compat.cpp \
+	compat/glibcxx_compat.cpp
 @GLIBC_BACK_COMPAT_TRUE@am__objects_2 = compat/libbitcoin_util_a-glibc_compat.$(OBJEXT) \
 @GLIBC_BACK_COMPAT_TRUE@	compat/libbitcoin_util_a-glibcxx_compat.$(OBJEXT)
 am_libbitcoin_util_a_OBJECTS =  \
@@ -613,10 +598,8 @@ am_univalue_libbitcoin_univalue_a_OBJECTS =  \
 	univalue/univalue_write.$(OBJEXT)
 univalue_libbitcoin_univalue_a_OBJECTS =  \
 	$(am_univalue_libbitcoin_univalue_a_OBJECTS)
-am__DEPENDENCIES_1 =
 @BUILD_BITCOIN_LIBS_TRUE@libbitcoinconsensus_la_DEPENDENCIES =  \
-@BUILD_BITCOIN_LIBS_TRUE@	$(am__DEPENDENCIES_1) \
-@BUILD_BITCOIN_LIBS_TRUE@	$(am__append_13)
+@BUILD_BITCOIN_LIBS_TRUE@	$(am__append_10)
 am__libbitcoinconsensus_la_SOURCES_DIST = primitives/transaction.cpp \
 	crypto/hmac_sha512.cpp crypto/scrypt.cpp crypto/sha1.cpp \
 	crypto/sha256.cpp crypto/sha512.cpp crypto/ripemd160.cpp \
@@ -654,6 +637,10 @@ libbitcoinconsensus_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(LDFLAGS) -o $@
 @BUILD_BITCOIN_LIBS_TRUE@am_libbitcoinconsensus_la_rpath = -rpath \
 @BUILD_BITCOIN_LIBS_TRUE@	$(libdir)
+am_genesis_util_OBJECTS = genesis_util.$(OBJEXT) \
+	crypto/scrypt.$(OBJEXT)
+genesis_util_OBJECTS = $(am_genesis_util_OBJECTS)
+genesis_util_DEPENDENCIES =
 am__qt_test_test_worldcoin_qt_SOURCES_DIST = qt/test/test_main.cpp \
 	qt/test/uritests.cpp qt/test/uritests.h \
 	qt/test/paymentrequestdata.h qt/test/paymentservertests.h \
@@ -670,26 +657,12 @@ am__qt_test_test_worldcoin_qt_SOURCES_DIST = qt/test/test_main.cpp \
 qt_test_test_worldcoin_qt_OBJECTS =  \
 	$(am_qt_test_test_worldcoin_qt_OBJECTS) \
 	$(nodist_qt_test_test_worldcoin_qt_OBJECTS)
-am__DEPENDENCIES_2 = $(am__append_2)
-am__DEPENDENCIES_3 = $(am__append_3)
 @ENABLE_QT_TESTS_TRUE@qt_test_test_worldcoin_qt_DEPENDENCIES =  \
 @ENABLE_QT_TESTS_TRUE@	$(LIBBITCOINQT) $(LIBBITCOIN_SERVER) \
-@ENABLE_QT_TESTS_TRUE@	$(am__append_31) $(LIBBITCOIN_CLI) \
+@ENABLE_QT_TESTS_TRUE@	$(am__append_28) $(LIBBITCOIN_CLI) \
 @ENABLE_QT_TESTS_TRUE@	$(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) \
 @ENABLE_QT_TESTS_TRUE@	$(LIBBITCOIN_CRYPTO) \
-@ENABLE_QT_TESTS_TRUE@	$(LIBBITCOIN_UNIVALUE) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_2) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_3) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) \
-@ENABLE_QT_TESTS_TRUE@	$(am__DEPENDENCIES_1) $(LIBSECP256K1)
+@ENABLE_QT_TESTS_TRUE@	$(LIBBITCOIN_UNIVALUE) $(LIBSECP256K1)
 qt_test_test_worldcoin_qt_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(AM_CXXFLAGS) $(CXXFLAGS) \
@@ -710,16 +683,10 @@ am__qt_worldcoin_qt_SOURCES_DIST = qt/bitcoin.cpp \
 @ENABLE_QT_TRUE@	$(am__objects_14) $(am__objects_16)
 qt_worldcoin_qt_OBJECTS = $(am_qt_worldcoin_qt_OBJECTS)
 @ENABLE_QT_TRUE@qt_worldcoin_qt_DEPENDENCIES = qt/libbitcoinqt.a \
-@ENABLE_QT_TRUE@	$(LIBBITCOIN_SERVER) $(am__append_25) \
+@ENABLE_QT_TRUE@	$(LIBBITCOIN_SERVER) $(am__append_22) \
 @ENABLE_QT_TRUE@	$(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) \
 @ENABLE_QT_TRUE@	$(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) \
-@ENABLE_QT_TRUE@	$(LIBBITCOIN_UNIVALUE) $(am__DEPENDENCIES_2) \
-@ENABLE_QT_TRUE@	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_1) \
-@ENABLE_QT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-@ENABLE_QT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-@ENABLE_QT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-@ENABLE_QT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-@ENABLE_QT_TRUE@	$(LIBSECP256K1)
+@ENABLE_QT_TRUE@	$(LIBBITCOIN_UNIVALUE) $(LIBSECP256K1)
 qt_worldcoin_qt_LINK = $(LIBTOOL) $(AM_V_lt) \
 	$(qt_worldcoin_qt_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
 	$(OBJCXXLD) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) \
@@ -800,16 +767,12 @@ am__test_test_worldcoin_SOURCES_DIST = test/bignum.h \
 @ENABLE_TESTS_TRUE@	$(am__objects_19)
 test_test_worldcoin_OBJECTS = $(am_test_test_worldcoin_OBJECTS) \
 	$(nodist_test_test_worldcoin_OBJECTS)
-@BUILD_BITCOIN_LIBS_TRUE@am__DEPENDENCIES_4 = libbitcoinconsensus.la
+@BUILD_BITCOIN_LIBS_TRUE@am__DEPENDENCIES_1 = libbitcoinconsensus.la
 @ENABLE_TESTS_TRUE@test_test_worldcoin_DEPENDENCIES =  \
 @ENABLE_TESTS_TRUE@	$(LIBBITCOIN_SERVER) $(LIBBITCOIN_CLI) \
 @ENABLE_TESTS_TRUE@	$(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) \
 @ENABLE_TESTS_TRUE@	$(LIBBITCOIN_CRYPTO) $(LIBBITCOIN_UNIVALUE) \
-@ENABLE_TESTS_TRUE@	$(am__DEPENDENCIES_2) $(am__DEPENDENCIES_3) \
-@ENABLE_TESTS_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-@ENABLE_TESTS_TRUE@	$(LIBSECP256K1) $(am__append_18) \
-@ENABLE_TESTS_TRUE@	$(am__DEPENDENCIES_4) $(am__DEPENDENCIES_1) \
-@ENABLE_TESTS_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+@ENABLE_TESTS_TRUE@	$(LIBSECP256K1) $(am__append_15) \
 @ENABLE_TESTS_TRUE@	$(am__DEPENDENCIES_1)
 test_test_worldcoin_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
@@ -820,9 +783,7 @@ am__worldcoin_cli_SOURCES_DIST = bitcoin-cli.cpp bitcoin-cli-res.rc
 am_worldcoin_cli_OBJECTS = worldcoin_cli-bitcoin-cli.$(OBJEXT) \
 	$(am__objects_20)
 worldcoin_cli_OBJECTS = $(am_worldcoin_cli_OBJECTS)
-worldcoin_cli_DEPENDENCIES = $(LIBBITCOIN_CLI) $(LIBBITCOIN_UTIL) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+worldcoin_cli_DEPENDENCIES = $(LIBBITCOIN_CLI) $(LIBBITCOIN_UTIL)
 worldcoin_cli_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(AM_CXXFLAGS) $(CXXFLAGS) $(worldcoin_cli_LDFLAGS) $(LDFLAGS) \
@@ -831,7 +792,7 @@ am_worldcoin_tx_OBJECTS = worldcoin_tx-bitcoin-tx.$(OBJEXT)
 worldcoin_tx_OBJECTS = $(am_worldcoin_tx_OBJECTS)
 worldcoin_tx_DEPENDENCIES = $(LIBBITCOIN_UNIVALUE) \
 	$(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) \
-	$(LIBSECP256K1) $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+	$(LIBSECP256K1)
 worldcoin_tx_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(worldcoin_tx_LDFLAGS) $(LDFLAGS) -o $@
@@ -840,12 +801,6 @@ am__worldcoind_SOURCES_DIST = bitcoind.cpp bitcoind-res.rc
 am_worldcoind_OBJECTS = worldcoind-bitcoind.$(OBJEXT) \
 	$(am__objects_21)
 worldcoind_OBJECTS = $(am_worldcoind_OBJECTS)
-worldcoind_DEPENDENCIES = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_COMMON) \
-	$(LIBBITCOIN_UNIVALUE) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) \
-	$(am__DEPENDENCIES_2) $(am__DEPENDENCIES_3) $(LIBSECP256K1) \
-	$(am__append_9) $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
 worldcoind_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(worldcoind_LDFLAGS) $(LDFLAGS) -o $@
@@ -861,10 +816,11 @@ AM_V_at = $(am__v_at_@AM_V@)
 am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
 am__v_at_1 = 
-DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src/config
-depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
+DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
+depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po \
+am__depfiles_remade = ./$(DEPDIR)/genesis_util.Po \
+	./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po \
 	./$(DEPDIR)/libbitcoin_common_a-allocators.Po \
 	./$(DEPDIR)/libbitcoin_common_a-amount.Po \
 	./$(DEPDIR)/libbitcoin_common_a-base58.Po \
@@ -951,6 +907,7 @@ am__depfiles_remade = ./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po \
 	crypto/$(DEPDIR)/libbitcoinconsensus_la-sha1.Plo \
 	crypto/$(DEPDIR)/libbitcoinconsensus_la-sha256.Plo \
 	crypto/$(DEPDIR)/libbitcoinconsensus_la-sha512.Plo \
+	crypto/$(DEPDIR)/scrypt.Po \
 	primitives/$(DEPDIR)/libbitcoin_common_a-block.Po \
 	primitives/$(DEPDIR)/libbitcoin_common_a-transaction.Po \
 	primitives/$(DEPDIR)/libbitcoinconsensus_la-transaction.Plo \
@@ -1168,7 +1125,7 @@ SOURCES = $(crypto_libbitcoin_crypto_a_SOURCES) \
 	$(libbitcoin_wallet_a_SOURCES) $(qt_libbitcoinqt_a_SOURCES) \
 	$(nodist_qt_libbitcoinqt_a_SOURCES) \
 	$(univalue_libbitcoin_univalue_a_SOURCES) \
-	$(libbitcoinconsensus_la_SOURCES) \
+	$(libbitcoinconsensus_la_SOURCES) $(genesis_util_SOURCES) \
 	$(qt_test_test_worldcoin_qt_SOURCES) \
 	$(nodist_qt_test_test_worldcoin_qt_SOURCES) \
 	$(qt_worldcoin_qt_SOURCES) $(test_test_worldcoin_SOURCES) \
@@ -1182,6 +1139,7 @@ DIST_SOURCES = $(crypto_libbitcoin_crypto_a_SOURCES) \
 	$(am__qt_libbitcoinqt_a_SOURCES_DIST) \
 	$(univalue_libbitcoin_univalue_a_SOURCES) \
 	$(am__libbitcoinconsensus_la_SOURCES_DIST) \
+	$(genesis_util_SOURCES) \
 	$(am__qt_test_test_worldcoin_qt_SOURCES_DIST) \
 	$(am__qt_worldcoin_qt_SOURCES_DIST) \
 	$(am__test_test_worldcoin_SOURCES_DIST) \
@@ -1394,7 +1352,7 @@ RECHECK_LOGS = $(TEST_LOGS)
 @ENABLE_TESTS_TRUE@	test/bitcoin-util-test.py
 TEST_SUITE_LOG = test-suite.log
 TEST_EXTENSIONS = @EXEEXT@ .test
-LOG_DRIVER = $(SHELL) $(top_srcdir)/build-aux/test-driver
+LOG_DRIVER = $(SHELL) $(top_srcdir)/test-driver
 LOG_COMPILE = $(LOG_COMPILER) $(AM_LOG_FLAGS) $(LOG_FLAGS)
 am__set_b = \
   case '$@' in \
@@ -1409,14 +1367,13 @@ am__set_b = \
 am__test_logs1 = $(TESTS:=.log)
 am__test_logs2 = $(am__test_logs1:@EXEEXT@.log=.log)
 TEST_LOGS = $(am__test_logs2:.test.log=.log)
-TEST_LOG_DRIVER = $(SHELL) $(top_srcdir)/build-aux/test-driver
+TEST_LOG_DRIVER = $(SHELL) $(top_srcdir)/test-driver
 TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
 	$(TEST_LOG_FLAGS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.qt.include \
 	$(srcdir)/Makefile.qttest.include \
-	$(srcdir)/Makefile.test.include \
-	$(top_srcdir)/build-aux/depcomp \
-	$(top_srcdir)/build-aux/test-driver
+	$(srcdir)/Makefile.test.include $(top_srcdir)/depcomp \
+	$(top_srcdir)/test-driver
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 am__relativize = \
   dir0=`pwd`; \
@@ -1451,36 +1408,10 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
-BDB_CPPFLAGS = @BDB_CPPFLAGS@
-BDB_LIBS = @BDB_LIBS@
-BOOST_CHRONO_LIB = @BOOST_CHRONO_LIB@
-BOOST_CPPFLAGS = @BOOST_CPPFLAGS@
-BOOST_FILESYSTEM_LIB = @BOOST_FILESYSTEM_LIB@
-BOOST_LDFLAGS = @BOOST_LDFLAGS@
-BOOST_LIBS = @BOOST_LIBS@
-BOOST_PROGRAM_OPTIONS_LIB = @BOOST_PROGRAM_OPTIONS_LIB@
-BOOST_SYSTEM_LIB = @BOOST_SYSTEM_LIB@
-BOOST_THREAD_LIB = @BOOST_THREAD_LIB@
-BOOST_UNIT_TEST_FRAMEWORK_LIB = @BOOST_UNIT_TEST_FRAMEWORK_LIB@
-BREW = @BREW@
-BUILD_QT = @BUILD_QT@
-BUILD_TEST = @BUILD_TEST@
-BUILD_TEST_QT = @BUILD_TEST_QT@
 CC = @CC@
-CCACHE = @CCACHE@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CLIENT_VERSION_BUILD = @CLIENT_VERSION_BUILD@
-CLIENT_VERSION_IS_RELEASE = @CLIENT_VERSION_IS_RELEASE@
-CLIENT_VERSION_MAJOR = @CLIENT_VERSION_MAJOR@
-CLIENT_VERSION_MINOR = @CLIENT_VERSION_MINOR@
-CLIENT_VERSION_REVISION = @CLIENT_VERSION_REVISION@
-COMPARISON_TOOL_REORG_TESTS = @COMPARISON_TOOL_REORG_TESTS@
-COPYRIGHT_YEAR = @COPYRIGHT_YEAR@
-CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
-CRYPTO_CFLAGS = @CRYPTO_CFLAGS@
-CRYPTO_LIBS = @CRYPTO_LIBS@
 CSCOPE = @CSCOPE@
 CTAGS = @CTAGS@
 CXX = @CXX@
@@ -1501,46 +1432,24 @@ ETAGS = @ETAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 FILECMD = @FILECMD@
-GCOV = @GCOV@
-GENHTML = @GENHTML@
-GENISOIMAGE = @GENISOIMAGE@
-GIT = @GIT@
 GREP = @GREP@
-HEXDUMP = @HEXDUMP@
 INSTALL = @INSTALL@
-INSTALLNAMETOOL = @INSTALLNAMETOOL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
-JAVA = @JAVA@
-JAVA_COMPARISON_TOOL = @JAVA_COMPARISON_TOOL@
-LCOV = @LCOV@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LEVELDB_CPPFLAGS = @LEVELDB_CPPFLAGS@ $(am__append_1)
-LEVELDB_TARGET_FLAGS = @LEVELDB_TARGET_FLAGS@
-LIBLEVELDB = @LIBLEVELDB@ $(am__append_2)
-LIBMEMENV = @LIBMEMENV@ $(am__append_3)
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
-LIBTOOL_APP_LDFLAGS = @LIBTOOL_APP_LDFLAGS@
 LIPO = @LIPO@
 LN_S = @LN_S@
-LRELEASE = @LRELEASE@
 LTLIBOBJS = @LTLIBOBJS@
 LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
-LUPDATE = @LUPDATE@
-MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
-MAKENSIS = @MAKENSIS@
 MANIFEST_TOOL = @MANIFEST_TOOL@
-MINIUPNPC_CPPFLAGS = @MINIUPNPC_CPPFLAGS@
-MINIUPNPC_LIBS = @MINIUPNPC_LIBS@
 MKDIR_P = @MKDIR_P@
-MOC = @MOC@
-MOC_DEFS = @MOC_DEFS@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJCXX = @OBJCXX@
@@ -1558,54 +1467,12 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
-PKG_CONFIG = @PKG_CONFIG@
-PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
-PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
-PORT = @PORT@
-PROTOBUF_CFLAGS = @PROTOBUF_CFLAGS@
-PROTOBUF_LIBS = @PROTOBUF_LIBS@
-PROTOC = @PROTOC@
-PTHREAD_CC = @PTHREAD_CC@
-PTHREAD_CFLAGS = @PTHREAD_CFLAGS@
-PTHREAD_CXX = @PTHREAD_CXX@
-PTHREAD_LIBS = @PTHREAD_LIBS@
-QR_CFLAGS = @QR_CFLAGS@
-QR_LIBS = @QR_LIBS@
-QTPLATFORM_CFLAGS = @QTPLATFORM_CFLAGS@
-QTPLATFORM_LIBS = @QTPLATFORM_LIBS@
-QTPRINT_CFLAGS = @QTPRINT_CFLAGS@
-QTPRINT_LIBS = @QTPRINT_LIBS@
-QT_CFLAGS = @QT_CFLAGS@
-QT_DBUS_CFLAGS = @QT_DBUS_CFLAGS@
-QT_DBUS_INCLUDES = @QT_DBUS_INCLUDES@
-QT_DBUS_LIBS = @QT_DBUS_LIBS@
-QT_INCLUDES = @QT_INCLUDES@
-QT_LDFLAGS = @QT_LDFLAGS@
-QT_LIBS = @QT_LIBS@
-QT_SELECT = @QT_SELECT@
-QT_TEST_CFLAGS = @QT_TEST_CFLAGS@
-QT_TEST_INCLUDES = @QT_TEST_INCLUDES@
-QT_TEST_LIBS = @QT_TEST_LIBS@
-QT_TRANSLATION_DIR = @QT_TRANSLATION_DIR@
 RANLIB = @RANLIB@
-RCC = @RCC@
-RELDFLAGS = @RELDFLAGS@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
-SSL_CFLAGS = @SSL_CFLAGS@
-SSL_LIBS = @SSL_LIBS@
 STRIP = @STRIP@
-TESTDEFS = @TESTDEFS@
-UIC = @UIC@
-USE_QRCODE = @USE_QRCODE@
-USE_UPNP = @USE_UPNP@
 VERSION = @VERSION@
-WINDOWS_BITS = @WINDOWS_BITS@
-WINDRES = @WINDRES@
-X11XCB_CFLAGS = @X11XCB_CFLAGS@
-X11XCB_LIBS = @X11XCB_LIBS@
-XGETTEXT = @XGETTEXT@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -1622,7 +1489,6 @@ am__rm_f_notfound = @am__rm_f_notfound@
 am__tar = @am__tar@
 am__untar = @am__untar@
 am__xargs_n = @am__xargs_n@
-ax_pthread_config = @ax_pthread_config@
 bindir = @bindir@
 build = @build@
 build_alias = @build_alias@
@@ -1659,18 +1525,20 @@ runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
-subdirs = @subdirs@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+SUBDIRS = leveldb
 DIST_SUBDIRS = secp256k1
 AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LIBTOOL_LDFLAGS)
-BITCOIN_CONFIG_INCLUDES = -I$(builddir)/config
-BITCOIN_INCLUDES = -I$(builddir) -I$(builddir)/obj $(BOOST_CPPFLAGS) \
-	$(LEVELDB_CPPFLAGS) $(CRYPTO_CFLAGS) $(SSL_CFLAGS) \
-	-I$(srcdir)/secp256k1/include $(am__append_4)
+BITCOIN_CONFIG_INCLUDES = -I$(top_builddir)
+BITCOIN_INCLUDES = -I$(top_builddir) -I$(top_builddir)/src/obj \
+	$(BOOST_CPPFLAGS) $(CRYPTO_CFLAGS) $(SSL_CFLAGS) \
+	-I$(srcdir)/secp256k1/include $(LEVELDB_CPPFLAGS) \
+	-I$(abs_top_srcdir)/src/leveldb/include \
+	-I$(abs_top_srcdir)/src/leveldb/helpers/memenv $(am__append_1)
 LIBBITCOIN_SERVER = libbitcoin_server.a
 LIBBITCOIN_WALLET = libbitcoin_wallet.a
 LIBBITCOIN_COMMON = libbitcoin_common.a
@@ -1685,11 +1553,13 @@ LIBSECP256K1 = secp256k1/libsecp256k1.la
 # But to build the less dependent modules first, we manually select their order here:
 EXTRA_LIBRARIES = crypto/libbitcoin_crypto.a libbitcoin_util.a \
 	libbitcoin_common.a univalue/libbitcoin_univalue.a \
-	libbitcoin_server.a libbitcoin_cli.a $(am__append_5) \
-	$(am__append_21)
+	libbitcoin_server.a libbitcoin_cli.a $(am__append_2) \
+	$(am__append_18)
 @BUILD_BITCOIN_LIBS_TRUE@lib_LTLIBRARIES = libbitcoinconsensus.la
 @BUILD_BITCOIN_LIBS_FALSE@LIBBITCOIN_CONSENSUS = 
 @BUILD_BITCOIN_LIBS_TRUE@LIBBITCOIN_CONSENSUS = libbitcoinconsensus.la
+genesis_util_SOURCES = genesis_util.cpp crypto/scrypt.cpp
+genesis_util_LDADD = -lssl -lcrypto
 # bitcoin core #
 BITCOIN_CORE_H = \
   addrman.h \
@@ -1720,7 +1590,6 @@ BITCOIN_CORE_H = \
   init.h \
   key.h \
   keystore.h \
-  leveldbwrapper.h \
   limitedmap.h \
   main.h \
   merkleblock.h \
@@ -1777,34 +1646,7 @@ JSON_H = \
 
 # server: shared between bitcoind and bitcoin-qt
 libbitcoin_server_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS)
-libbitcoin_server_a_SOURCES = \
-  addrman.cpp \
-  alert.cpp \
-  bloom.cpp \
-  chain.cpp \
-  checkpoints.cpp \
-  init.cpp \
-  leveldbwrapper.cpp \
-  main.cpp \
-  merkleblock.cpp \
-  miner.cpp \
-  net.cpp \
-  noui.cpp \
-  pow.cpp \
-  rest.cpp \
-  rpcblockchain.cpp \
-  rpcmining.cpp \
-  rpcmisc.cpp \
-  rpcnet.cpp \
-  rpcrawtransaction.cpp \
-  rpcserver.cpp \
-  script/sigcache.cpp \
-  timedata.cpp \
-  txdb.cpp \
-  txmempool.cpp \
-  $(JSON_H) \
-  $(BITCOIN_CORE_H)
-
+libbitcoin_server_a_SOURCES = addrman.cpp alert.cpp bloom.cpp chain.cpp checkpoints.cpp init.cpp main.cpp merkleblock.cpp miner.cpp net.cpp noui.cpp pow.cpp rest.cpp rpcblockchain.cpp rpcmining.cpp rpcmisc.cpp rpcnet.cpp rpcrawtransaction.cpp rpcserver.cpp script/sigcache.cpp timedata.cpp txdb.cpp txmempool.cpp leveldbwrapper.cpp $(JSON_H) $(BITCOIN_CORE_H)
 
 # wallet: shared between bitcoind and bitcoin-qt, but only linked
 # when wallet enabled
@@ -1888,7 +1730,7 @@ libbitcoin_util_a_SOURCES = compat/strnlen.cpp compat/glibc_sanity.cpp \
 	compat/glibcxx_sanity.cpp chainparamsbase.cpp \
 	clientversion.cpp random.cpp rpcprotocol.cpp sync.cpp \
 	uint256.cpp util.cpp utilstrencodings.cpp utilmoneystr.cpp \
-	utiltime.cpp $(BITCOIN_CORE_H) $(am__append_8)
+	utiltime.cpp $(BITCOIN_CORE_H) $(am__append_5)
 
 # cli: shared between bitcoin-cli and bitcoin-qt
 libbitcoin_cli_a_CPPFLAGS = $(BITCOIN_INCLUDES)
@@ -1901,11 +1743,12 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 
 # worldcoind binary #
 worldcoind_LDADD = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_COMMON) \
-	$(LIBBITCOIN_UNIVALUE) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) \
-	$(LIBLEVELDB) $(LIBMEMENV) $(LIBSECP256K1) $(am__append_9) \
-	$(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) \
-	$(MINIUPNPC_LIBS)
-worldcoind_SOURCES = bitcoind.cpp $(am__append_10)
+	$(LIBBITCOIN_UNIVALUE) $(LIBBITCOIN_UTIL) $(LIBSECP256K1) \
+	$(LIBBITCOIN_CRYPTO) $(LIBLEVELDB) $(LIBMEMENV) \
+	$(am__append_6) $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) \
+	$(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBLEVELDB) $(LIBMEMENV)
+worldcoind_SOURCES = bitcoind.cpp $(am__append_7)
+worldcoind_DEPENDENCIES = $(LIBLEVELDB) $(LIBMEMENV) $(EXTRA_LIBRARIES)
 worldcoind_CPPFLAGS = $(BITCOIN_INCLUDES)
 worldcoind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
@@ -1917,7 +1760,7 @@ worldcoin_cli_LDADD = \
   $(SSL_LIBS) \
   $(CRYPTO_LIBS)
 
-worldcoin_cli_SOURCES = bitcoin-cli.cpp $(am__append_11)
+worldcoin_cli_SOURCES = bitcoin-cli.cpp $(am__append_8)
 worldcoin_cli_CPPFLAGS = $(BITCOIN_INCLUDES)
 #
 
@@ -1948,15 +1791,15 @@ worldcoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 @BUILD_BITCOIN_LIBS_TRUE@	script/interpreter.cpp \
 @BUILD_BITCOIN_LIBS_TRUE@	script/bitcoinconsensus.cpp \
 @BUILD_BITCOIN_LIBS_TRUE@	uint256.cpp utilstrencodings.cpp \
-@BUILD_BITCOIN_LIBS_TRUE@	$(am__append_12)
+@BUILD_BITCOIN_LIBS_TRUE@	$(am__append_9)
 @BUILD_BITCOIN_LIBS_TRUE@libbitcoinconsensus_la_LDFLAGS = -no-undefined $(RELDFLAGS)
 @BUILD_BITCOIN_LIBS_TRUE@libbitcoinconsensus_la_LIBADD =  \
-@BUILD_BITCOIN_LIBS_TRUE@	$(CRYPTO_LIBS) $(am__append_13)
+@BUILD_BITCOIN_LIBS_TRUE@	$(CRYPTO_LIBS) $(am__append_10)
 @BUILD_BITCOIN_LIBS_TRUE@libbitcoinconsensus_la_CPPFLAGS = $(CRYPTO_CFLAGS) -I$(builddir)/obj -DBUILD_BITCOIN_INTERNAL
-CLEANFILES = leveldb/libleveldb.a leveldb/libmemenv.a *.gcda *.gcno \
-	$(am__append_19) $(am__append_26) $(am__append_32)
+CLEANFILES = *.gcda *.gcno $(am__append_16) $(am__append_23) \
+	$(am__append_29)
 DISTCLEANFILES = obj/build.h
-EXTRA_DIST = leveldb $(am__append_16)
+EXTRA_DIST = leveldb $(am__append_13)
 @ENABLE_TESTS_TRUE@TEST_SRCDIR = test
 @ENABLE_TESTS_TRUE@TEST_BINARY = test/test_worldcoin$(EXEEXT)
 @ENABLE_TESTS_TRUE@JSON_TEST_FILES = \
@@ -2001,7 +1844,7 @@ EXTRA_DIST = leveldb $(am__append_16)
 @ENABLE_TESTS_TRUE@	test/transaction_tests.cpp \
 @ENABLE_TESTS_TRUE@	test/uint256_tests.cpp \
 @ENABLE_TESTS_TRUE@	test/univalue_tests.cpp test/util_tests.cpp \
-@ENABLE_TESTS_TRUE@	$(am__append_17)
+@ENABLE_TESTS_TRUE@	$(am__append_14)
 @ENABLE_TESTS_TRUE@test_test_worldcoin_SOURCES = $(BITCOIN_TESTS) $(JSON_TEST_FILES) $(RAW_TEST_FILES)
 @ENABLE_TESTS_TRUE@test_test_worldcoin_CPPFLAGS = $(BITCOIN_INCLUDES) -I$(builddir)/test/ $(TESTDEFS)
 @ENABLE_TESTS_TRUE@test_test_worldcoin_LDADD = $(LIBBITCOIN_SERVER) \
@@ -2010,7 +1853,7 @@ EXTRA_DIST = leveldb $(am__append_16)
 @ENABLE_TESTS_TRUE@	$(LIBBITCOIN_UNIVALUE) $(LIBLEVELDB) \
 @ENABLE_TESTS_TRUE@	$(LIBMEMENV) $(BOOST_LIBS) \
 @ENABLE_TESTS_TRUE@	$(BOOST_UNIT_TEST_FRAMEWORK_LIB) \
-@ENABLE_TESTS_TRUE@	$(LIBSECP256K1) $(am__append_18) \
+@ENABLE_TESTS_TRUE@	$(LIBSECP256K1) $(am__append_15) \
 @ENABLE_TESTS_TRUE@	$(LIBBITCOIN_CONSENSUS) $(BDB_LIBS) \
 @ENABLE_TESTS_TRUE@	$(SSL_LIBS) $(CRYPTO_LIBS) \
 @ENABLE_TESTS_TRUE@	$(MINIUPNPC_LIBS)
@@ -2284,7 +2127,7 @@ EXTRA_DIST = leveldb $(am__append_16)
 @ENABLE_QT_TRUE@	qt/qvaluecombobox.cpp qt/rpcconsole.cpp \
 @ENABLE_QT_TRUE@	qt/splashscreen.cpp qt/trafficgraphwidget.cpp \
 @ENABLE_QT_TRUE@	qt/utilitydialog.cpp qt/winshutdownmonitor.cpp \
-@ENABLE_QT_TRUE@	$(am__append_22)
+@ENABLE_QT_TRUE@	$(am__append_19)
 @ENABLE_QT_TRUE@RES_IMAGES = \
 @ENABLE_QT_TRUE@  qt/res/images/about.png \
 @ENABLE_QT_TRUE@  qt/res/images/splash.png \
@@ -2313,9 +2156,9 @@ EXTRA_DIST = leveldb $(am__append_16)
 @ENABLE_QT_TRUE@  $(QT_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS)
 
 @ENABLE_QT_TRUE@qt_worldcoin_qt_SOURCES = qt/bitcoin.cpp \
-@ENABLE_QT_TRUE@	$(am__append_23) $(am__append_24)
+@ENABLE_QT_TRUE@	$(am__append_20) $(am__append_21)
 @ENABLE_QT_TRUE@qt_worldcoin_qt_LDADD = qt/libbitcoinqt.a \
-@ENABLE_QT_TRUE@	$(LIBBITCOIN_SERVER) $(am__append_25) \
+@ENABLE_QT_TRUE@	$(LIBBITCOIN_SERVER) $(am__append_22) \
 @ENABLE_QT_TRUE@	$(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) \
 @ENABLE_QT_TRUE@	$(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) \
 @ENABLE_QT_TRUE@	$(LIBBITCOIN_UNIVALUE) $(LIBLEVELDB) \
@@ -2330,7 +2173,7 @@ EXTRA_DIST = leveldb $(am__append_16)
 @ENABLE_QT_TRUE@QT_QM = $(QT_TS:.ts=.qm)
 @ENABLE_QT_TRUE@CLEAN_QT = $(nodist_qt_libbitcoinqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda qt/*.gcno
 @ENABLE_QT_TESTS_TRUE@TEST_QT_MOC_CPP = qt/test/moc_uritests.cpp \
-@ENABLE_QT_TESTS_TRUE@	$(am__append_29)
+@ENABLE_QT_TESTS_TRUE@	$(am__append_26)
 @ENABLE_QT_TESTS_TRUE@TEST_QT_H = \
 @ENABLE_QT_TESTS_TRUE@  qt/test/uritests.h \
 @ENABLE_QT_TESTS_TRUE@  qt/test/paymentrequestdata.h \
@@ -2342,11 +2185,11 @@ EXTRA_DIST = leveldb $(am__append_16)
 @ENABLE_QT_TESTS_TRUE@qt_test_test_worldcoin_qt_SOURCES =  \
 @ENABLE_QT_TESTS_TRUE@	qt/test/test_main.cpp \
 @ENABLE_QT_TESTS_TRUE@	qt/test/uritests.cpp $(TEST_QT_H) \
-@ENABLE_QT_TESTS_TRUE@	$(am__append_30)
+@ENABLE_QT_TESTS_TRUE@	$(am__append_27)
 @ENABLE_QT_TESTS_TRUE@nodist_qt_test_test_worldcoin_qt_SOURCES = $(TEST_QT_MOC_CPP)
 @ENABLE_QT_TESTS_TRUE@qt_test_test_worldcoin_qt_LDADD =  \
 @ENABLE_QT_TESTS_TRUE@	$(LIBBITCOINQT) $(LIBBITCOIN_SERVER) \
-@ENABLE_QT_TESTS_TRUE@	$(am__append_31) $(LIBBITCOIN_CLI) \
+@ENABLE_QT_TESTS_TRUE@	$(am__append_28) $(LIBBITCOIN_CLI) \
 @ENABLE_QT_TESTS_TRUE@	$(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) \
 @ENABLE_QT_TESTS_TRUE@	$(LIBBITCOIN_CRYPTO) \
 @ENABLE_QT_TESTS_TRUE@	$(LIBBITCOIN_UNIVALUE) $(LIBLEVELDB) \
@@ -2361,7 +2204,7 @@ all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .cc .cpp .lo .log .mm .o .obj .rc .test .test$(EXEEXT) .trs
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/Makefile.test.include $(srcdir)/Makefile.qt.include $(srcdir)/Makefile.qttest.include $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/Makefile.test.include $(srcdir)/Makefile.qt.include $(srcdir)/Makefile.qttest.include $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -2386,9 +2229,9 @@ $(srcdir)/Makefile.test.include $(srcdir)/Makefile.qt.include $(srcdir)/Makefile
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 
-$(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
+$(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
+$(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 install-binPROGRAMS: $(bin_PROGRAMS)
@@ -2806,6 +2649,12 @@ compat/libbitcoinconsensus_la-glibcxx_compat.lo:  \
 
 libbitcoinconsensus.la: $(libbitcoinconsensus_la_OBJECTS) $(libbitcoinconsensus_la_DEPENDENCIES) $(EXTRA_libbitcoinconsensus_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(libbitcoinconsensus_la_LINK) $(am_libbitcoinconsensus_la_rpath) $(libbitcoinconsensus_la_OBJECTS) $(libbitcoinconsensus_la_LIBADD) $(LIBS)
+crypto/scrypt.$(OBJEXT): crypto/$(am__dirstamp) \
+	crypto/$(DEPDIR)/$(am__dirstamp)
+
+genesis_util$(EXEEXT): $(genesis_util_OBJECTS) $(genesis_util_DEPENDENCIES) $(EXTRA_genesis_util_DEPENDENCIES) 
+	@rm -f genesis_util$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(genesis_util_OBJECTS) $(genesis_util_LDADD) $(LIBS)
 qt/test/$(am__dirstamp):
 	@$(MKDIR_P) qt/test
 	@: >>qt/test/$(am__dirstamp)
@@ -2966,6 +2815,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/genesis_util.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-allocators.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-amount.Po@am__quote@ # am--include-marker
@@ -3053,6 +2903,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoinconsensus_la-sha1.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoinconsensus_la-sha256.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoinconsensus_la-sha512.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/scrypt.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@primitives/$(DEPDIR)/libbitcoin_common_a-block.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@primitives/$(DEPDIR)/libbitcoin_common_a-transaction.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@primitives/$(DEPDIR)/libbitcoinconsensus_la-transaction.Plo@am__quote@ # am--include-marker
@@ -3771,20 +3622,6 @@ libbitcoin_server_a-init.obj: init.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-init.obj `if test -f 'init.cpp'; then $(CYGPATH_W) 'init.cpp'; else $(CYGPATH_W) '$(srcdir)/init.cpp'; fi`
 
-libbitcoin_server_a-leveldbwrapper.o: leveldbwrapper.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-leveldbwrapper.o -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Tpo -c -o libbitcoin_server_a-leveldbwrapper.o `test -f 'leveldbwrapper.cpp' || echo '$(srcdir)/'`leveldbwrapper.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Tpo $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='leveldbwrapper.cpp' object='libbitcoin_server_a-leveldbwrapper.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-leveldbwrapper.o `test -f 'leveldbwrapper.cpp' || echo '$(srcdir)/'`leveldbwrapper.cpp
-
-libbitcoin_server_a-leveldbwrapper.obj: leveldbwrapper.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-leveldbwrapper.obj -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Tpo -c -o libbitcoin_server_a-leveldbwrapper.obj `if test -f 'leveldbwrapper.cpp'; then $(CYGPATH_W) 'leveldbwrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/leveldbwrapper.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Tpo $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='leveldbwrapper.cpp' object='libbitcoin_server_a-leveldbwrapper.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-leveldbwrapper.obj `if test -f 'leveldbwrapper.cpp'; then $(CYGPATH_W) 'leveldbwrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/leveldbwrapper.cpp'; fi`
-
 libbitcoin_server_a-main.o: main.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-main.o -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-main.Tpo -c -o libbitcoin_server_a-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_server_a-main.Tpo $(DEPDIR)/libbitcoin_server_a-main.Po
@@ -4022,6 +3859,20 @@ libbitcoin_server_a-txmempool.obj: txmempool.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='txmempool.cpp' object='libbitcoin_server_a-txmempool.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-txmempool.obj `if test -f 'txmempool.cpp'; then $(CYGPATH_W) 'txmempool.cpp'; else $(CYGPATH_W) '$(srcdir)/txmempool.cpp'; fi`
+
+libbitcoin_server_a-leveldbwrapper.o: leveldbwrapper.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-leveldbwrapper.o -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Tpo -c -o libbitcoin_server_a-leveldbwrapper.o `test -f 'leveldbwrapper.cpp' || echo '$(srcdir)/'`leveldbwrapper.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Tpo $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='leveldbwrapper.cpp' object='libbitcoin_server_a-leveldbwrapper.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-leveldbwrapper.o `test -f 'leveldbwrapper.cpp' || echo '$(srcdir)/'`leveldbwrapper.cpp
+
+libbitcoin_server_a-leveldbwrapper.obj: leveldbwrapper.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-leveldbwrapper.obj -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Tpo -c -o libbitcoin_server_a-leveldbwrapper.obj `if test -f 'leveldbwrapper.cpp'; then $(CYGPATH_W) 'leveldbwrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/leveldbwrapper.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Tpo $(DEPDIR)/libbitcoin_server_a-leveldbwrapper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='leveldbwrapper.cpp' object='libbitcoin_server_a-leveldbwrapper.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-leveldbwrapper.obj `if test -f 'leveldbwrapper.cpp'; then $(CYGPATH_W) 'leveldbwrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/leveldbwrapper.cpp'; fi`
 
 compat/libbitcoin_util_a-strnlen.o: compat/strnlen.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_util_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT compat/libbitcoin_util_a-strnlen.o -MD -MP -MF compat/$(DEPDIR)/libbitcoin_util_a-strnlen.Tpo -c -o compat/libbitcoin_util_a-strnlen.o `test -f 'compat/strnlen.cpp' || echo '$(srcdir)/'`compat/strnlen.cpp
@@ -6963,6 +6814,7 @@ clean-am: clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
 	clean-libtool clean-local mostlyclean-am
 
 distclean: distclean-recursive
+	-rm -f ./$(DEPDIR)/genesis_util.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-allocators.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-amount.Po
@@ -7050,6 +6902,7 @@ distclean: distclean-recursive
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha1.Plo
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha256.Plo
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha512.Plo
+	-rm -f crypto/$(DEPDIR)/scrypt.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoin_common_a-block.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoin_common_a-transaction.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoinconsensus_la-transaction.Plo
@@ -7250,6 +7103,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
+	-rm -f ./$(DEPDIR)/genesis_util.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-allocators.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-amount.Po
@@ -7337,6 +7191,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha1.Plo
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha256.Plo
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha512.Plo
+	-rm -f crypto/$(DEPDIR)/scrypt.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoin_common_a-block.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoin_common_a-transaction.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoinconsensus_la-transaction.Plo
@@ -7535,14 +7390,6 @@ uninstall-am: uninstall-binPROGRAMS uninstall-includeHEADERS \
 .PRECIOUS: Makefile
 
 
-# NOTE: This dependency is not strictly necessary, but without it make may try to build both in parallel, which breaks the LevelDB build system in a race
-@EMBEDDED_LEVELDB_TRUE@$(LIBLEVELDB): $(LIBMEMENV)
-
-@EMBEDDED_LEVELDB_TRUE@$(LIBLEVELDB) $(LIBMEMENV):
-@EMBEDDED_LEVELDB_TRUE@	@echo "Building LevelDB ..." && $(MAKE) -C $(@D) $(@F) CXX="$(CXX)" \
-@EMBEDDED_LEVELDB_TRUE@	  CC="$(CC)" PLATFORM=$(TARGET_OS) AR="$(AR)" $(LEVELDB_TARGET_FLAGS) \
-@EMBEDDED_LEVELDB_TRUE@          OPT="$(CXXFLAGS) $(CPPFLAGS)"
-
 $(LIBSECP256K1): $(wildcard secp256k1/src/*) $(wildcard secp256k1/include/*)
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C $(@D) $(@F)
 
@@ -7551,13 +7398,11 @@ $(LIBSECP256K1): $(wildcard secp256k1/src/*) $(wildcard secp256k1/include/*)
 obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
 	@$(top_srcdir)/share/genbuild.sh $(abs_top_builddir)/src/obj/build.h \
-	  $(abs_top_srcdir)
+		$(abs_top_srcdir)
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
 clean-local:
-	-$(MAKE) -C leveldb clean
 	-$(MAKE) -C secp256k1 clean
-	rm -f leveldb/*/*.gcno leveldb/helpers/memenv/*.gcno
 	-rm -f config.h
 
 .rc.o:
@@ -7566,7 +7411,7 @@ clean-local:
 
 .mm.o:
 	$(AM_V_CXX) $(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	  $(CPPFLAGS) $(AM_CXXFLAGS) $(QT_INCLUDES) $(CXXFLAGS)  -c -o $@ $<
+		$(CPPFLAGS) $(AM_CXXFLAGS) $(QT_INCLUDES) $(CXXFLAGS)  -c -o $@ $<
 
 %.pb.cc %.pb.h: %.proto
 	@test -f $(PROTOC)
@@ -7662,6 +7507,11 @@ clean-local:
 
 @ENABLE_QT_TESTS_TRUE@test_bitcoin_qt_clean: FORCE
 @ENABLE_QT_TESTS_TRUE@	rm -f $(CLEAN_BITCOIN_QT_TEST) $(qt_test_test_worldcoin_qt_OBJECTS)
+
+leveldb/out-static/libleveldb.a:
+	$(MAKE) -C leveldb out-static/libleveldb.a
+leveldb/out-static/libmemenv.a:
+	$(MAKE) -C leveldb out-static/libmemenv.a
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

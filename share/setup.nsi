@@ -5,16 +5,16 @@ SetCompressor /SOLID lzma
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.10.4.0
+!define VERSION 1.0.0.0
 !define COMPANY "Worldcoin Core project"
-!define URL http://www.worldcoin.org/
+!define URL http://www.worldcoin.tools/
 
 # MUI Symbol Definitions
-!define MUI_ICON "/opt/crypto/sources/worldcoin/share/pixmaps/bitcoin.ico"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "/opt/crypto/sources/worldcoin/share/pixmaps/nsis-wizard.bmp"
+!define MUI_ICON "/Users/gw/Desktop/worldcoin/share/pixmaps/bitcoin.ico"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "/Users/gw/Desktop/worldcoin/share/pixmaps/nsis-wizard.bmp"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_RIGHT
-!define MUI_HEADERIMAGE_BITMAP "/opt/crypto/sources/worldcoin/share/pixmaps/nsis-header.bmp"
+!define MUI_HEADERIMAGE_BITMAP "/Users/gw/Desktop/worldcoin/share/pixmaps/nsis-header.bmp"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
@@ -22,7 +22,7 @@ SetCompressor /SOLID lzma
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER "Worldcoin Core"
 !define MUI_FINISHPAGE_RUN $INSTDIR\worldcoin-qt.exe
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
-!define MUI_UNWELCOMEFINISHPAGE_BITMAP "/opt/crypto/sources/worldcoin/share/pixmaps/nsis-wizard.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "/Users/gw/Desktop/worldcoin/share/pixmaps/nsis-wizard.bmp"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
 # Included files
@@ -48,7 +48,7 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile /opt/crypto/sources/worldcoin/worldcoin-${VERSION}-win-setup.exe
+OutFile /Users/gw/Desktop/worldcoin/worldcoin-${VERSION}-win-setup.exe
 !if "" == "64"
 InstallDir $PROGRAMFILES64\Worldcoin
 !else
@@ -73,14 +73,14 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath $INSTDIR
     SetOverwrite on
-    File /opt/crypto/sources/worldcoin/release/worldcoin-qt.exe
-    File /oname=COPYING.txt /opt/crypto/sources/worldcoin/COPYING
-    File /oname=readme.txt /opt/crypto/sources/worldcoin/doc/README_windows.txt
+    File /Users/gw/Desktop/worldcoin/release/worldcoin-qt.exe
+    File /oname=COPYING.txt /Users/gw/Desktop/worldcoin/COPYING
+    File /oname=readme.txt /Users/gw/Desktop/worldcoin/doc/README_windows.txt
     SetOutPath $INSTDIR\daemon
-    File /opt/crypto/sources/worldcoin/release/worldcoind.exe
-    File /opt/crypto/sources/worldcoin/release/worldcoin-cli.exe
+    File /Users/gw/Desktop/worldcoin/release/worldcoind.exe
+    File /Users/gw/Desktop/worldcoin/release/worldcoin-cli.exe
     SetOutPath $INSTDIR\doc
-    File /r /opt/crypto/sources/worldcoin/doc\*.*
+    File /r /Users/gw/Desktop/worldcoin/doc\*.*
     SetOutPath $INSTDIR
     WriteRegStr HKCU "${REGKEY}\Components" Main 1
 

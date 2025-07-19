@@ -8,6 +8,8 @@
 
 #include "crypto/ripemd160.h"
 #include "crypto/sha256.h"
+#include "crypto/scrypt.h"
+#include "crypto/scrypt.h"
 #include "serialize.h"
 #include "uint256.h"
 #include "version.h"
@@ -98,6 +100,8 @@ inline uint256 Hash(const T1 p1begin, const T1 p1end,
               .Finalize((unsigned char*)&result);
     return result;
 }
+
+
 
 /** Compute the 160-bit hash an object. */
 template<typename T1>

@@ -1,7 +1,7 @@
 Worldcoin Core integration/staging tree
 =====================================
 
-https://worldcoin.org
+https://worldcoin.tools
 
 What is Worldcoin?
 ----------------
@@ -13,7 +13,7 @@ out collectively by the network. Worldcoin Core is the name of open source
 software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the Worldcoin Core software, see https://worldcoin.org
+the Worldcoin Core software, see https://worldcoin.tools
 
 License
 -------
@@ -39,10 +39,6 @@ Developers should expect to rework and resubmit patches if the code doesn't
 match the project's coding conventions (see [doc/coding.md](doc/coding.md)) or are
 controversial.
 
-The `master-0.10` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/worldcoin-project/worldcoin/tags) are created
-regularly to indicate new official, stable release versions of Worldcoin.
-
 Testing
 -------
 
@@ -55,9 +51,6 @@ lots of money.
 
 Large changes should have a test plan, and should be tested by somebody other
 than the developer who wrote the code.
-Creating a thread in the [Worldcoin discussion forum](https://worldcointalk.org/index.php?board=2.0) will allow the Worldcoin
-development team members to review your proposal and to provide assistance with creating a test plan. 
-
 
 Translations
 ------------

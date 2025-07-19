@@ -17,13 +17,13 @@
   <string>APPL</string>
 
   <key>CFBundleGetInfoString</key>
-  <string>0.10.4.0, Copyright © 2009-2015 The Bitcoin Core developers 2011-2015 The Worldcoin Core developers</string>
+  <string>1.0.0.0, Copyright © 2009-2025 The Bitcoin Core developers 2011-2025 The Worldcoin Core developers</string>
 
   <key>CFBundleShortVersionString</key>
-  <string>0.10.4.0</string>
+  <string>1.0.0.0</string>
 
   <key>CFBundleVersion</key>
-  <string>0.10.4.0</string>
+  <string>1.0.0.0</string>
 
   <key>CFBundleSignature</key>
   <string>????</string>

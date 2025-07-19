@@ -45,7 +45,7 @@ static const int MAX_URI_LENGTH = 255;
 #define SPINNER_FRAMES 35
 
 #define QAPP_ORG_NAME "Worldcoin"
-#define QAPP_ORG_DOMAIN "worldcoin.org"
+#define QAPP_ORG_DOMAIN "worldcoin.tools"
 #define QAPP_APP_NAME_DEFAULT "Worldcoin-Qt"
 #define QAPP_APP_NAME_TESTNET "Worldcoin-Qt-testnet"
 

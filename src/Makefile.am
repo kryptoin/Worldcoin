@@ -1,26 +1,13 @@
+SUBDIRS = leveldb
 DIST_SUBDIRS = secp256k1
 AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LIBTOOL_LDFLAGS)
 
-
-if EMBEDDED_LEVELDB
-LEVELDB_CPPFLAGS += -I$(srcdir)/leveldb/include
-LEVELDB_CPPFLAGS += -I$(srcdir)/leveldb/helpers/memenv
-LIBLEVELDB += $(builddir)/leveldb/libleveldb.a
-LIBMEMENV  += $(builddir)/leveldb/libmemenv.a
-
-# NOTE: This dependency is not strictly necessary, but without it make may try to build both in parallel, which breaks the LevelDB build system in a race
-$(LIBLEVELDB): $(LIBMEMENV)
-
-$(LIBLEVELDB) $(LIBMEMENV):
-	@echo "Building LevelDB ..." && $(MAKE) -C $(@D) $(@F) CXX="$(CXX)" \
-	  CC="$(CC)" PLATFORM=$(TARGET_OS) AR="$(AR)" $(LEVELDB_TARGET_FLAGS) \
-          OPT="$(CXXFLAGS) $(CPPFLAGS)"
-endif
-
-BITCOIN_CONFIG_INCLUDES=-I$(builddir)/config
-BITCOIN_INCLUDES=-I$(builddir) -I$(builddir)/obj $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLAGS) $(CRYPTO_CFLAGS) $(SSL_CFLAGS)
+BITCOIN_CONFIG_INCLUDES=-I$(top_builddir)
+BITCOIN_INCLUDES=-I$(top_builddir) -I$(top_builddir)/src/obj $(BOOST_CPPFLAGS) $(CRYPTO_CFLAGS) $(SSL_CFLAGS)
 
 BITCOIN_INCLUDES += -I$(srcdir)/secp256k1/include
+BITCOIN_INCLUDES += $(LEVELDB_CPPFLAGS)
+BITCOIN_INCLUDES += -I$(abs_top_srcdir)/src/leveldb/include -I$(abs_top_srcdir)/src/leveldb/helpers/memenv
 
 LIBBITCOIN_SERVER=libbitcoin_server.a
 LIBBITCOIN_WALLET=libbitcoin_wallet.a
@@ -67,6 +54,12 @@ if BUILD_BITCOIN_UTILS
   bin_PROGRAMS += worldcoin-cli worldcoin-tx
 endif
 
+bin_PROGRAMS += genesis_util
+
+genesis_util_SOURCES = genesis_util.cpp crypto/scrypt.cpp
+
+genesis_util_LDADD = -lssl -lcrypto
+
 .PHONY: FORCE
 # bitcoin core #
 BITCOIN_CORE_H = \
@@ -98,7 +91,6 @@ BITCOIN_CORE_H = \
   init.h \
   key.h \
   keystore.h \
-  leveldbwrapper.h \
   limitedmap.h \
   main.h \
   merkleblock.h \
@@ -155,38 +147,12 @@ JSON_H = \
 obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
 	@$(top_srcdir)/share/genbuild.sh $(abs_top_builddir)/src/obj/build.h \
-	  $(abs_top_srcdir)
+		$(abs_top_srcdir)
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
 # server: shared between bitcoind and bitcoin-qt
 libbitcoin_server_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS)
-libbitcoin_server_a_SOURCES = \
-  addrman.cpp \
-  alert.cpp \
-  bloom.cpp \
-  chain.cpp \
-  checkpoints.cpp \
-  init.cpp \
-  leveldbwrapper.cpp \
-  main.cpp \
-  merkleblock.cpp \
-  miner.cpp \
-  net.cpp \
-  noui.cpp \
-  pow.cpp \
-  rest.cpp \
-  rpcblockchain.cpp \
-  rpcmining.cpp \
-  rpcmisc.cpp \
-  rpcnet.cpp \
-  rpcrawtransaction.cpp \
-  rpcserver.cpp \
-  script/sigcache.cpp \
-  timedata.cpp \
-  txdb.cpp \
-  txmempool.cpp \
-  $(JSON_H) \
-  $(BITCOIN_CORE_H)
+libbitcoin_server_a_SOURCES = addrman.cpp alert.cpp bloom.cpp chain.cpp checkpoints.cpp init.cpp main.cpp merkleblock.cpp miner.cpp net.cpp noui.cpp pow.cpp rest.cpp rpcblockchain.cpp rpcmining.cpp rpcmisc.cpp rpcnet.cpp rpcrawtransaction.cpp rpcserver.cpp script/sigcache.cpp timedata.cpp txdb.cpp txmempool.cpp leveldbwrapper.cpp $(JSON_H) $(BITCOIN_CORE_H)
 
 # wallet: shared between bitcoind and bitcoin-qt, but only linked
 # when wallet enabled
@@ -293,27 +259,20 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # worldcoind binary #
-worldcoind_LDADD = \
-  $(LIBBITCOIN_SERVER) \
-  $(LIBBITCOIN_COMMON) \
-  $(LIBBITCOIN_UNIVALUE) \
-  $(LIBBITCOIN_UTIL) \
-  $(LIBBITCOIN_CRYPTO) \
-  $(LIBLEVELDB) \
-  $(LIBMEMENV) \
-  $(LIBSECP256K1)
+worldcoind_LDADD =   $(LIBBITCOIN_SERVER)   $(LIBBITCOIN_COMMON)   $(LIBBITCOIN_UNIVALUE)   $(LIBBITCOIN_UTIL)   $(LIBSECP256K1)   $(LIBBITCOIN_CRYPTO) $(LIBLEVELDB) $(LIBMEMENV)
 
 if ENABLE_WALLET
 worldcoind_LDADD += libbitcoin_wallet.a
 endif
 worldcoind_SOURCES = bitcoind.cpp
+worldcoind_DEPENDENCIES = $(LIBLEVELDB) $(LIBMEMENV) $(EXTRA_LIBRARIES)
 #
 
 if TARGET_WINDOWS
 worldcoind_SOURCES += bitcoind-res.rc
 endif
 
-worldcoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS)
+worldcoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBLEVELDB) $(LIBMEMENV)
 worldcoind_CPPFLAGS = $(BITCOIN_INCLUDES)
 worldcoind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
@@ -384,16 +343,14 @@ libbitcoinconsensus_la_LIBADD += secp256k1/libsecp256k1.la
 endif
 endif
 
-CLEANFILES = leveldb/libleveldb.a leveldb/libmemenv.a *.gcda *.gcno
+CLEANFILES = *.gcda *.gcno
 
 DISTCLEANFILES = obj/build.h
 
 EXTRA_DIST = leveldb
 
 clean-local:
-	-$(MAKE) -C leveldb clean
 	-$(MAKE) -C secp256k1 clean
-	rm -f leveldb/*/*.gcno leveldb/helpers/memenv/*.gcno
 	-rm -f config.h
 
 .rc.o:
@@ -402,7 +359,7 @@ clean-local:
 
 .mm.o:
 	$(AM_V_CXX) $(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	  $(CPPFLAGS) $(AM_CXXFLAGS) $(QT_INCLUDES) $(CXXFLAGS)  -c -o $@ $<
+		$(CPPFLAGS) $(AM_CXXFLAGS) $(QT_INCLUDES) $(CXXFLAGS)  -c -o $@ $<
 
 %.pb.cc %.pb.h: %.proto
 	@test -f $(PROTOC)
@@ -419,3 +376,8 @@ endif
 if ENABLE_QT_TESTS
 include Makefile.qttest.include
 endif
+
+leveldb/out-static/libleveldb.a:
+	$(MAKE) -C leveldb out-static/libleveldb.a
+leveldb/out-static/libmemenv.a:
+	$(MAKE) -C leveldb out-static/libmemenv.a

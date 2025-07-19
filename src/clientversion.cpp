@@ -13,7 +13,7 @@
  * for both bitcoind and bitcoin-core, to make it harder for attackers to
  * target servers or GUI users specifically.
  */
-const std::string CLIENT_NAME("WorldcoinFoundation");
+const std::string CLIENT_NAME("Worldcoin.tools");
 
 /**
  * Client version number
@@ -45,8 +45,8 @@ const std::string CLIENT_NAME("WorldcoinFoundation");
 //! git will put "#define GIT_ARCHIVE 1" on the next line inside archives. 
 #define GIT_ARCHIVE 1
 #ifdef GIT_ARCHIVE
-#define GIT_COMMIT_ID "7f9af3f9bcb"
-#define GIT_COMMIT_DATE "Mon, 21 Dec 2015 12:56:35 +1100"
+#define GIT_COMMIT_ID "new_commit_id"
+#define GIT_COMMIT_DATE "Wed, 16 Jul 2025 12:00:00 +0000"
 #endif
 
 #define BUILD_DESC_WITH_SUFFIX(maj, min, rev, build, suffix) \

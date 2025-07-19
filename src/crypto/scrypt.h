@@ -5,6 +5,10 @@
 
 static const int SCRYPT_SCRATCHPAD_SIZE = 131072 + 63;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void scrypt_1024_1_1_256(const char *input, char *output);
 void scrypt_1024_1_1_256_sp_generic(const char *input, char *output, char *scratchpad);
 
@@ -42,4 +46,7 @@ static inline void le32enc(void *pp, uint32_t x)
         p[2] = (x >> 16) & 0xff;
         p[3] = (x >> 24) & 0xff;
 }
+#ifdef __cplusplus
+}
+#endif
 #endif
