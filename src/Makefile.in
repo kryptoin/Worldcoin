@@ -94,8 +94,8 @@ build_triplet = @build@
 host_triplet = @host@
 @ENABLE_WALLET_TRUE@am__append_1 = $(BDB_CPPFLAGS)
 @ENABLE_WALLET_TRUE@am__append_2 = libbitcoin_wallet.a
-bin_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) genesis_util$(EXEEXT) \
-	$(am__EXEEXT_3) $(am__EXEEXT_4) $(am__EXEEXT_5)
+bin_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+	$(am__EXEEXT_4) $(am__EXEEXT_5)
 TESTS = $(am__EXEEXT_6) $(am__EXEEXT_5)
 @BUILD_BITCOIND_TRUE@am__append_3 = worldcoind
 @BUILD_BITCOIN_UTILS_TRUE@am__append_4 = worldcoin-cli worldcoin-tx
@@ -178,7 +178,6 @@ am__aclocal_m4_deps = $(top_srcdir)/build-aux/m4/libtool.m4 \
 	$(top_srcdir)/build-aux/m4/ltoptions.m4 \
 	$(top_srcdir)/build-aux/m4/ltsugar.m4 \
 	$(top_srcdir)/build-aux/m4/ltversion.m4 \
-	$(top_srcdir)/build-aux/m4/lt~obsolete.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -637,10 +636,6 @@ libbitcoinconsensus_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(LDFLAGS) -o $@
 @BUILD_BITCOIN_LIBS_TRUE@am_libbitcoinconsensus_la_rpath = -rpath \
 @BUILD_BITCOIN_LIBS_TRUE@	$(libdir)
-am_genesis_util_OBJECTS = genesis_util.$(OBJEXT) \
-	crypto/scrypt.$(OBJEXT)
-genesis_util_OBJECTS = $(am_genesis_util_OBJECTS)
-genesis_util_DEPENDENCIES =
 am__qt_test_test_worldcoin_qt_SOURCES_DIST = qt/test/test_main.cpp \
 	qt/test/uritests.cpp qt/test/uritests.h \
 	qt/test/paymentrequestdata.h qt/test/paymentservertests.h \
@@ -819,8 +814,7 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/genesis_util.Po \
-	./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po \
+am__depfiles_remade = ./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po \
 	./$(DEPDIR)/libbitcoin_common_a-allocators.Po \
 	./$(DEPDIR)/libbitcoin_common_a-amount.Po \
 	./$(DEPDIR)/libbitcoin_common_a-base58.Po \
@@ -907,7 +901,6 @@ am__depfiles_remade = ./$(DEPDIR)/genesis_util.Po \
 	crypto/$(DEPDIR)/libbitcoinconsensus_la-sha1.Plo \
 	crypto/$(DEPDIR)/libbitcoinconsensus_la-sha256.Plo \
 	crypto/$(DEPDIR)/libbitcoinconsensus_la-sha512.Plo \
-	crypto/$(DEPDIR)/scrypt.Po \
 	primitives/$(DEPDIR)/libbitcoin_common_a-block.Po \
 	primitives/$(DEPDIR)/libbitcoin_common_a-transaction.Po \
 	primitives/$(DEPDIR)/libbitcoinconsensus_la-transaction.Plo \
@@ -1125,7 +1118,7 @@ SOURCES = $(crypto_libbitcoin_crypto_a_SOURCES) \
 	$(libbitcoin_wallet_a_SOURCES) $(qt_libbitcoinqt_a_SOURCES) \
 	$(nodist_qt_libbitcoinqt_a_SOURCES) \
 	$(univalue_libbitcoin_univalue_a_SOURCES) \
-	$(libbitcoinconsensus_la_SOURCES) $(genesis_util_SOURCES) \
+	$(libbitcoinconsensus_la_SOURCES) \
 	$(qt_test_test_worldcoin_qt_SOURCES) \
 	$(nodist_qt_test_test_worldcoin_qt_SOURCES) \
 	$(qt_worldcoin_qt_SOURCES) $(test_test_worldcoin_SOURCES) \
@@ -1139,7 +1132,6 @@ DIST_SOURCES = $(crypto_libbitcoin_crypto_a_SOURCES) \
 	$(am__qt_libbitcoinqt_a_SOURCES_DIST) \
 	$(univalue_libbitcoin_univalue_a_SOURCES) \
 	$(am__libbitcoinconsensus_la_SOURCES_DIST) \
-	$(genesis_util_SOURCES) \
 	$(am__qt_test_test_worldcoin_qt_SOURCES_DIST) \
 	$(am__qt_worldcoin_qt_SOURCES_DIST) \
 	$(am__test_test_worldcoin_SOURCES_DIST) \
@@ -1558,8 +1550,6 @@ EXTRA_LIBRARIES = crypto/libbitcoin_crypto.a libbitcoin_util.a \
 @BUILD_BITCOIN_LIBS_TRUE@lib_LTLIBRARIES = libbitcoinconsensus.la
 @BUILD_BITCOIN_LIBS_FALSE@LIBBITCOIN_CONSENSUS = 
 @BUILD_BITCOIN_LIBS_TRUE@LIBBITCOIN_CONSENSUS = libbitcoinconsensus.la
-genesis_util_SOURCES = genesis_util.cpp crypto/scrypt.cpp
-genesis_util_LDADD = -lssl -lcrypto
 # bitcoin core #
 BITCOIN_CORE_H = \
   addrman.h \
@@ -2649,12 +2639,6 @@ compat/libbitcoinconsensus_la-glibcxx_compat.lo:  \
 
 libbitcoinconsensus.la: $(libbitcoinconsensus_la_OBJECTS) $(libbitcoinconsensus_la_DEPENDENCIES) $(EXTRA_libbitcoinconsensus_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(libbitcoinconsensus_la_LINK) $(am_libbitcoinconsensus_la_rpath) $(libbitcoinconsensus_la_OBJECTS) $(libbitcoinconsensus_la_LIBADD) $(LIBS)
-crypto/scrypt.$(OBJEXT): crypto/$(am__dirstamp) \
-	crypto/$(DEPDIR)/$(am__dirstamp)
-
-genesis_util$(EXEEXT): $(genesis_util_OBJECTS) $(genesis_util_DEPENDENCIES) $(EXTRA_genesis_util_DEPENDENCIES) 
-	@rm -f genesis_util$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(genesis_util_OBJECTS) $(genesis_util_LDADD) $(LIBS)
 qt/test/$(am__dirstamp):
 	@$(MKDIR_P) qt/test
 	@: >>qt/test/$(am__dirstamp)
@@ -2815,7 +2799,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/genesis_util.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-allocators.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libbitcoin_common_a-amount.Po@am__quote@ # am--include-marker
@@ -2903,7 +2886,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoinconsensus_la-sha1.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoinconsensus_la-sha256.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoinconsensus_la-sha512.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/scrypt.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@primitives/$(DEPDIR)/libbitcoin_common_a-block.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@primitives/$(DEPDIR)/libbitcoin_common_a-transaction.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@primitives/$(DEPDIR)/libbitcoinconsensus_la-transaction.Plo@am__quote@ # am--include-marker
@@ -6814,7 +6796,6 @@ clean-am: clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
 	clean-libtool clean-local mostlyclean-am
 
 distclean: distclean-recursive
-	-rm -f ./$(DEPDIR)/genesis_util.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-allocators.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-amount.Po
@@ -6902,7 +6883,6 @@ distclean: distclean-recursive
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha1.Plo
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha256.Plo
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha512.Plo
-	-rm -f crypto/$(DEPDIR)/scrypt.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoin_common_a-block.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoin_common_a-transaction.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoinconsensus_la-transaction.Plo
@@ -7103,7 +7083,6 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
-	-rm -f ./$(DEPDIR)/genesis_util.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-allocators.Po
 	-rm -f ./$(DEPDIR)/libbitcoin_common_a-amount.Po
@@ -7191,7 +7170,6 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha1.Plo
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha256.Plo
 	-rm -f crypto/$(DEPDIR)/libbitcoinconsensus_la-sha512.Plo
-	-rm -f crypto/$(DEPDIR)/scrypt.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoin_common_a-block.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoin_common_a-transaction.Po
 	-rm -f primitives/$(DEPDIR)/libbitcoinconsensus_la-transaction.Plo
@@ -7392,6 +7370,12 @@ uninstall-am: uninstall-binPROGRAMS uninstall-includeHEADERS \
 
 $(LIBSECP256K1): $(wildcard secp256k1/src/*) $(wildcard secp256k1/include/*)
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C $(@D) $(@F)
+
+#bin_PROGRAMS += genesis_util
+
+#genesis_util_SOURCES = genesis_util.cpp crypto/scrypt.cpp
+
+#genesis_util_LDADD = -lssl -lcrypto
 
 .PHONY: FORCE
 

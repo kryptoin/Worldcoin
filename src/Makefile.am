@@ -54,11 +54,11 @@ if BUILD_BITCOIN_UTILS
   bin_PROGRAMS += worldcoin-cli worldcoin-tx
 endif
 
-bin_PROGRAMS += genesis_util
+#bin_PROGRAMS += genesis_util
 
-genesis_util_SOURCES = genesis_util.cpp crypto/scrypt.cpp
+#genesis_util_SOURCES = genesis_util.cpp crypto/scrypt.cpp
 
-genesis_util_LDADD = -lssl -lcrypto
+#genesis_util_LDADD = -lssl -lcrypto
 
 .PHONY: FORCE
 # bitcoin core #
