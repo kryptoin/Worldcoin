@@ -96,6 +96,7 @@ am__aclocal_m4_deps = $(top_srcdir)/build-aux/m4/libtool.m4 \
 	$(top_srcdir)/build-aux/m4/ltoptions.m4 \
 	$(top_srcdir)/build-aux/m4/ltsugar.m4 \
 	$(top_srcdir)/build-aux/m4/ltversion.m4 \
+	$(top_srcdir)/build-aux/m4/lt~obsolete.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -164,8 +165,8 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in COPYING \
-	INSTALL README.md compile config.guess config.sub depcomp \
-	install-sh ltmain.sh missing
+	INSTALL README.md compile config.guess config.sub install-sh \
+	ltmain.sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -1017,7 +1018,8 @@ $(BITCOIN_CLI_BIN): FORCE
 .INTERMEDIATE: $(COVERAGE_INFO)
 
 clean-local:
-	rm -rf test_bitcoin.coverage/ total.coverage/ $(OSX_APP)
+	rm -rf test_bitcoin.coverage/ total.coverage/ $(OSX_APP) autom4te.cache
+	@find . -name '*~' -delete
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
