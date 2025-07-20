@@ -1,4 +1,4 @@
-AC_INIT([YourProject],[1.0],[you@example.com])
+AC_INIT([Worldcoin],[1.0],[info@worldcoin.tools])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 AC_CONFIG_SRCDIR([src/main.cpp])
 AC_CONFIG_HEADERS([config.h])

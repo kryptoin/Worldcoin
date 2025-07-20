@@ -1,5 +1,5 @@
-Building Bitcoin
+Building Worldcoin
 
-See doc/build-*.md for instructions on building bitcoind,
+See doc/build-*.md for instructions on building worldcoind,
 the intended-for-services, no-graphical-interface, reference
-implementation of Bitcoin.
+implementation of Worldcoin.

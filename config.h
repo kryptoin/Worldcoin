@@ -35,19 +35,19 @@
 #define LT_OBJDIR ".libs/"
 
 /* Name of package */
-#define PACKAGE "yourproject"
+#define PACKAGE "worldcoin"
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "you@example.com"
+#define PACKAGE_BUGREPORT "info@worldcoin.tools"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "YourProject"
+#define PACKAGE_NAME "Worldcoin"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "YourProject 1.0"
+#define PACKAGE_STRING "Worldcoin 1.0"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "yourproject"
+#define PACKAGE_TARNAME "worldcoin"
 
 /* Define to the home page for this package. */
 #define PACKAGE_URL ""
