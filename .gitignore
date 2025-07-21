@@ -22,3 +22,4 @@ qrc_*.cpp
 .deps
 .DS_Store
 build
+config.log
