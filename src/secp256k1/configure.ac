@@ -1,14 +1,15 @@
 AC_PREREQ([2.60])
 AC_INIT([libsecp256k1],[0.1])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_MACRO_DIR([build-aux/m4])
+AC_CONFIG_MACRO_DIRS([build-aux/m4])
+
 AC_CANONICAL_HOST
 AH_TOP([#ifndef LIBSECP256K1_CONFIG_H])
 AH_TOP([#define LIBSECP256K1_CONFIG_H])
 AH_BOTTOM([#endif //LIBSECP256K1_CONFIG_H])
 AM_INIT_AUTOMAKE([foreign])
 LT_INIT
-m4_include([../../build-aux/m4/secp256k1.m4])
+
 
 dnl make the compilation flags quiet unless V=1 is used
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
