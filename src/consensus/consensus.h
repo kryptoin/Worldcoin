@@ -1,0 +1,5 @@
+// Placeholder for consensus.h
+#ifndef BITCOIN_CONSENSUS_CONSENSUS_H
+#define BITCOIN_CONSENSUS_CONSENSUS_H
+
+#endif // BITCOIN_CONSENSUS_CONSENSUS_H

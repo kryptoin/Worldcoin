@@ -1814,7 +1814,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
             if (!FindUndoPos(state, pindex->nFile, pos, ::GetSerializeSize(blockundo, SER_DISK, CLIENT_VERSION) + 40))
                 return error("ConnectBlock() : FindUndoPos failed");
             if (!blockundo.WriteToDisk(pos, pindex->pprev->GetBlockHash()))
-                return state.Abort("Failed to write undo data");
+                return state.Error("Failed to write undo data");
 
             // update nUndoPos in block index
             pindex->nUndoPos = pos.nPos;
@@ -1827,7 +1827,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 
     if (fTxIndex)
         if (!pblocktree->WriteTxIndex(vPos))
-            return state.Abort("Failed to write transaction index");
+            return state.Error("Failed to write transaction index");
 
     // add this block to the view's block chain
     view.SetBestBlock(pindex->GetBlockHash());
@@ -1877,24 +1877,24 @@ bool static FlushStateToDisk(CValidationState &state, FlushStateMode mode) {
         bool fileschanged = false;
         for (set<int>::iterator it = setDirtyFileInfo.begin(); it != setDirtyFileInfo.end(); ) {
             if (!pblocktree->WriteBlockFileInfo(*it, vinfoBlockFile[*it])) {
-                return state.Abort("Failed to write to block index");
+                return state.Error("Failed to write to block index");
             }
             fileschanged = true;
             setDirtyFileInfo.erase(it++);
         }
         if (fileschanged && !pblocktree->WriteLastBlockFile(nLastBlockFile)) {
-            return state.Abort("Failed to write to block index");
+            return state.Error("Failed to write to block index");
         }
         for (set<CBlockIndex*>::iterator it = setDirtyBlockIndex.begin(); it != setDirtyBlockIndex.end(); ) {
              if (!pblocktree->WriteBlockIndex(CDiskBlockIndex(*it))) {
-                 return state.Abort("Failed to write to block index");
+                 return state.Error("Failed to write to block index");
              }
              setDirtyBlockIndex.erase(it++);
         }
         pblocktree->Sync();
         // Finally flush the chainstate (which may refer to block index entries).
         if (!pcoinsTip->Flush())
-            return state.Abort("Failed to write to coin database");
+            return state.Error("Failed to write to coin database");
         // Update best block in wallet (so we can detect restored wallets).
         if (mode != FLUSH_STATE_IF_NEEDED) {
             g_signals.SetBestChain(chainActive.GetLocator());
@@ -1902,7 +1902,7 @@ bool static FlushStateToDisk(CValidationState &state, FlushStateMode mode) {
         nLastWrite = GetTimeMicros();
     }
     } catch (const std::runtime_error& e) {
-        return state.Abort(std::string("System error while flushing: ") + e.what());
+        return state.Error(std::string("System error while flushing: ") + e.what());
     }
     return true;
 }
@@ -1959,7 +1959,7 @@ bool static DisconnectTip(CValidationState &state) {
     // Read block from disk.
     CBlock block;
     if (!ReadBlockFromDisk(block, pindexDelete))
-        return state.Abort("Failed to read block");
+        return state.Error("Failed to read block");
     // Apply the block atomically to the chain state.
     int64_t nStart = GetTimeMicros();
     {
@@ -2010,7 +2010,7 @@ bool static ConnectTip(CValidationState &state, CBlockIndex *pindexNew, CBlock *
     CBlock block;
     if (!pblock) {
         if (!ReadBlockFromDisk(block, pindexNew))
-            return state.Abort("Failed to read block");
+            return state.Error("Failed to read block");
         pblock = &block;
     }
     // Apply the block atomically to the chain state.
@@ -2729,76 +2729,14 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
             return error("AcceptBlock() : FindBlockPos failed");
         if (dbp == NULL)
             if (!WriteBlockToDisk(block, blockPos))
-                return state.Abort("Failed to write block");
+                return state.Error("Failed to write block");
         if (!ReceivedBlockTransactions(block, state, pindex, blockPos))
             return error("AcceptBlock() : ReceivedBlockTransactions failed");
     } catch(std::runtime_error &e) {
-        return state.Abort(std::string("System error: ") + e.what());
+        return state.Error(std::string("System error: ") + e.what());
     }
 
     return true;
-}
-
-bool CBlockIndex::IsSuperMajority(int minVersion, const CBlockIndex* pstart, unsigned int nRequired)
-{
-    unsigned int nToCheck = Params().ToCheckBlockUpgradeMajority();
-    unsigned int nFound = 0;
-    for (unsigned int i = 0; i < nToCheck && nFound < nRequired && pstart != NULL; i++)
-    {
-        if (pstart->nVersion >= minVersion)
-            ++nFound;
-        pstart = pstart->pprev;
-    }
-    return (nFound >= nRequired);
-}
-
-/** Turn the lowest '1' bit in the binary representation of a number into a '0'. */
-int static inline InvertLowestOne(int n) { return n & (n - 1); }
-
-/** Compute what height to jump back to with the CBlockIndex::pskip pointer. */
-int static inline GetSkipHeight(int height) {
-    if (height < 2)
-        return 0;
-
-    // Determine which height to jump back to. Any number strictly lower than height is acceptable,
-    // but the following expression seems to perform well in simulations (max 110 steps to go back
-    // up to 2**18 blocks).
-    return (height & 1) ? InvertLowestOne(InvertLowestOne(height - 1)) + 1 : InvertLowestOne(height);
-}
-
-CBlockIndex* CBlockIndex::GetAncestor(int height)
-{
-    if (height > nHeight || height < 0)
-        return NULL;
-
-    CBlockIndex* pindexWalk = this;
-    int heightWalk = nHeight;
-    while (heightWalk > height) {
-        int heightSkip = GetSkipHeight(heightWalk);
-        int heightSkipPrev = GetSkipHeight(heightWalk - 1);
-        if (heightSkip == height ||
-            (heightSkip > height && !(heightSkipPrev < heightSkip - 2 &&
-                                      heightSkipPrev >= height))) {
-            // Only follow pskip if pprev->pskip isn't better than pskip->pprev.
-            pindexWalk = pindexWalk->pskip;
-            heightWalk = heightSkip;
-        } else {
-            pindexWalk = pindexWalk->pprev;
-            heightWalk--;
-        }
-    }
-    return pindexWalk;
-}
-
-const CBlockIndex* CBlockIndex::GetAncestor(int height) const
-{
-    return const_cast<CBlockIndex*>(this)->GetAncestor(height);
-}
-
-void CBlockIndex::BuildSkip()
-{
-    if (pprev)
-        pskip = pprev->GetAncestor(GetSkipHeight(nHeight));
 }
 
 bool ProcessNewBlock(CValidationState &state, CNode* pfrom, CBlock* pblock, CDiskBlockPos *dbp)
