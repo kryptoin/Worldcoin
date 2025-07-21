@@ -160,7 +160,7 @@
         <translation>אישור הצפנת הארנק</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR LITECOINS&lt;/b&gt;!</source>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR WORLDCOINS&lt;/b&gt;!</source>
         <translation>אזהרה: הצפנת הארנק ואיבוד מילת הצופן עשויה להוביל &lt;b&gt;לאיבוד כל הלייטקוינים שלך&lt;/b&gt;!</translation>
     </message>
     <message>

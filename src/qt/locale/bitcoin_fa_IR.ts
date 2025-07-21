@@ -520,7 +520,7 @@ Address: %4
     </message>
     <message>
         <source>Welcome to the Worldcoin RPC console.</source>
-        <translation>به کنسول آر.پی.سی. LITECOIN خوش آمدید</translation>
+        <translation>به کنسول آر.پی.سی. WORLDCOIN خوش آمدید</translation>
     </message>
     </context>
 <context>
