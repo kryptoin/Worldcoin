@@ -14,6 +14,7 @@ src/build.h
 *.qm
 Makefile
 #resources cpp
+contrib/external-argon2d
 qrc_*.cpp
 #qt creator
 *.pro.user
