@@ -463,7 +463,7 @@ void static BitcoinMiner(CWallet *pwallet)
                 char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
                 while(true)
                 {
-                    scrypt_1024_1_1_256_sp(BEGIN(pblock->nVersion), BEGIN(thash), scratchpad);
+                    thash = pblock->GetPoWHash();
                     if (thash <= hashTarget)
                     {
                         // Found a solution

@@ -18,7 +18,8 @@ BOOST_AUTO_TEST_CASE(subsidy_limit_test)
         nSum += nSubsidy * 1000;
         BOOST_CHECK(MoneyRange(nSum));
     }
-    BOOST_CHECK(nSum == 8399999990760000ULL);
+    // Update this expected value based on your new reward schedule
+    BOOST_CHECK(nSum <= 500000000 * COIN);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

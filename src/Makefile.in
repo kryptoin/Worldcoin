@@ -236,14 +236,15 @@ crypto_libbitcoin_crypto_a_RANLIB = $(RANLIB)
 crypto_libbitcoin_crypto_a_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
 am_crypto_libbitcoin_crypto_a_OBJECTS =  \
+	crypto/libbitcoin_crypto_a-argon2.$(OBJEXT) \
+	crypto/libbitcoin_crypto_a-hmac_sha256.$(OBJEXT) \
+	crypto/libbitcoin_crypto_a-hmac_sha512.$(OBJEXT) \
+	crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.$(OBJEXT) \
+	crypto/libbitcoin_crypto_a-ripemd160.$(OBJEXT) \
+	crypto/libbitcoin_crypto_a-scrypt.$(OBJEXT) \
 	crypto/libbitcoin_crypto_a-sha1.$(OBJEXT) \
 	crypto/libbitcoin_crypto_a-sha256.$(OBJEXT) \
-	crypto/libbitcoin_crypto_a-sha512.$(OBJEXT) \
-	crypto/libbitcoin_crypto_a-hmac_sha256.$(OBJEXT) \
-	crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.$(OBJEXT) \
-	crypto/libbitcoin_crypto_a-hmac_sha512.$(OBJEXT) \
-	crypto/libbitcoin_crypto_a-scrypt.$(OBJEXT) \
-	crypto/libbitcoin_crypto_a-ripemd160.$(OBJEXT)
+	crypto/libbitcoin_crypto_a-sha512.$(OBJEXT)
 crypto_libbitcoin_crypto_a_OBJECTS =  \
 	$(am_crypto_libbitcoin_crypto_a_OBJECTS)
 libbitcoin_cli_a_AR = $(AR) $(ARFLAGS)
@@ -889,6 +890,7 @@ am__depfiles_remade = ./$(DEPDIR)/libbitcoin_cli_a-rpcclient.Po \
 	compat/$(DEPDIR)/libbitcoin_util_a-strnlen.Po \
 	compat/$(DEPDIR)/libbitcoinconsensus_la-glibc_compat.Plo \
 	compat/$(DEPDIR)/libbitcoinconsensus_la-glibcxx_compat.Plo \
+	crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Po \
 	crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Po \
 	crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Po \
 	crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Po \
@@ -1656,23 +1658,25 @@ libbitcoin_wallet_a_SOURCES = \
 # crypto primitives library
 crypto_libbitcoin_crypto_a_CPPFLAGS = $(BITCOIN_CONFIG_INCLUDES)
 crypto_libbitcoin_crypto_a_SOURCES = \
-  crypto/sha1.cpp \
-  crypto/sha256.cpp \
-  crypto/sha512.cpp \
-  crypto/hmac_sha256.cpp \
-  crypto/rfc6979_hmac_sha256.cpp \
-  crypto/hmac_sha512.cpp \
-  crypto/scrypt.cpp \
-  crypto/ripemd160.cpp \
+  crypto/argon2.cpp \
+  crypto/argon2.h \
   crypto/common.h \
-  crypto/sha256.h \
-  crypto/sha512.h \
+  crypto/hmac_sha256.cpp \
   crypto/hmac_sha256.h \
-  crypto/rfc6979_hmac_sha256.h \
+  crypto/hmac_sha512.cpp \
   crypto/hmac_sha512.h \
+  crypto/rfc6979_hmac_sha256.cpp \
+  crypto/rfc6979_hmac_sha256.h \
+  crypto/ripemd160.cpp \
+  crypto/ripemd160.h \
+  crypto/scrypt.cpp \
   crypto/scrypt.h \
+  crypto/sha1.cpp \
   crypto/sha1.h \
-  crypto/ripemd160.h
+  crypto/sha256.cpp \
+  crypto/sha256.h \
+  crypto/sha512.cpp \
+  crypto/sha512.h
 
 
 # univalue JSON library
@@ -2308,22 +2312,24 @@ crypto/$(am__dirstamp):
 crypto/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) crypto/$(DEPDIR)
 	@: >>crypto/$(DEPDIR)/$(am__dirstamp)
+crypto/libbitcoin_crypto_a-argon2.$(OBJEXT): crypto/$(am__dirstamp) \
+	crypto/$(DEPDIR)/$(am__dirstamp)
+crypto/libbitcoin_crypto_a-hmac_sha256.$(OBJEXT):  \
+	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
+crypto/libbitcoin_crypto_a-hmac_sha512.$(OBJEXT):  \
+	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
+crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.$(OBJEXT):  \
+	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
+crypto/libbitcoin_crypto_a-ripemd160.$(OBJEXT):  \
+	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
+crypto/libbitcoin_crypto_a-scrypt.$(OBJEXT): crypto/$(am__dirstamp) \
+	crypto/$(DEPDIR)/$(am__dirstamp)
 crypto/libbitcoin_crypto_a-sha1.$(OBJEXT): crypto/$(am__dirstamp) \
 	crypto/$(DEPDIR)/$(am__dirstamp)
 crypto/libbitcoin_crypto_a-sha256.$(OBJEXT): crypto/$(am__dirstamp) \
 	crypto/$(DEPDIR)/$(am__dirstamp)
 crypto/libbitcoin_crypto_a-sha512.$(OBJEXT): crypto/$(am__dirstamp) \
 	crypto/$(DEPDIR)/$(am__dirstamp)
-crypto/libbitcoin_crypto_a-hmac_sha256.$(OBJEXT):  \
-	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
-crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.$(OBJEXT):  \
-	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
-crypto/libbitcoin_crypto_a-hmac_sha512.$(OBJEXT):  \
-	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
-crypto/libbitcoin_crypto_a-scrypt.$(OBJEXT): crypto/$(am__dirstamp) \
-	crypto/$(DEPDIR)/$(am__dirstamp)
-crypto/libbitcoin_crypto_a-ripemd160.$(OBJEXT):  \
-	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
 
 crypto/libbitcoin_crypto.a: $(crypto_libbitcoin_crypto_a_OBJECTS) $(crypto_libbitcoin_crypto_a_DEPENDENCIES) $(EXTRA_crypto_libbitcoin_crypto_a_DEPENDENCIES) crypto/$(am__dirstamp)
 	$(AM_V_at)-rm -f crypto/libbitcoin_crypto.a
@@ -2873,6 +2879,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/libbitcoin_util_a-strnlen.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/libbitcoinconsensus_la-glibc_compat.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@compat/$(DEPDIR)/libbitcoinconsensus_la-glibcxx_compat.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Po@am__quote@ # am--include-marker
@@ -3073,6 +3080,90 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
+crypto/libbitcoin_crypto_a-argon2.o: crypto/argon2.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-argon2.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Tpo -c -o crypto/libbitcoin_crypto_a-argon2.o `test -f 'crypto/argon2.cpp' || echo '$(srcdir)/'`crypto/argon2.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/argon2.cpp' object='crypto/libbitcoin_crypto_a-argon2.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-argon2.o `test -f 'crypto/argon2.cpp' || echo '$(srcdir)/'`crypto/argon2.cpp
+
+crypto/libbitcoin_crypto_a-argon2.obj: crypto/argon2.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-argon2.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Tpo -c -o crypto/libbitcoin_crypto_a-argon2.obj `if test -f 'crypto/argon2.cpp'; then $(CYGPATH_W) 'crypto/argon2.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/argon2.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/argon2.cpp' object='crypto/libbitcoin_crypto_a-argon2.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-argon2.obj `if test -f 'crypto/argon2.cpp'; then $(CYGPATH_W) 'crypto/argon2.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/argon2.cpp'; fi`
+
+crypto/libbitcoin_crypto_a-hmac_sha256.o: crypto/hmac_sha256.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-hmac_sha256.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Tpo -c -o crypto/libbitcoin_crypto_a-hmac_sha256.o `test -f 'crypto/hmac_sha256.cpp' || echo '$(srcdir)/'`crypto/hmac_sha256.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/hmac_sha256.cpp' object='crypto/libbitcoin_crypto_a-hmac_sha256.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-hmac_sha256.o `test -f 'crypto/hmac_sha256.cpp' || echo '$(srcdir)/'`crypto/hmac_sha256.cpp
+
+crypto/libbitcoin_crypto_a-hmac_sha256.obj: crypto/hmac_sha256.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-hmac_sha256.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Tpo -c -o crypto/libbitcoin_crypto_a-hmac_sha256.obj `if test -f 'crypto/hmac_sha256.cpp'; then $(CYGPATH_W) 'crypto/hmac_sha256.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/hmac_sha256.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/hmac_sha256.cpp' object='crypto/libbitcoin_crypto_a-hmac_sha256.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-hmac_sha256.obj `if test -f 'crypto/hmac_sha256.cpp'; then $(CYGPATH_W) 'crypto/hmac_sha256.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/hmac_sha256.cpp'; fi`
+
+crypto/libbitcoin_crypto_a-hmac_sha512.o: crypto/hmac_sha512.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-hmac_sha512.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Tpo -c -o crypto/libbitcoin_crypto_a-hmac_sha512.o `test -f 'crypto/hmac_sha512.cpp' || echo '$(srcdir)/'`crypto/hmac_sha512.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/hmac_sha512.cpp' object='crypto/libbitcoin_crypto_a-hmac_sha512.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-hmac_sha512.o `test -f 'crypto/hmac_sha512.cpp' || echo '$(srcdir)/'`crypto/hmac_sha512.cpp
+
+crypto/libbitcoin_crypto_a-hmac_sha512.obj: crypto/hmac_sha512.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-hmac_sha512.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Tpo -c -o crypto/libbitcoin_crypto_a-hmac_sha512.obj `if test -f 'crypto/hmac_sha512.cpp'; then $(CYGPATH_W) 'crypto/hmac_sha512.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/hmac_sha512.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/hmac_sha512.cpp' object='crypto/libbitcoin_crypto_a-hmac_sha512.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-hmac_sha512.obj `if test -f 'crypto/hmac_sha512.cpp'; then $(CYGPATH_W) 'crypto/hmac_sha512.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/hmac_sha512.cpp'; fi`
+
+crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o: crypto/rfc6979_hmac_sha256.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Tpo -c -o crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o `test -f 'crypto/rfc6979_hmac_sha256.cpp' || echo '$(srcdir)/'`crypto/rfc6979_hmac_sha256.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/rfc6979_hmac_sha256.cpp' object='crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o `test -f 'crypto/rfc6979_hmac_sha256.cpp' || echo '$(srcdir)/'`crypto/rfc6979_hmac_sha256.cpp
+
+crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj: crypto/rfc6979_hmac_sha256.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Tpo -c -o crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj `if test -f 'crypto/rfc6979_hmac_sha256.cpp'; then $(CYGPATH_W) 'crypto/rfc6979_hmac_sha256.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/rfc6979_hmac_sha256.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/rfc6979_hmac_sha256.cpp' object='crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj `if test -f 'crypto/rfc6979_hmac_sha256.cpp'; then $(CYGPATH_W) 'crypto/rfc6979_hmac_sha256.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/rfc6979_hmac_sha256.cpp'; fi`
+
+crypto/libbitcoin_crypto_a-ripemd160.o: crypto/ripemd160.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-ripemd160.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Tpo -c -o crypto/libbitcoin_crypto_a-ripemd160.o `test -f 'crypto/ripemd160.cpp' || echo '$(srcdir)/'`crypto/ripemd160.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/ripemd160.cpp' object='crypto/libbitcoin_crypto_a-ripemd160.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-ripemd160.o `test -f 'crypto/ripemd160.cpp' || echo '$(srcdir)/'`crypto/ripemd160.cpp
+
+crypto/libbitcoin_crypto_a-ripemd160.obj: crypto/ripemd160.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-ripemd160.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Tpo -c -o crypto/libbitcoin_crypto_a-ripemd160.obj `if test -f 'crypto/ripemd160.cpp'; then $(CYGPATH_W) 'crypto/ripemd160.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/ripemd160.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/ripemd160.cpp' object='crypto/libbitcoin_crypto_a-ripemd160.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-ripemd160.obj `if test -f 'crypto/ripemd160.cpp'; then $(CYGPATH_W) 'crypto/ripemd160.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/ripemd160.cpp'; fi`
+
+crypto/libbitcoin_crypto_a-scrypt.o: crypto/scrypt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-scrypt.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Tpo -c -o crypto/libbitcoin_crypto_a-scrypt.o `test -f 'crypto/scrypt.cpp' || echo '$(srcdir)/'`crypto/scrypt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/scrypt.cpp' object='crypto/libbitcoin_crypto_a-scrypt.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-scrypt.o `test -f 'crypto/scrypt.cpp' || echo '$(srcdir)/'`crypto/scrypt.cpp
+
+crypto/libbitcoin_crypto_a-scrypt.obj: crypto/scrypt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-scrypt.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Tpo -c -o crypto/libbitcoin_crypto_a-scrypt.obj `if test -f 'crypto/scrypt.cpp'; then $(CYGPATH_W) 'crypto/scrypt.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/scrypt.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/scrypt.cpp' object='crypto/libbitcoin_crypto_a-scrypt.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-scrypt.obj `if test -f 'crypto/scrypt.cpp'; then $(CYGPATH_W) 'crypto/scrypt.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/scrypt.cpp'; fi`
+
 crypto/libbitcoin_crypto_a-sha1.o: crypto/sha1.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-sha1.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-sha1.Tpo -c -o crypto/libbitcoin_crypto_a-sha1.o `test -f 'crypto/sha1.cpp' || echo '$(srcdir)/'`crypto/sha1.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-sha1.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-sha1.Po
@@ -3114,76 +3205,6 @@ crypto/libbitcoin_crypto_a-sha512.obj: crypto/sha512.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/sha512.cpp' object='crypto/libbitcoin_crypto_a-sha512.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-sha512.obj `if test -f 'crypto/sha512.cpp'; then $(CYGPATH_W) 'crypto/sha512.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/sha512.cpp'; fi`
-
-crypto/libbitcoin_crypto_a-hmac_sha256.o: crypto/hmac_sha256.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-hmac_sha256.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Tpo -c -o crypto/libbitcoin_crypto_a-hmac_sha256.o `test -f 'crypto/hmac_sha256.cpp' || echo '$(srcdir)/'`crypto/hmac_sha256.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/hmac_sha256.cpp' object='crypto/libbitcoin_crypto_a-hmac_sha256.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-hmac_sha256.o `test -f 'crypto/hmac_sha256.cpp' || echo '$(srcdir)/'`crypto/hmac_sha256.cpp
-
-crypto/libbitcoin_crypto_a-hmac_sha256.obj: crypto/hmac_sha256.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-hmac_sha256.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Tpo -c -o crypto/libbitcoin_crypto_a-hmac_sha256.obj `if test -f 'crypto/hmac_sha256.cpp'; then $(CYGPATH_W) 'crypto/hmac_sha256.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/hmac_sha256.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/hmac_sha256.cpp' object='crypto/libbitcoin_crypto_a-hmac_sha256.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-hmac_sha256.obj `if test -f 'crypto/hmac_sha256.cpp'; then $(CYGPATH_W) 'crypto/hmac_sha256.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/hmac_sha256.cpp'; fi`
-
-crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o: crypto/rfc6979_hmac_sha256.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Tpo -c -o crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o `test -f 'crypto/rfc6979_hmac_sha256.cpp' || echo '$(srcdir)/'`crypto/rfc6979_hmac_sha256.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/rfc6979_hmac_sha256.cpp' object='crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.o `test -f 'crypto/rfc6979_hmac_sha256.cpp' || echo '$(srcdir)/'`crypto/rfc6979_hmac_sha256.cpp
-
-crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj: crypto/rfc6979_hmac_sha256.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Tpo -c -o crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj `if test -f 'crypto/rfc6979_hmac_sha256.cpp'; then $(CYGPATH_W) 'crypto/rfc6979_hmac_sha256.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/rfc6979_hmac_sha256.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/rfc6979_hmac_sha256.cpp' object='crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-rfc6979_hmac_sha256.obj `if test -f 'crypto/rfc6979_hmac_sha256.cpp'; then $(CYGPATH_W) 'crypto/rfc6979_hmac_sha256.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/rfc6979_hmac_sha256.cpp'; fi`
-
-crypto/libbitcoin_crypto_a-hmac_sha512.o: crypto/hmac_sha512.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-hmac_sha512.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Tpo -c -o crypto/libbitcoin_crypto_a-hmac_sha512.o `test -f 'crypto/hmac_sha512.cpp' || echo '$(srcdir)/'`crypto/hmac_sha512.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/hmac_sha512.cpp' object='crypto/libbitcoin_crypto_a-hmac_sha512.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-hmac_sha512.o `test -f 'crypto/hmac_sha512.cpp' || echo '$(srcdir)/'`crypto/hmac_sha512.cpp
-
-crypto/libbitcoin_crypto_a-hmac_sha512.obj: crypto/hmac_sha512.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-hmac_sha512.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Tpo -c -o crypto/libbitcoin_crypto_a-hmac_sha512.obj `if test -f 'crypto/hmac_sha512.cpp'; then $(CYGPATH_W) 'crypto/hmac_sha512.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/hmac_sha512.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/hmac_sha512.cpp' object='crypto/libbitcoin_crypto_a-hmac_sha512.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-hmac_sha512.obj `if test -f 'crypto/hmac_sha512.cpp'; then $(CYGPATH_W) 'crypto/hmac_sha512.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/hmac_sha512.cpp'; fi`
-
-crypto/libbitcoin_crypto_a-scrypt.o: crypto/scrypt.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-scrypt.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Tpo -c -o crypto/libbitcoin_crypto_a-scrypt.o `test -f 'crypto/scrypt.cpp' || echo '$(srcdir)/'`crypto/scrypt.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/scrypt.cpp' object='crypto/libbitcoin_crypto_a-scrypt.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-scrypt.o `test -f 'crypto/scrypt.cpp' || echo '$(srcdir)/'`crypto/scrypt.cpp
-
-crypto/libbitcoin_crypto_a-scrypt.obj: crypto/scrypt.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-scrypt.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Tpo -c -o crypto/libbitcoin_crypto_a-scrypt.obj `if test -f 'crypto/scrypt.cpp'; then $(CYGPATH_W) 'crypto/scrypt.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/scrypt.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-scrypt.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/scrypt.cpp' object='crypto/libbitcoin_crypto_a-scrypt.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-scrypt.obj `if test -f 'crypto/scrypt.cpp'; then $(CYGPATH_W) 'crypto/scrypt.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/scrypt.cpp'; fi`
-
-crypto/libbitcoin_crypto_a-ripemd160.o: crypto/ripemd160.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-ripemd160.o -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Tpo -c -o crypto/libbitcoin_crypto_a-ripemd160.o `test -f 'crypto/ripemd160.cpp' || echo '$(srcdir)/'`crypto/ripemd160.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/ripemd160.cpp' object='crypto/libbitcoin_crypto_a-ripemd160.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-ripemd160.o `test -f 'crypto/ripemd160.cpp' || echo '$(srcdir)/'`crypto/ripemd160.cpp
-
-crypto/libbitcoin_crypto_a-ripemd160.obj: crypto/ripemd160.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT crypto/libbitcoin_crypto_a-ripemd160.obj -MD -MP -MF crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Tpo -c -o crypto/libbitcoin_crypto_a-ripemd160.obj `if test -f 'crypto/ripemd160.cpp'; then $(CYGPATH_W) 'crypto/ripemd160.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/ripemd160.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Tpo crypto/$(DEPDIR)/libbitcoin_crypto_a-ripemd160.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='crypto/ripemd160.cpp' object='crypto/libbitcoin_crypto_a-ripemd160.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o crypto/libbitcoin_crypto_a-ripemd160.obj `if test -f 'crypto/ripemd160.cpp'; then $(CYGPATH_W) 'crypto/ripemd160.cpp'; else $(CYGPATH_W) '$(srcdir)/crypto/ripemd160.cpp'; fi`
 
 libbitcoin_cli_a-rpcclient.o: rpcclient.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_cli_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_cli_a-rpcclient.o -MD -MP -MF $(DEPDIR)/libbitcoin_cli_a-rpcclient.Tpo -c -o libbitcoin_cli_a-rpcclient.o `test -f 'rpcclient.cpp' || echo '$(srcdir)/'`rpcclient.cpp
@@ -6870,6 +6891,7 @@ distclean: distclean-recursive
 	-rm -f compat/$(DEPDIR)/libbitcoin_util_a-strnlen.Po
 	-rm -f compat/$(DEPDIR)/libbitcoinconsensus_la-glibc_compat.Plo
 	-rm -f compat/$(DEPDIR)/libbitcoinconsensus_la-glibcxx_compat.Plo
+	-rm -f crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Po
 	-rm -f crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Po
 	-rm -f crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Po
 	-rm -f crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Po
@@ -7157,6 +7179,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f compat/$(DEPDIR)/libbitcoin_util_a-strnlen.Po
 	-rm -f compat/$(DEPDIR)/libbitcoinconsensus_la-glibc_compat.Plo
 	-rm -f compat/$(DEPDIR)/libbitcoinconsensus_la-glibcxx_compat.Plo
+	-rm -f crypto/$(DEPDIR)/libbitcoin_crypto_a-argon2.Po
 	-rm -f crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha256.Po
 	-rm -f crypto/$(DEPDIR)/libbitcoin_crypto_a-hmac_sha512.Po
 	-rm -f crypto/$(DEPDIR)/libbitcoin_crypto_a-rfc6979_hmac_sha256.Po

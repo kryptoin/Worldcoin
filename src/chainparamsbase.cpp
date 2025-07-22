@@ -22,7 +22,7 @@ public:
     CBaseMainParams()
     {
         networkID = CBaseChainParams::MAIN;
-        nRPCPort = 11082;
+        nRPCPort = 11084;  // New RPC port for Argon2d network
     }
 };
 static CBaseMainParams mainParams;

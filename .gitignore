@@ -5,6 +5,7 @@
 *.rej
 .*.swp
 .bitcoin
+.vscode
 build.sh
 doc/notes
 src/*.exe

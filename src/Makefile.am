@@ -170,23 +170,25 @@ libbitcoin_wallet_a_SOURCES = \
 # crypto primitives library
 crypto_libbitcoin_crypto_a_CPPFLAGS = $(BITCOIN_CONFIG_INCLUDES)
 crypto_libbitcoin_crypto_a_SOURCES = \
-  crypto/sha1.cpp \
-  crypto/sha256.cpp \
-  crypto/sha512.cpp \
-  crypto/hmac_sha256.cpp \
-  crypto/rfc6979_hmac_sha256.cpp \
-  crypto/hmac_sha512.cpp \
-  crypto/scrypt.cpp \
-  crypto/ripemd160.cpp \
+  crypto/argon2.cpp \
+  crypto/argon2.h \
   crypto/common.h \
-  crypto/sha256.h \
-  crypto/sha512.h \
+  crypto/hmac_sha256.cpp \
   crypto/hmac_sha256.h \
-  crypto/rfc6979_hmac_sha256.h \
+  crypto/hmac_sha512.cpp \
   crypto/hmac_sha512.h \
+  crypto/rfc6979_hmac_sha256.cpp \
+  crypto/rfc6979_hmac_sha256.h \
+  crypto/ripemd160.cpp \
+  crypto/ripemd160.h \
+  crypto/scrypt.cpp \
   crypto/scrypt.h \
+  crypto/sha1.cpp \
   crypto/sha1.h \
-  crypto/ripemd160.h
+  crypto/sha256.cpp \
+  crypto/sha256.h \
+  crypto/sha512.cpp \
+  crypto/sha512.h
 
 # univalue JSON library
 univalue_libbitcoin_univalue_a_SOURCES = \
