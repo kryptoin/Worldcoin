@@ -7,6 +7,7 @@
 .bitcoin
 .vscode
 build.sh
+config.status
 doc/notes
 src/*.exe
 src/build.h
@@ -25,3 +26,19 @@ qrc_*.cpp
 .DS_Store
 build
 config.log
+Makefile.in
+aclocal.m4
+compile
+depcomp
+install-sh
+libtool
+missing
+src/Makefile.in
+src/crypto/libbitcoin_crypto.a
+src/libbitcoin_cli.a
+src/libbitcoin_common.a
+src/libbitcoin_server.a
+src/libbitcoin_util.a
+src/libbitcoin_wallet.a
+src/univalue/libbitcoin_univalue.a
+test-driver
