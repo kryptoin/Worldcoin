@@ -76,6 +76,9 @@ namespace Checkpoints {
 
         const MapCheckpoints& checkpoints = *Params().Checkpoints().mapCheckpoints;
 
+        if (checkpoints.empty())
+            return 0;
+
         return checkpoints.rbegin()->first;
     }
 

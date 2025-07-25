@@ -422,105 +422,101 @@ bool ClientAllowed(const boost::asio::ip::address& address)
 	return false;
 }
 
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/ssl/context.hpp>
+#include <boost/shared_ptr.hpp>
+#include <memory>
+
 // Forward declaration for RPCListen
-// This tells the compiler that RPCListen exists and what its signature is,
-// before its full definition.
-template <typename Protocol, typename SocketAcceptorService>
-static void RPCListen(boost::shared_ptr< basic_socket_acceptor<Protocol, SocketAcceptorService> > acceptor,
-                      std::shared_ptr<ssl::context> context_ptr,
+static void RPCListen(boost::shared_ptr<boost::asio::ip::tcp::acceptor> acceptor,
+                      std::shared_ptr<boost::asio::ssl::context> context_ptr,
                       const bool fUseSSL);
 
-// Corrected AcceptedConnectionImpl class
+// Updated AcceptedConnectionImpl class template
 template <typename Protocol>
 class AcceptedConnectionImpl : public AcceptedConnection
 {
 public:
-		AcceptedConnectionImpl(
-				boost::asio::io_context& io_context,
-				boost::asio::ssl::context& context,
-				bool fUseSSL) :
-				sslStream(io_context, context),
-				_d(io_context, sslStream, fUseSSL),
-				_stream(_d)
-		{
-		}
+    AcceptedConnectionImpl(
+        boost::asio::io_context& io_context,
+        boost::asio::ssl::context& context,
+        bool fUseSSL) :
+        sslStream(io_context, context),
+        _d(io_context, sslStream, fUseSSL),
+        _stream(_d)
+    {
+    }
 
-		virtual std::iostream& stream()
-		{
-				return _stream;
-		}
+    std::iostream& stream() override
+    {
+        return _stream;
+    }
 
-		virtual std::string peer_address_to_string() const
-		{
-				return peer.address().to_string();
-		}
+    std::string peer_address_to_string() const override
+    {
+        return peer.address().to_string();
+    }
 
-		virtual void close()
-		{
-				_stream.close();
-		}
+    void close() override
+    {
+        _stream.close();
+    }
 
-		typename Protocol::endpoint peer;
-		boost::asio::ssl::stream<typename Protocol::socket> sslStream;
+    typename Protocol::endpoint peer;
+    boost::asio::ssl::stream<typename Protocol::socket> sslStream;
 
 private:
-		SSLIOStreamDevice<Protocol> _d;
-		boost::iostreams::stream<SSLIOStreamDevice<Protocol>> _stream;
+    SSLIOStreamDevice<Protocol> _d;
+    boost::iostreams::stream<SSLIOStreamDevice<Protocol>> _stream;
 };
 
 void ServiceConnection(AcceptedConnection *conn);
 
-template <typename Protocol, typename SocketAcceptorService>
-static void RPCAcceptHandler(boost::shared_ptr< basic_socket_acceptor<Protocol, SocketAcceptorService> > acceptor,
-														 std::shared_ptr<ssl::context> context_ptr, // Use shared_ptr consistently
-														 const bool fUseSSL,
-														 boost::shared_ptr< AcceptedConnection > conn,
-														 const boost::system::error_code& error)
+// Updated RPCAcceptHandler function
+static void RPCAcceptHandler(boost::shared_ptr<boost::asio::ip::tcp::acceptor> acceptor,
+                             std::shared_ptr<boost::asio::ssl::context> context_ptr,
+                             const bool fUseSSL,
+                             boost::shared_ptr<AcceptedConnection> conn,
+                             const boost::system::error_code& error)
 {
-		if (error != asio::error::operation_aborted && acceptor->is_open())
-				RPCListen(acceptor, context_ptr, fUseSSL); // Pass context_ptr
+    if (error != boost::asio::error::operation_aborted && acceptor->is_open()) {
+        RPCListen(acceptor, context_ptr, fUseSSL);
+    }
 
-		AcceptedConnectionImpl<ip::tcp>* tcp_conn = dynamic_cast< AcceptedConnectionImpl<ip::tcp>* >(conn.get());
+    auto tcp_conn = dynamic_cast<AcceptedConnectionImpl<boost::asio::ip::tcp>*>(conn.get());
 
-		if (error)
-		{
-				LogPrintf("%s: Error: %s\n", __func__, error.message());
-		}
-		else if (tcp_conn && !ClientAllowed(tcp_conn->peer.address()))
-		{
-				if (!fUseSSL)
-						conn->stream() << HTTPError(HTTP_FORBIDDEN, false) << std::flush;
-				conn->close();
-		}
-		else {
-				ServiceConnection(conn.get());
-				conn->close();
-		}
+    if (error) {
+        LogPrintf("%s: Error: %s\n", __func__, error.message());
+    } else if (tcp_conn && !ClientAllowed(tcp_conn->peer.address())) {
+        if (!fUseSSL)
+            conn->stream() << HTTPError(HTTP_FORBIDDEN, false) << std::flush;
+        conn->close();
+    } else {
+        ServiceConnection(conn.get());
+        conn->close();
+    }
 }
 
-// Corrected RPCListen function
-template <typename Protocol, typename SocketAcceptorService>
-static void RPCListen(boost::shared_ptr< basic_socket_acceptor<Protocol, SocketAcceptorService> > acceptor,
-											std::shared_ptr<ssl::context> context_ptr,
-											const bool fUseSSL)
+// Updated RPCListen function
+static void RPCListen(boost::shared_ptr<boost::asio::ip::tcp::acceptor> acceptor,
+                      std::shared_ptr<boost::asio::ssl::context> context_ptr,
+                      const bool fUseSSL)
 {
-		// Create the connection - make sure to dereference the shared_ptr correctly
-		boost::shared_ptr<AcceptedConnectionImpl<Protocol>> conn(
-				new AcceptedConnectionImpl<Protocol>(
-						// Change this line:
-						*rpc_io_service, // Use the global rpc_io_service directly, which is a io_context
-						*context_ptr, // Dereference the shared_ptr to get ssl::context&
-						fUseSSL
-				)
-		);
+    boost::shared_ptr<AcceptedConnectionImpl<boost::asio::ip::tcp>> conn(
+        new AcceptedConnectionImpl<boost::asio::ip::tcp>(
+            *rpc_io_service, // assuming rpc_io_service is a global io_context
+            *context_ptr,
+            fUseSSL
+        )
+    );
 
-		acceptor->async_accept(
-				conn->sslStream.lowest_layer(),
-				conn->peer,
-				[acceptor, context_ptr, fUseSSL, conn](const boost::system::error_code& error)
-				{
-						RPCAcceptHandler(acceptor, context_ptr, fUseSSL, conn, error);
-				});
+    acceptor->async_accept(
+        conn->sslStream.lowest_layer(),
+        conn->peer,
+        [acceptor, context_ptr, fUseSSL, conn](const boost::system::error_code& error)
+        {
+            RPCAcceptHandler(acceptor, context_ptr, fUseSSL, conn, error);
+        });
 }
 
 static ip::tcp::endpoint ParseEndpoint(const std::string &strEndpoint, int defaultPort)

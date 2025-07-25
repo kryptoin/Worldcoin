@@ -6,7 +6,7 @@
 .*.swp
 .bitcoin
 .vscode
-build.sh
+#build.sh
 config.status
 doc/notes
 src/*.exe

@@ -90,13 +90,19 @@ public:
     genesis.nNonce = 576060;  // Found nonce
 
     hashGenesisBlock = genesis.GetHash();
-    // Remove the mining loop - it's no longer needed
 
-    base58Prefixes[PUBKEY_ADDRESS] = list_of(73);
-    base58Prefixes[SCRIPT_ADDRESS] = list_of(5);
-    base58Prefixes[SECRET_KEY] = list_of(14);
-    base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x04)(0x88)(0xB2)(0x1E);
-    base58Prefixes[EXT_SECRET_KEY] = list_of(0x04)(0x88)(0xAD)(0xE4);
+//    base58Prefixes[PUBKEY_ADDRESS] = list_of(73);
+//    base58Prefixes[SCRIPT_ADDRESS] = list_of(5);
+//    base58Prefixes[SECRET_KEY] = list_of(14);
+//    base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x04)(0x88)(0xB2)(0x1E);
+//    base58Prefixes[EXT_SECRET_KEY] = list_of(0x04)(0x88)(0xAD)(0xE4);
+
+     base58Prefixes[PUBKEY_ADDRESS]     = std::vector<unsigned char>{73};
+     base58Prefixes[SCRIPT_ADDRESS]     = std::vector<unsigned char>{5};
+     base58Prefixes[SECRET_KEY]         = std::vector<unsigned char>{14};
+     base58Prefixes[EXT_PUBLIC_KEY]     = std::vector<unsigned char>{0x04, 0x88, 0xB2, 0x1E};
+     base58Prefixes[EXT_SECRET_KEY]     = std::vector<unsigned char>{0x04, 0x88, 0xAD, 0xE4};
+
 
     convertSeed6(vFixedSeeds, pnSeed6_main, ARRAYLEN(pnSeed6_main));
 
